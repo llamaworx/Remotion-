@@ -1,4 +1,4 @@
-import { Composition } from "remotion";
+import { Composition, staticFile } from "remotion";
 import { BolkaProductVideo } from "./compositions/BolkaProductVideo";
 
 export const RemotionRoot: React.FC = () => {
@@ -20,6 +20,8 @@ export const RemotionRoot: React.FC = () => {
             "Enterprise-Grade Security",
             "Seamless Integration",
           ],
+          // Add your music file to public/music.mp3 and uncomment below:
+          // musicUrl: staticFile("music.mp3"),
         }}
       />
     </>
