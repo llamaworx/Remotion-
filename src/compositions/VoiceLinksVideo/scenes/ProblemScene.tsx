@@ -7,15 +7,45 @@ import {
   useVideoConfig,
 } from "remotion";
 
+// Professional SVG Icons
+const ClockIcon: React.FC<{ size: number; color: string }> = ({ size, color }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10" />
+    <polyline points="12 6 12 12 16 14" />
+  </svg>
+);
+
+const GlobeIcon: React.FC<{ size: number; color: string }> = ({ size, color }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10" />
+    <line x1="2" y1="12" x2="22" y2="12" />
+    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+  </svg>
+);
+
+const PhoneOffIcon: React.FC<{ size: number; color: string }> = ({ size, color }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.42 19.42 0 0 1-3.33-2.67m-2.67-3.34a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91" />
+    <line x1="1" y1="1" x2="23" y2="23" />
+  </svg>
+);
+
+const DollarIcon: React.FC<{ size: number; color: string }> = ({ size, color }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="12" y1="1" x2="12" y2="23" />
+    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+  </svg>
+);
+
 export const ProblemScene: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
   const problems = [
-    { icon: "😤", text: "Long hold times" },
-    { icon: "🌍", text: "Language barriers" },
-    { icon: "📞", text: "Limited support hours" },
-    { icon: "💸", text: "High support costs" },
+    { Icon: ClockIcon, text: "Long Hold Times", subtext: "Average 13 min wait" },
+    { Icon: GlobeIcon, text: "Language Barriers", subtext: "Limited support" },
+    { Icon: PhoneOffIcon, text: "Limited Hours", subtext: "9-5 only" },
+    { Icon: DollarIcon, text: "High Costs", subtext: "$15+ per call" },
   ];
 
   return (
@@ -30,21 +60,22 @@ export const ProblemScene: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: 100,
-          opacity: interpolate(frame, [0, 15], [0, 1]),
-          transform: `translateY(${interpolate(frame, [0, 15], [20, 0])}px)`,
+          top: 120,
+          opacity: interpolate(frame, [0, 25], [0, 1]),
+          transform: `translateY(${interpolate(frame, [0, 25], [30, 0])}px)`,
         }}
       >
         <h2
           style={{
             fontFamily: "system-ui, -apple-system, sans-serif",
-            fontSize: 48,
+            fontSize: 56,
             fontWeight: 700,
-            color: "rgba(255, 255, 255, 0.6)",
+            color: "rgba(255, 255, 255, 0.7)",
             margin: 0,
           }}
         >
-          Customer support today is...
+          Customer support today is{" "}
+          <span style={{ color: "#FF4444" }}>broken</span>
         </h2>
       </div>
 
@@ -52,19 +83,17 @@ export const ProblemScene: React.FC = () => {
       <div
         style={{
           display: "flex",
-          gap: 40,
-          marginTop: 60,
+          gap: 50,
+          marginTop: 80,
         }}
       >
         {problems.map((problem, i) => {
-          const delay = i * 12;
+          const delay = i * 20 + 30;
           const cardSpring = spring({
-            frame: frame - delay - 20,
+            frame: frame - delay,
             fps,
-            config: { damping: 12, stiffness: 100 },
+            config: { damping: 14, stiffness: 90 },
           });
-
-          const shake = frame > delay + 40 ? Math.sin((frame - delay) * 0.5) * 3 : 0;
 
           return (
             <div
@@ -73,26 +102,52 @@ export const ProblemScene: React.FC = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                gap: 20,
-                padding: "40px 50px",
-                background: "rgba(255, 50, 50, 0.1)",
-                borderRadius: 24,
-                border: "2px solid rgba(255, 50, 50, 0.3)",
-                transform: `scale(${cardSpring}) rotate(${shake}deg)`,
+                gap: 24,
+                padding: "50px 45px",
+                background: "rgba(255, 50, 50, 0.08)",
+                borderRadius: 28,
+                border: "2px solid rgba(255, 50, 50, 0.25)",
+                transform: `scale(${cardSpring})`,
                 opacity: cardSpring,
+                minWidth: 220,
               }}
             >
-              <span style={{ fontSize: 64 }}>{problem.icon}</span>
+              {/* Icon container */}
+              <div
+                style={{
+                  width: 80,
+                  height: 80,
+                  borderRadius: "50%",
+                  background: "rgba(255, 68, 68, 0.15)",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <problem.Icon size={40} color="#FF6666" />
+              </div>
+
               <span
                 style={{
                   fontFamily: "system-ui, -apple-system, sans-serif",
-                  fontSize: 24,
-                  fontWeight: 600,
+                  fontSize: 26,
+                  fontWeight: 700,
                   color: "white",
                   textAlign: "center",
                 }}
               >
                 {problem.text}
+              </span>
+
+              <span
+                style={{
+                  fontFamily: "system-ui, -apple-system, sans-serif",
+                  fontSize: 18,
+                  color: "rgba(255, 255, 255, 0.5)",
+                  textAlign: "center",
+                }}
+              >
+                {problem.subtext}
               </span>
             </div>
           );
@@ -103,13 +158,15 @@ export const ProblemScene: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          fontSize: 200,
-          opacity: interpolate(frame, [70, 85], [0, 0.8], { extrapolateRight: "clamp" }),
-          transform: `scale(${interpolate(frame, [70, 85], [2, 1], { extrapolateRight: "clamp" })})`,
-          color: "#FF4444",
+          opacity: interpolate(frame, [140, 165], [0, 0.9], { extrapolateRight: "clamp" }),
+          transform: `scale(${interpolate(frame, [140, 165], [2.5, 1], { extrapolateRight: "clamp" })})`,
         }}
       >
-        ✕
+        <svg width="180" height="180" viewBox="0 0 24 24" fill="none" stroke="#FF4444" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="15" y1="9" x2="9" y2="15" />
+          <line x1="9" y1="9" x2="15" y2="15" />
+        </svg>
       </div>
     </AbsoluteFill>
   );

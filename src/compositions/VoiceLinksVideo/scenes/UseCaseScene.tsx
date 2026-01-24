@@ -7,6 +7,22 @@ import {
   useVideoConfig,
 } from "remotion";
 
+// Professional SVG Icons
+const CheckCircleIcon: React.FC<{ size: number; color: string }> = ({ size, color }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+    <polyline points="22 4 12 14.01 9 11.01" />
+  </svg>
+);
+
+const TargetIcon: React.FC<{ size: number; color: string }> = ({ size, color }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10" />
+    <circle cx="12" cy="12" r="6" />
+    <circle cx="12" cy="12" r="2" />
+  </svg>
+);
+
 interface UseCaseSceneProps {
   useCase: {
     title: string;
@@ -21,19 +37,19 @@ export const UseCaseScene: React.FC<UseCaseSceneProps> = ({ useCase }) => {
   const { fps } = useVideoConfig();
 
   // Industry badge animation
-  const industrySpring = spring({ frame, fps, config: { damping: 12 } });
+  const industrySpring = spring({ frame, fps, config: { damping: 14, stiffness: 80 } });
 
   // Title animation
-  const titleSpring = spring({ frame: frame - 15, fps, config: { damping: 12 } });
+  const titleSpring = spring({ frame: frame - 25, fps, config: { damping: 14, stiffness: 80 } });
 
   // Scenario card animation
-  const scenarioSpring = spring({ frame: frame - 35, fps, config: { damping: 12 } });
+  const scenarioSpring = spring({ frame: frame - 55, fps, config: { damping: 14, stiffness: 80 } });
 
   // Benefit animation
-  const benefitSpring = spring({ frame: frame - 70, fps, config: { damping: 12 } });
+  const benefitSpring = spring({ frame: frame - 120, fps, config: { damping: 14, stiffness: 80 } });
 
   // Floating animation for the card
-  const float = Math.sin(frame * 0.08) * 8;
+  const float = Math.sin(frame * 0.05) * 6;
 
   return (
     <AbsoluteFill
@@ -47,10 +63,10 @@ export const UseCaseScene: React.FC<UseCaseSceneProps> = ({ useCase }) => {
       <div
         style={{
           position: "absolute",
-          width: 1000,
-          height: 600,
-          borderRadius: 40,
-          background: "linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 140, 66, 0.05) 100%)",
+          width: 1200,
+          height: 700,
+          borderRadius: 50,
+          background: "linear-gradient(135deg, rgba(255, 107, 53, 0.08) 0%, rgba(255, 140, 66, 0.03) 100%)",
           transform: `translateY(${float}px)`,
         }}
       />
@@ -60,20 +76,24 @@ export const UseCaseScene: React.FC<UseCaseSceneProps> = ({ useCase }) => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: 30,
+          gap: 35,
           zIndex: 1,
         }}
       >
         {/* "Use Case" label */}
         <div
           style={{
-            opacity: interpolate(frame, [0, 15], [0, 1]),
+            display: "flex",
+            alignItems: "center",
+            gap: 16,
+            opacity: interpolate(frame, [0, 20], [0, 1]),
           }}
         >
+          <TargetIcon size={28} color="rgba(255, 255, 255, 0.5)" />
           <span
             style={{
               fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: 24,
+              fontSize: 26,
               fontWeight: 600,
               color: "rgba(255, 255, 255, 0.5)",
               textTransform: "uppercase",
@@ -87,20 +107,21 @@ export const UseCaseScene: React.FC<UseCaseSceneProps> = ({ useCase }) => {
         {/* Industry badge */}
         <div
           style={{
-            padding: "12px 32px",
+            padding: "16px 40px",
             background: "linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%)",
-            borderRadius: 30,
+            borderRadius: 40,
             transform: `scale(${industrySpring})`,
+            boxShadow: "0 10px 40px rgba(255, 107, 53, 0.3)",
           }}
         >
           <span
             style={{
               fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: 22,
+              fontSize: 24,
               fontWeight: 700,
               color: "white",
               textTransform: "uppercase",
-              letterSpacing: 2,
+              letterSpacing: 3,
             }}
           >
             {useCase.industry}
@@ -111,14 +132,15 @@ export const UseCaseScene: React.FC<UseCaseSceneProps> = ({ useCase }) => {
         <h2
           style={{
             fontFamily: "system-ui, -apple-system, sans-serif",
-            fontSize: 64,
+            fontSize: 72,
             fontWeight: 800,
             color: "white",
             margin: 0,
             textAlign: "center",
-            maxWidth: 1000,
+            maxWidth: 1100,
             opacity: titleSpring,
-            transform: `translateY(${interpolate(titleSpring, [0, 1], [30, 0])}px)`,
+            transform: `translateY(${interpolate(titleSpring, [0, 1], [40, 0])}px)`,
+            lineHeight: 1.2,
           }}
         >
           {useCase.title}
@@ -127,11 +149,11 @@ export const UseCaseScene: React.FC<UseCaseSceneProps> = ({ useCase }) => {
         {/* Scenario card */}
         <div
           style={{
-            padding: "40px 60px",
-            background: "rgba(255, 255, 255, 0.05)",
-            borderRadius: 24,
+            padding: "50px 80px",
+            background: "rgba(255, 255, 255, 0.04)",
+            borderRadius: 30,
             border: "2px solid rgba(255, 255, 255, 0.1)",
-            maxWidth: 900,
+            maxWidth: 1000,
             transform: `scale(${scenarioSpring}) translateY(${float}px)`,
             opacity: scenarioSpring,
           }}
@@ -139,11 +161,12 @@ export const UseCaseScene: React.FC<UseCaseSceneProps> = ({ useCase }) => {
           <p
             style={{
               fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: 28,
-              color: "rgba(255, 255, 255, 0.8)",
+              fontSize: 30,
+              color: "rgba(255, 255, 255, 0.85)",
               margin: 0,
               textAlign: "center",
-              lineHeight: 1.6,
+              lineHeight: 1.7,
+              fontStyle: "italic",
             }}
           >
             "{useCase.scenario}"
@@ -155,17 +178,29 @@ export const UseCaseScene: React.FC<UseCaseSceneProps> = ({ useCase }) => {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 16,
-            marginTop: 20,
+            gap: 20,
+            marginTop: 30,
             opacity: benefitSpring,
-            transform: `translateY(${interpolate(benefitSpring, [0, 1], [20, 0])}px)`,
+            transform: `translateY(${interpolate(benefitSpring, [0, 1], [30, 0])}px)`,
           }}
         >
-          <span style={{ fontSize: 40 }}>✅</span>
+          <div
+            style={{
+              width: 56,
+              height: 56,
+              borderRadius: "50%",
+              background: "rgba(76, 175, 80, 0.15)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CheckCircleIcon size={32} color="#4CAF50" />
+          </div>
           <span
             style={{
               fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: 32,
+              fontSize: 36,
               fontWeight: 600,
               color: "#4CAF50",
             }}

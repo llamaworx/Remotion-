@@ -5,25 +5,34 @@ import {
   useCurrentFrame,
   spring,
   useVideoConfig,
-  Img,
-  staticFile,
 } from "remotion";
+
+// Professional Mic Icon
+const MicIcon: React.FC<{ size: number; color: string }> = ({ size, color }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+    <line x1="12" y1="19" x2="12" y2="23" />
+    <line x1="8" y1="23" x2="16" y2="23" />
+  </svg>
+);
 
 export const SolutionScene: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
   // Logo animation
-  const logoSpring = spring({ frame, fps, config: { damping: 12 } });
+  const logoSpring = spring({ frame, fps, config: { damping: 14, stiffness: 80 } });
   const logoScale = interpolate(logoSpring, [0, 1], [0, 1]);
   const logoRotate = interpolate(logoSpring, [0, 1], [-180, 0]);
 
   // Text animations
-  const textSpring = spring({ frame: frame - 30, fps, config: { damping: 15 } });
-  const taglineSpring = spring({ frame: frame - 50, fps, config: { damping: 15 } });
+  const textSpring = spring({ frame: frame - 45, fps, config: { damping: 15, stiffness: 80 } });
+  const taglineSpring = spring({ frame: frame - 75, fps, config: { damping: 15, stiffness: 80 } });
+  const subtitleSpring = spring({ frame: frame - 110, fps, config: { damping: 15, stiffness: 80 } });
 
   // Glow pulse
-  const glowPulse = Math.sin(frame * 0.1) * 0.3 + 0.7;
+  const glowPulse = Math.sin(frame * 0.08) * 0.3 + 0.7;
 
   return (
     <AbsoluteFill
@@ -36,11 +45,11 @@ export const SolutionScene: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          width: 600,
-          height: 600,
+          width: 700,
+          height: 700,
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(255, 107, 53, 0.3) 0%, transparent 70%)",
-          filter: "blur(60px)",
+          background: "radial-gradient(circle, rgba(255, 107, 53, 0.25) 0%, transparent 70%)",
+          filter: "blur(80px)",
           opacity: glowPulse,
         }}
       />
@@ -50,96 +59,85 @@ export const SolutionScene: React.FC = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: 30,
+          gap: 35,
         }}
       >
         {/* Introducing text */}
         <div
           style={{
-            opacity: interpolate(frame, [0, 20], [0, 1]),
-            transform: `translateY(${interpolate(frame, [0, 20], [-20, 0])}px)`,
+            opacity: interpolate(frame, [0, 30], [0, 1]),
+            transform: `translateY(${interpolate(frame, [0, 30], [-30, 0])}px)`,
           }}
         >
           <span
             style={{
               fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: 32,
+              fontSize: 34,
               fontWeight: 500,
               color: "rgba(255, 255, 255, 0.6)",
               textTransform: "uppercase",
-              letterSpacing: 8,
+              letterSpacing: 10,
             }}
           >
             Introducing
           </span>
         </div>
 
-        {/* Bolka Logo - Orange swirl */}
+        {/* Bolka Logo */}
         <div
           style={{
-            width: 150,
-            height: 150,
+            width: 180,
+            height: 180,
             borderRadius: "50%",
             background: "linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%)",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             transform: `scale(${logoScale}) rotate(${logoRotate}deg)`,
-            boxShadow: `0 0 60px rgba(255, 107, 53, ${glowPulse})`,
+            boxShadow: `0 0 80px rgba(255, 107, 53, ${glowPulse})`,
           }}
         >
-          {/* Stylized swirl pattern */}
-          <svg width="100" height="100" viewBox="0 0 100 100">
-            {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
-              <path
-                key={i}
-                d={`M50,50 Q${50 + Math.cos((i * Math.PI) / 4) * 30},${50 + Math.sin((i * Math.PI) / 4) * 30} ${50 + Math.cos((i * Math.PI) / 4 + 0.5) * 45},${50 + Math.sin((i * Math.PI) / 4 + 0.5) * 45}`}
-                stroke="white"
-                strokeWidth="4"
-                fill="none"
-                opacity={0.8}
-              />
-            ))}
-          </svg>
+          <MicIcon size={90} color="white" />
         </div>
 
         {/* Brand name */}
         <h1
           style={{
             fontFamily: "system-ui, -apple-system, sans-serif",
-            fontSize: 96,
+            fontSize: 110,
             fontWeight: 800,
             color: "white",
             margin: 0,
             opacity: textSpring,
-            transform: `translateY(${interpolate(textSpring, [0, 1], [30, 0])}px)`,
-            letterSpacing: 4,
+            transform: `translateY(${interpolate(textSpring, [0, 1], [40, 0])}px)`,
+            letterSpacing: 6,
           }}
         >
           BOLKA
         </h1>
 
-        {/* Voice Links */}
+        {/* Voice Links badge */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
             gap: 20,
             opacity: taglineSpring,
-            transform: `translateY(${interpolate(taglineSpring, [0, 1], [20, 0])}px)`,
+            transform: `translateY(${interpolate(taglineSpring, [0, 1], [30, 0])}px)`,
           }}
         >
           <div
             style={{
-              padding: "16px 40px",
+              padding: "20px 50px",
               background: "linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%)",
               borderRadius: 50,
+              boxShadow: "0 15px 50px rgba(255, 107, 53, 0.4)",
             }}
           >
             <span
               style={{
                 fontFamily: "system-ui, -apple-system, sans-serif",
-                fontSize: 36,
+                fontSize: 42,
                 fontWeight: 700,
                 color: "white",
               }}
@@ -153,11 +151,12 @@ export const SolutionScene: React.FC = () => {
         <p
           style={{
             fontFamily: "system-ui, -apple-system, sans-serif",
-            fontSize: 28,
+            fontSize: 32,
             color: "rgba(255, 255, 255, 0.7)",
             margin: 0,
-            marginTop: 20,
-            opacity: interpolate(frame, [70, 90], [0, 1], { extrapolateRight: "clamp" }),
+            marginTop: 25,
+            opacity: subtitleSpring,
+            transform: `translateY(${interpolate(subtitleSpring, [0, 1], [20, 0])}px)`,
           }}
         >
           Voice AI Anywhere

@@ -31,38 +31,38 @@ export const VoiceLinksVideo: React.FC<VoiceLinksVideoProps> = ({
       {/* Background Music */}
       {musicUrl && <Audio src={musicUrl} volume={0.4} />}
 
-      {/* Hook - Grab attention */}
-      <Sequence from={0} durationInFrames={90}>
+      {/* Hook - Grab attention (5s) */}
+      <Sequence from={0} durationInFrames={150}>
         <HookScene />
       </Sequence>
 
-      {/* Problem - Current state is broken */}
-      <Sequence from={90} durationInFrames={90}>
+      {/* Problem - Current state is broken (6s) */}
+      <Sequence from={150} durationInFrames={180}>
         <ProblemScene />
       </Sequence>
 
-      {/* Solution - Introducing Voice Links */}
-      <Sequence from={180} durationInFrames={120}>
+      {/* Solution - Introducing Voice Links (6s) */}
+      <Sequence from={330} durationInFrames={180}>
         <SolutionScene />
       </Sequence>
 
-      {/* Analogy - Like Payment Links */}
-      <Sequence from={300} durationInFrames={120}>
+      {/* Analogy - Like Payment Links (7s) */}
+      <Sequence from={510} durationInFrames={210}>
         <AnalogyScene />
       </Sequence>
 
-      {/* How It Works - 3 Simple Steps */}
-      <Sequence from={420} durationInFrames={150}>
+      {/* How It Works - 3 Simple Steps (8s) */}
+      <Sequence from={720} durationInFrames={240}>
         <HowItWorksScene />
       </Sequence>
 
-      {/* Use Case - Specific Example */}
-      <Sequence from={570} durationInFrames={150}>
+      {/* Use Case - Specific Example (8s) */}
+      <Sequence from={960} durationInFrames={240}>
         <UseCaseScene useCase={useCase} />
       </Sequence>
 
-      {/* CTA - Get Started */}
-      <Sequence from={720} durationInFrames={90}>
+      {/* CTA - Get Started (5s) */}
+      <Sequence from={1200} durationInFrames={150}>
         <CTAScene />
       </Sequence>
     </AbsoluteFill>

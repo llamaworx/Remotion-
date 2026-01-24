@@ -30,10 +30,10 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="VoiceLinksVideo"
         component={VoiceLinksVideo}
-        durationInFrames={810}
+        durationInFrames={1350}
         fps={30}
-        width={1080}
-        height={1920}
+        width={1920}
+        height={1080}
         defaultProps={{
           useCase: {
             title: "Post-Purchase Product Support",
