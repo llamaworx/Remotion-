@@ -6,32 +6,7 @@ import {
   spring,
   useVideoConfig,
 } from "remotion";
-
-// Professional SVG Icons
-const CreditCardIcon: React.FC<{ size: number; color: string }> = ({ size, color }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
-    <line x1="1" y1="10" x2="23" y2="10" />
-  </svg>
-);
-
-const CalendarIcon: React.FC<{ size: number; color: string }> = ({ size, color }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-    <line x1="16" y1="2" x2="16" y2="6" />
-    <line x1="8" y1="2" x2="8" y2="6" />
-    <line x1="3" y1="10" x2="21" y2="10" />
-  </svg>
-);
-
-const MicIcon: React.FC<{ size: number; color: string }> = ({ size, color }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
-    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
-    <line x1="12" y1="19" x2="12" y2="23" />
-    <line x1="8" y1="23" x2="16" y2="23" />
-  </svg>
-);
+import { CreditCardIcon, CalendarIcon, MicIcon, BolkaLogo } from "../../../components/Icons";
 
 export const AnalogyScene: React.FC = () => {
   const frame = useCurrentFrame();
@@ -43,19 +18,23 @@ export const AnalogyScene: React.FC = () => {
       label: "Payment Links",
       desc: "Share & Get Paid",
       color: "#4CAF50",
+      gradient: "linear-gradient(135deg, #4CAF50 0%, #81C784 100%)",
     },
     {
       Icon: CalendarIcon,
       label: "Meeting Links",
       desc: "Share & Get Booked",
       color: "#2196F3",
+      gradient: "linear-gradient(135deg, #2196F3 0%, #64B5F6 100%)",
     },
     {
       Icon: MicIcon,
       label: "Voice Links",
       desc: "Share & Get Conversations",
       color: "#FF6B35",
+      gradient: "linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%)",
       highlight: true,
+      useBolkaLogo: true,
     },
   ];
 
@@ -65,6 +44,7 @@ export const AnalogyScene: React.FC = () => {
         justifyContent: "center",
         alignItems: "center",
         padding: 80,
+        background: "radial-gradient(ellipse at center, rgba(255, 107, 53, 0.05) 0%, transparent 60%)",
       }}
     >
       {/* Title */}
@@ -119,37 +99,52 @@ export const AnalogyScene: React.FC = () => {
                   gap: 30,
                   padding: isVoiceLink ? "60px 70px" : "50px 60px",
                   background: isVoiceLink
-                    ? "linear-gradient(135deg, rgba(255, 107, 53, 0.15) 0%, rgba(255, 140, 66, 0.08) 100%)"
-                    : "rgba(255, 255, 255, 0.04)",
+                    ? "linear-gradient(135deg, rgba(255, 107, 53, 0.12) 0%, rgba(255, 140, 66, 0.06) 100%)"
+                    : "rgba(255, 255, 255, 0.03)",
                   borderRadius: 36,
-                  border: `3px solid ${isVoiceLink ? item.color : "rgba(255, 255, 255, 0.1)"}`,
+                  border: `3px solid ${isVoiceLink ? "rgba(255, 107, 53, 0.5)" : "rgba(255, 255, 255, 0.08)"}`,
                   transform: `scale(${cardSpring}) ${isVoiceLink ? "scale(1.08)" : ""}`,
                   opacity: cardSpring,
                   boxShadow: isVoiceLink
-                    ? `0 0 ${50 + glowPulse * 40}px rgba(255, 107, 53, ${0.25 + glowPulse * 0.25})`
+                    ? `0 0 ${50 + glowPulse * 40}px rgba(255, 107, 53, ${0.2 + glowPulse * 0.2})`
                     : "none",
+                  backdropFilter: "blur(10px)",
                 }}
               >
                 {/* Icon container */}
-                <div
-                  style={{
-                    width: isVoiceLink ? 100 : 85,
-                    height: isVoiceLink ? 100 : 85,
-                    borderRadius: "50%",
-                    background: `${item.color}20`,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <item.Icon size={isVoiceLink ? 50 : 42} color={item.color} />
-                </div>
+                {item.useBolkaLogo ? (
+                  <div
+                    style={{
+                      filter: `drop-shadow(0 10px 30px rgba(255, 107, 53, 0.4))`,
+                    }}
+                  >
+                    <BolkaLogo size={100} />
+                  </div>
+                ) : (
+                  <div
+                    style={{
+                      width: 85,
+                      height: 85,
+                      borderRadius: "50%",
+                      background: item.gradient,
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      boxShadow: `0 10px 30px ${item.color}40`,
+                    }}
+                  >
+                    <item.Icon size={42} color="white" />
+                  </div>
+                )}
 
                 <span
                   style={{
                     fontFamily: "system-ui, -apple-system, sans-serif",
                     fontSize: isVoiceLink ? 34 : 30,
                     fontWeight: 700,
+                    background: isVoiceLink ? item.gradient : "none",
+                    WebkitBackgroundClip: isVoiceLink ? "text" : "none",
+                    WebkitTextFillColor: isVoiceLink ? "transparent" : item.color,
                     color: item.color,
                   }}
                 >
@@ -198,7 +193,9 @@ export const AnalogyScene: React.FC = () => {
             fontFamily: "system-ui, -apple-system, sans-serif",
             fontSize: 40,
             fontWeight: 600,
-            color: "#FF6B35",
+            background: "linear-gradient(90deg, #FF6B35 0%, #FF8C42 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
             margin: 0,
           }}
         >

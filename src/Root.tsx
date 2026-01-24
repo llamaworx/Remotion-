@@ -21,8 +21,8 @@ export const RemotionRoot: React.FC = () => {
             "Enterprise-Grade Security",
             "Seamless Integration",
           ],
-          // Add your music file to public/music.mp3 and uncomment below:
-          // musicUrl: staticFile("music.mp3"),
+          // Add your music file to public/music.mp3
+          musicUrl: staticFile("music.mp3"),
         }}
       />
 
@@ -41,8 +41,8 @@ export const RemotionRoot: React.FC = () => {
             scenario: "Customer scans QR code on product packaging and instantly connects with AI support - no waiting, no forms, just talk.",
             benefit: "80% faster resolution, 24/7 availability",
           },
-          // Add your music file to public/music.mp3 and uncomment below:
-          // musicUrl: staticFile("music.mp3"),
+          // Add your music file to public/music.mp3
+          musicUrl: staticFile("music.mp3"),
         }}
       />
     </>

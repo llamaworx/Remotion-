@@ -6,16 +6,7 @@ import {
   spring,
   useVideoConfig,
 } from "remotion";
-
-// Professional Mic Icon
-const MicIcon: React.FC<{ size: number; color: string }> = ({ size, color }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
-    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
-    <line x1="12" y1="19" x2="12" y2="23" />
-    <line x1="8" y1="23" x2="16" y2="23" />
-  </svg>
-);
+import { BolkaLogo } from "../../../components/Icons";
 
 export const SolutionScene: React.FC = () => {
   const frame = useCurrentFrame();
@@ -39,14 +30,15 @@ export const SolutionScene: React.FC = () => {
       style={{
         justifyContent: "center",
         alignItems: "center",
+        background: "radial-gradient(ellipse at center, rgba(255, 107, 53, 0.08) 0%, transparent 50%)",
       }}
     >
       {/* Background glow */}
       <div
         style={{
           position: "absolute",
-          width: 700,
-          height: 700,
+          width: 800,
+          height: 800,
           borderRadius: "50%",
           background: "radial-gradient(circle, rgba(255, 107, 53, 0.25) 0%, transparent 70%)",
           filter: "blur(80px)",
@@ -83,21 +75,14 @@ export const SolutionScene: React.FC = () => {
           </span>
         </div>
 
-        {/* Bolka Logo */}
+        {/* Bolka Original Logo - Swirl */}
         <div
           style={{
-            width: 180,
-            height: 180,
-            borderRadius: "50%",
-            background: "linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
             transform: `scale(${logoScale}) rotate(${logoRotate}deg)`,
-            boxShadow: `0 0 80px rgba(255, 107, 53, ${glowPulse})`,
+            filter: `drop-shadow(0 0 60px rgba(255, 107, 53, ${glowPulse}))`,
           }}
         >
-          <MicIcon size={90} color="white" />
+          <BolkaLogo size={200} />
         </div>
 
         {/* Brand name */}
@@ -106,11 +91,13 @@ export const SolutionScene: React.FC = () => {
             fontFamily: "system-ui, -apple-system, sans-serif",
             fontSize: 110,
             fontWeight: 800,
-            color: "white",
             margin: 0,
             opacity: textSpring,
             transform: `translateY(${interpolate(textSpring, [0, 1], [40, 0])}px)`,
             letterSpacing: 6,
+            background: "linear-gradient(90deg, #FFFFFF 0%, #E0E0E0 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
           }}
         >
           BOLKA

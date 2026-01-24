@@ -6,30 +6,19 @@ import {
   spring,
   useVideoConfig,
 } from "remotion";
-
-// Professional SVG Icons
-const SparklesIcon: React.FC<{ size: number; color: string }> = ({ size, color }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 3L14.5 8.5L20 9L16 13.5L17 19L12 16L7 19L8 13.5L4 9L9.5 8.5L12 3Z" />
-  </svg>
-);
-
-const LinkIcon: React.FC<{ size: number; color: string }> = ({ size, color }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-  </svg>
-);
-
-const ShareIcon: React.FC<{ size: number; color: string }> = ({ size, color }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="18" cy="5" r="3" />
-    <circle cx="6" cy="12" r="3" />
-    <circle cx="18" cy="19" r="3" />
-    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
-  </svg>
-);
+import {
+  SparklesIcon,
+  LinkIcon,
+  ShareIcon,
+  SMSIcon,
+  EmailIcon,
+  WhatsAppIcon,
+  FacebookIcon,
+  InstagramIcon,
+  TikTokIcon,
+  QRCodeIcon,
+  PrintIcon,
+} from "../../../components/Icons";
 
 export const HowItWorksScene: React.FC = () => {
   const frame = useCurrentFrame();
@@ -41,30 +30,33 @@ export const HowItWorksScene: React.FC = () => {
       Icon: SparklesIcon,
       title: "Create",
       desc: "Build your Voice AI assistant in minutes with our simple builder",
+      gradient: "linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%)",
     },
     {
       number: "2",
       Icon: LinkIcon,
       title: "Get Link",
       desc: "Receive your unique Voice Link URL instantly",
+      gradient: "linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%)",
     },
     {
       number: "3",
       Icon: ShareIcon,
       title: "Share Anywhere",
       desc: "Distribute via any channel your customers use",
+      gradient: "linear-gradient(135deg, #10B981 0%, #34D399 100%)",
     },
   ];
 
   const channels = [
-    "SMS",
-    "Email",
-    "WhatsApp",
-    "Facebook",
-    "Instagram",
-    "TikTok",
-    "QR Code",
-    "Print",
+    { name: "SMS", Icon: SMSIcon, bg: "linear-gradient(135deg, #34C759 0%, #30D158 100%)" },
+    { name: "Email", Icon: EmailIcon, bg: "linear-gradient(135deg, #EA4335 0%, #FBBC05 100%)" },
+    { name: "WhatsApp", Icon: WhatsAppIcon, bg: "#25D366" },
+    { name: "Facebook", Icon: FacebookIcon, bg: "#1877F2" },
+    { name: "Instagram", Icon: InstagramIcon, bg: "linear-gradient(135deg, #833AB4 0%, #F77737 50%, #FCAF45 100%)" },
+    { name: "TikTok", Icon: TikTokIcon, bg: "linear-gradient(135deg, #000000 0%, #25F4EE 50%, #FE2C55 100%)" },
+    { name: "QR Code", Icon: QRCodeIcon, bg: "linear-gradient(135deg, #1a1a1a 0%, #333333 100%)" },
+    { name: "Print", Icon: PrintIcon, bg: "linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)" },
   ];
 
   return (
@@ -75,6 +67,15 @@ export const HowItWorksScene: React.FC = () => {
         padding: 80,
       }}
     >
+      {/* Background gradient overlay */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "radial-gradient(ellipse at center, rgba(255, 107, 53, 0.05) 0%, transparent 70%)",
+        }}
+      />
+
       {/* Title */}
       <div
         style={{
@@ -93,7 +94,15 @@ export const HowItWorksScene: React.FC = () => {
           }}
         >
           Dead Simple.{" "}
-          <span style={{ color: "#FF6B35" }}>3 Steps.</span>
+          <span
+            style={{
+              background: "linear-gradient(90deg, #FF6B35 0%, #FF8C42 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            3 Steps.
+          </span>
         </h2>
       </div>
 
@@ -132,11 +141,11 @@ export const HowItWorksScene: React.FC = () => {
                   width: 90,
                   height: 90,
                   borderRadius: "50%",
-                  background: "linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%)",
+                  background: step.gradient,
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  boxShadow: "0 15px 50px rgba(255, 107, 53, 0.4)",
+                  boxShadow: "0 15px 50px rgba(255, 107, 53, 0.3)",
                 }}
               >
                 <span
@@ -157,8 +166,8 @@ export const HowItWorksScene: React.FC = () => {
                   width: 80,
                   height: 80,
                   borderRadius: 20,
-                  background: "rgba(255, 107, 53, 0.1)",
-                  border: "2px solid rgba(255, 107, 53, 0.3)",
+                  background: "rgba(255, 255, 255, 0.05)",
+                  border: "2px solid rgba(255, 255, 255, 0.1)",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
@@ -198,23 +207,23 @@ export const HowItWorksScene: React.FC = () => {
         })}
       </div>
 
-      {/* Channel badges */}
+      {/* Channel badges with real logos */}
       <div
         style={{
           position: "absolute",
-          bottom: 100,
+          bottom: 90,
           display: "flex",
-          gap: 20,
+          gap: 24,
           flexWrap: "wrap",
           justifyContent: "center",
-          maxWidth: 1400,
+          maxWidth: 1500,
           opacity: interpolate(frame, [160, 200], [0, 1], {
             extrapolateRight: "clamp",
           }),
         }}
       >
         {channels.map((channel, i) => {
-          const badgeDelay = i * 4 + 160;
+          const badgeDelay = i * 5 + 160;
           const badgeSpring = spring({
             frame: frame - badgeDelay,
             fps,
@@ -225,22 +234,40 @@ export const HowItWorksScene: React.FC = () => {
             <div
               key={i}
               style={{
-                padding: "14px 28px",
+                display: "flex",
+                alignItems: "center",
+                gap: 12,
+                padding: "14px 24px",
                 background: "rgba(255, 255, 255, 0.08)",
-                borderRadius: 30,
-                border: "1px solid rgba(255, 255, 255, 0.15)",
+                borderRadius: 50,
+                border: "1px solid rgba(255, 255, 255, 0.12)",
                 transform: `scale(${badgeSpring})`,
+                backdropFilter: "blur(10px)",
               }}
             >
+              <div
+                style={{
+                  width: 32,
+                  height: 32,
+                  borderRadius: 8,
+                  background: channel.bg,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  overflow: "hidden",
+                }}
+              >
+                <channel.Icon size={20} />
+              </div>
               <span
                 style={{
                   fontFamily: "system-ui, -apple-system, sans-serif",
-                  fontSize: 20,
+                  fontSize: 18,
                   color: "white",
-                  fontWeight: 500,
+                  fontWeight: 600,
                 }}
               >
-                {channel}
+                {channel.name}
               </span>
             </div>
           );
