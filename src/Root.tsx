@@ -1,5 +1,6 @@
 import { Composition, staticFile } from "remotion";
 import { BolkaProductVideo } from "./compositions/BolkaProductVideo";
+import { VoiceLinksVideo } from "./compositions/VoiceLinksVideo";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -20,6 +21,26 @@ export const RemotionRoot: React.FC = () => {
             "Enterprise-Grade Security",
             "Seamless Integration",
           ],
+          // Add your music file to public/music.mp3 and uncomment below:
+          // musicUrl: staticFile("music.mp3"),
+        }}
+      />
+
+      {/* Voice Links Viral Video - Change useCase for daily videos */}
+      <Composition
+        id="VoiceLinksVideo"
+        component={VoiceLinksVideo}
+        durationInFrames={810}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={{
+          useCase: {
+            title: "Post-Purchase Product Support",
+            industry: "E-Commerce",
+            scenario: "Customer scans QR code on product packaging and instantly connects with AI support - no waiting, no forms, just talk.",
+            benefit: "80% faster resolution, 24/7 availability",
+          },
           // Add your music file to public/music.mp3 and uncomment below:
           // musicUrl: staticFile("music.mp3"),
         }}
