@@ -1,32 +1,98 @@
 import React from "react";
 
 // Bolka Original Logo - Orange sphere with white wave stripes
-export const BolkaLogo: React.FC<{ size: number }> = ({ size }) => (
-  <svg width={size} height={size} viewBox="0 0 100 100">
-    <defs>
-      <linearGradient id="bolkaOrange" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#FF7A3D" />
-        <stop offset="50%" stopColor="#FF6B35" />
-        <stop offset="100%" stopColor="#E85A2A" />
-      </linearGradient>
-      <clipPath id="circleClip">
-        <circle cx="50" cy="50" r="48" />
-      </clipPath>
-    </defs>
-    {/* Orange circle background */}
-    <circle cx="50" cy="50" r="48" fill="url(#bolkaOrange)" />
-    {/* White wave stripes */}
-    <g clipPath="url(#circleClip)">
-      <path d="M-10,15 Q25,10 50,25 T110,20" stroke="white" strokeWidth="8" fill="none" strokeLinecap="round" />
-      <path d="M-10,30 Q25,22 50,38 T110,32" stroke="white" strokeWidth="8" fill="none" strokeLinecap="round" />
-      <path d="M-10,45 Q25,35 50,52 T110,45" stroke="white" strokeWidth="8" fill="none" strokeLinecap="round" />
-      <path d="M-10,60 Q25,50 50,67 T110,60" stroke="white" strokeWidth="8" fill="none" strokeLinecap="round" />
-      <path d="M-10,75 Q25,65 50,82 T110,75" stroke="white" strokeWidth="8" fill="none" strokeLinecap="round" />
-      <path d="M-10,90 Q25,80 50,97 T110,90" stroke="white" strokeWidth="8" fill="none" strokeLinecap="round" />
-      <path d="M-10,105 Q25,95 50,112 T110,105" stroke="white" strokeWidth="8" fill="none" strokeLinecap="round" />
-    </g>
-  </svg>
-);
+// Exact recreation of the original Bolka logo
+export const BolkaLogo: React.FC<{ size: number }> = ({ size }) => {
+  // Use unique IDs to avoid conflicts when multiple logos are rendered
+  const gradientId = `bolkaOrange_${Math.random().toString(36).substr(2, 9)}`;
+  const clipId = `circleClip_${Math.random().toString(36).substr(2, 9)}`;
+
+  return (
+    <svg width={size} height={size} viewBox="0 0 100 100">
+      <defs>
+        {/* Orange gradient matching the original */}
+        <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#FF8247" />
+          <stop offset="50%" stopColor="#FF6B35" />
+          <stop offset="100%" stopColor="#E8592A" />
+        </linearGradient>
+        <clipPath id={clipId}>
+          <circle cx="50" cy="50" r="50" />
+        </clipPath>
+      </defs>
+      {/* Orange circle background */}
+      <circle cx="50" cy="50" r="50" fill={`url(#${gradientId})`} />
+      {/* White wave stripes - matching original curve pattern */}
+      <g clipPath={`url(#${clipId})`}>
+        {/* Curved wave stripes flowing diagonally from bottom-left to top-right */}
+        <path
+          d="M -15 8 C 10 5, 35 18, 55 12 C 75 6, 95 15, 115 10"
+          stroke="white"
+          strokeWidth="6"
+          fill="none"
+          strokeLinecap="round"
+          opacity="0.95"
+        />
+        <path
+          d="M -15 22 C 10 18, 35 32, 55 26 C 75 20, 95 30, 115 25"
+          stroke="white"
+          strokeWidth="6"
+          fill="none"
+          strokeLinecap="round"
+          opacity="0.95"
+        />
+        <path
+          d="M -15 36 C 10 32, 35 46, 55 40 C 75 34, 95 44, 115 39"
+          stroke="white"
+          strokeWidth="6"
+          fill="none"
+          strokeLinecap="round"
+          opacity="0.95"
+        />
+        <path
+          d="M -15 50 C 10 46, 35 60, 55 54 C 75 48, 95 58, 115 53"
+          stroke="white"
+          strokeWidth="6"
+          fill="none"
+          strokeLinecap="round"
+          opacity="0.95"
+        />
+        <path
+          d="M -15 64 C 10 60, 35 74, 55 68 C 75 62, 95 72, 115 67"
+          stroke="white"
+          strokeWidth="6"
+          fill="none"
+          strokeLinecap="round"
+          opacity="0.95"
+        />
+        <path
+          d="M -15 78 C 10 74, 35 88, 55 82 C 75 76, 95 86, 115 81"
+          stroke="white"
+          strokeWidth="6"
+          fill="none"
+          strokeLinecap="round"
+          opacity="0.95"
+        />
+        <path
+          d="M -15 92 C 10 88, 35 102, 55 96 C 75 90, 95 100, 115 95"
+          stroke="white"
+          strokeWidth="6"
+          fill="none"
+          strokeLinecap="round"
+          opacity="0.95"
+        />
+        <path
+          d="M -15 106 C 10 102, 35 116, 55 110 C 75 104, 95 114, 115 109"
+          stroke="white"
+          strokeWidth="5"
+          fill="none"
+          strokeLinecap="round"
+          opacity="0.9"
+        />
+      </g>
+    </svg>
+  );
+};
 
 // WhatsApp Official Icon
 export const WhatsAppIcon: React.FC<{ size: number }> = ({ size }) => (
