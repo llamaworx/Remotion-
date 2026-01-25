@@ -1,101 +1,97 @@
 import React from "react";
 
-// Bolka Original Logo - Orange Swirl
+// Bolka Original Logo - Orange sphere with white wave stripes
 export const BolkaLogo: React.FC<{ size: number }> = ({ size }) => (
   <svg width={size} height={size} viewBox="0 0 100 100">
     <defs>
-      <linearGradient id="bolkaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#FF6B35" />
-        <stop offset="100%" stopColor="#FF8C42" />
+      <linearGradient id="bolkaOrange" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#FF7A3D" />
+        <stop offset="50%" stopColor="#FF6B35" />
+        <stop offset="100%" stopColor="#E85A2A" />
       </linearGradient>
+      <clipPath id="circleClip">
+        <circle cx="50" cy="50" r="48" />
+      </clipPath>
     </defs>
-    <circle cx="50" cy="50" r="48" fill="url(#bolkaGradient)" />
-    {/* Swirl stripes pattern */}
-    {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => {
-      const angle = (i * 20 - 80) * (Math.PI / 180);
-      const startX = 50 + Math.cos(angle) * 5;
-      const startY = 50 + Math.sin(angle) * 5;
-      const endX = 50 + Math.cos(angle + 0.3) * 45;
-      const endY = 50 + Math.sin(angle + 0.3) * 45;
-      const ctrlX = 50 + Math.cos(angle + 0.15) * 30;
-      const ctrlY = 50 + Math.sin(angle + 0.15) * 25;
-      return (
-        <path
-          key={i}
-          d={`M ${startX} ${startY} Q ${ctrlX} ${ctrlY} ${endX} ${endY}`}
-          stroke="white"
-          strokeWidth="6"
-          fill="none"
-          opacity={0.9}
-          strokeLinecap="round"
-        />
-      );
-    })}
+    {/* Orange circle background */}
+    <circle cx="50" cy="50" r="48" fill="url(#bolkaOrange)" />
+    {/* White wave stripes */}
+    <g clipPath="url(#circleClip)">
+      <path d="M-10,15 Q25,10 50,25 T110,20" stroke="white" strokeWidth="8" fill="none" strokeLinecap="round" />
+      <path d="M-10,30 Q25,22 50,38 T110,32" stroke="white" strokeWidth="8" fill="none" strokeLinecap="round" />
+      <path d="M-10,45 Q25,35 50,52 T110,45" stroke="white" strokeWidth="8" fill="none" strokeLinecap="round" />
+      <path d="M-10,60 Q25,50 50,67 T110,60" stroke="white" strokeWidth="8" fill="none" strokeLinecap="round" />
+      <path d="M-10,75 Q25,65 50,82 T110,75" stroke="white" strokeWidth="8" fill="none" strokeLinecap="round" />
+      <path d="M-10,90 Q25,80 50,97 T110,90" stroke="white" strokeWidth="8" fill="none" strokeLinecap="round" />
+      <path d="M-10,105 Q25,95 50,112 T110,105" stroke="white" strokeWidth="8" fill="none" strokeLinecap="round" />
+    </g>
   </svg>
 );
 
-// WhatsApp Icon
+// WhatsApp Official Icon
 export const WhatsAppIcon: React.FC<{ size: number }> = ({ size }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="#25D366">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
   </svg>
 );
 
-// Facebook Icon
+// Facebook Official Icon
 export const FacebookIcon: React.FC<{ size: number }> = ({ size }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="#1877F2">
     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
   </svg>
 );
 
-// Instagram Icon
+// Instagram Official Icon with gradient
 export const InstagramIcon: React.FC<{ size: number }> = ({ size }) => (
   <svg width={size} height={size} viewBox="0 0 24 24">
     <defs>
-      <linearGradient id="igGradient" x1="0%" y1="100%" x2="100%" y2="0%">
-        <stop offset="0%" stopColor="#FFDC80" />
-        <stop offset="25%" stopColor="#FCAF45" />
-        <stop offset="50%" stopColor="#F77737" />
-        <stop offset="75%" stopColor="#C13584" />
-        <stop offset="100%" stopColor="#833AB4" />
-      </linearGradient>
+      <radialGradient id="igRadial" cx="30%" cy="107%" r="150%">
+        <stop offset="0%" stopColor="#fdf497" />
+        <stop offset="5%" stopColor="#fdf497" />
+        <stop offset="45%" stopColor="#fd5949" />
+        <stop offset="60%" stopColor="#d6249f" />
+        <stop offset="90%" stopColor="#285AEB" />
+      </radialGradient>
     </defs>
-    <path fill="url(#igGradient)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+    <path fill="url(#igRadial)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
   </svg>
 );
 
-// TikTok Icon
+// TikTok Official Icon
 export const TikTokIcon: React.FC<{ size: number }> = ({ size }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="white">
-    <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/>
+  <svg width={size} height={size} viewBox="0 0 24 24">
+    <path fill="#25F4EE" d="M9.37 23.5v-9.45c0-2.15 0-4.3.01-6.45 0-.31.04-.47.42-.57 1.67-.46 2.92-1.85 3.18-3.58h3.5c.02.19.06.37.06.56 0 1.32-.01 2.64.01 3.95.01.19.14.42.28.55.76.72 1.55 1.4 2.45 2.2v3.54c-1.67-.02-3.25-.5-4.7-1.34v6.83c0 1.02-.07 2.07-.31 3.05-.87 3.6-4.27 5.95-7.9 5.28-3.34-.62-5.63-3.3-5.76-6.7-.14-3.7 2.36-6.87 5.95-7.53.27-.05.54-.07.81-.1z"/>
+    <path fill="#FE2C55" d="M9.37 23.5c-.27.03-.54.05-.81.1-3.59.66-6.09 3.83-5.95 7.53.13 3.4 2.42 6.08 5.76 6.7 3.63.67 7.03-1.68 7.9-5.28.24-.98.31-2.03.31-3.05v-6.83c1.45.84 3.03 1.32 4.7 1.34V20.5c-.9-.8-1.69-1.48-2.45-2.2-.14-.13-.27-.36-.28-.55-.02-1.31-.01-2.63-.01-3.95 0-.19-.04-.37-.06-.56h-3.5c-.26 1.73-1.51 3.12-3.18 3.58-.38.1-.42.26-.42.57-.01 2.15-.01 4.3-.01 6.45v9.66z"/>
+    <path fill="white" d="M16.52 8.42c.76.72 1.55 1.4 2.45 2.2v3.54c-1.67-.02-3.25-.5-4.7-1.34v6.83c0 1.02-.07 2.07-.31 3.05-.87 3.6-4.27 5.95-7.9 5.28-3.34-.62-5.63-3.3-5.76-6.7-.14-3.7 2.36-6.87 5.95-7.53.27-.05.54-.07.81-.1V18c-1.89.33-3.31 1.89-3.31 3.8 0 2.12 1.72 3.84 3.84 3.84 2.12 0 3.84-1.72 3.84-3.84V6.45c0-.31.04-.47.42-.57 1.67-.46 2.92-1.85 3.18-3.58h3.5c.02.19.06.37.06.56 0 1.32-.01 2.64.01 3.95.01.19.14.42.28.55-.36.34-.36.72-.36 1.06z"/>
   </svg>
 );
 
-// Email Icon
+// Gmail/Email Official Icon
 export const EmailIcon: React.FC<{ size: number }> = ({ size }) => (
   <svg width={size} height={size} viewBox="0 0 24 24">
-    <defs>
-      <linearGradient id="emailGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#EA4335" />
-        <stop offset="33%" stopColor="#FBBC05" />
-        <stop offset="66%" stopColor="#34A853" />
-        <stop offset="100%" stopColor="#4285F4" />
-      </linearGradient>
-    </defs>
-    <path fill="url(#emailGradient)" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+    <path fill="#4285F4" d="M22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4H20C21.1 4 22 4.9 22 6Z"/>
+    <path fill="#EA4335" d="M22 6L12 13L2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6Z"/>
+    <path fill="#FBBC05" d="M2 6L12 13L22 6"/>
+    <path fill="#34A853" d="M2 6V18L12 13L2 6Z"/>
+    <path fill="#C5221F" d="M22 6V18L12 13L22 6Z"/>
+    <path fill="white" d="M12 13L2 6H22L12 13Z" opacity="0.2"/>
   </svg>
 );
 
-// SMS Icon
+// SMS/iMessage Icon
 export const SMSIcon: React.FC<{ size: number }> = ({ size }) => (
   <svg width={size} height={size} viewBox="0 0 24 24">
     <defs>
-      <linearGradient id="smsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#34C759" />
-        <stop offset="100%" stopColor="#30D158" />
+      <linearGradient id="smsGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stopColor="#5AF158" />
+        <stop offset="100%" stopColor="#32D74B" />
       </linearGradient>
     </defs>
-    <path fill="url(#smsGradient)" d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-3 12H7v-2h10v2zm0-3H7V9h10v2zm0-3H7V6h10v2z"/>
+    <path fill="url(#smsGrad)" d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z"/>
+    <circle cx="8" cy="10" r="1.5" fill="white"/>
+    <circle cx="12" cy="10" r="1.5" fill="white"/>
+    <circle cx="16" cy="10" r="1.5" fill="white"/>
   </svg>
 );
 
@@ -113,7 +109,7 @@ export const PrintIcon: React.FC<{ size: number }> = ({ size }) => (
   </svg>
 );
 
-// Professional stroke icons for other uses
+// Professional stroke icons
 export const MicIcon: React.FC<{ size: number; color: string }> = ({ size, color }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
