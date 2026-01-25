@@ -25,7 +25,7 @@ export const VoiceLinksVideo: React.FC<VoiceLinksVideoProps> = ({
   return (
     <AbsoluteFill
       style={{
-        background: "linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%)",
+        background: "linear-gradient(180deg, #FFFFFF 0%, #F5F7FA 50%, #EEF2F7 100%)",
       }}
     >
       {/* Background Music */}

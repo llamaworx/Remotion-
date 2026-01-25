@@ -29,21 +29,21 @@ export const HowItWorksScene: React.FC = () => {
       number: "1",
       Icon: SparklesIcon,
       title: "Create",
-      desc: "Build your Voice AI assistant in minutes with our simple builder",
+      desc: "Build your Voice AI in minutes",
       gradient: "linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%)",
     },
     {
       number: "2",
       Icon: LinkIcon,
       title: "Get Link",
-      desc: "Receive your unique Voice Link URL instantly",
+      desc: "Receive your unique URL",
       gradient: "linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%)",
     },
     {
       number: "3",
       Icon: ShareIcon,
-      title: "Share Anywhere",
-      desc: "Distribute via any channel your customers use",
+      title: "Share",
+      desc: "Distribute anywhere",
       gradient: "linear-gradient(135deg, #10B981 0%, #34D399 100%)",
     },
   ];
@@ -54,43 +54,65 @@ export const HowItWorksScene: React.FC = () => {
     { name: "WhatsApp", Icon: WhatsAppIcon, bg: "#25D366" },
     { name: "Facebook", Icon: FacebookIcon, bg: "#1877F2" },
     { name: "Instagram", Icon: InstagramIcon, bg: "linear-gradient(135deg, #833AB4 0%, #F77737 50%, #FCAF45 100%)" },
-    { name: "TikTok", Icon: TikTokIcon, bg: "linear-gradient(135deg, #000000 0%, #25F4EE 50%, #FE2C55 100%)" },
+    { name: "TikTok", Icon: TikTokIcon, bg: "#000000" },
     { name: "QR Code", Icon: QRCodeIcon, bg: "linear-gradient(135deg, #1a1a1a 0%, #333333 100%)" },
     { name: "Print", Icon: PrintIcon, bg: "linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)" },
   ];
 
+  // Floating animation
+  const float = Math.sin(frame * 0.04) * 10;
+
   return (
     <AbsoluteFill
       style={{
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "center",
-        padding: 80,
+        paddingTop: 120,
+        padding: 50,
       }}
     >
-      {/* Background gradient overlay */}
+      {/* Background decorative elements */}
       <div
         style={{
           position: "absolute",
-          inset: 0,
-          background: "radial-gradient(ellipse at center, rgba(255, 107, 53, 0.05) 0%, transparent 70%)",
+          top: 200,
+          right: 80,
+          width: 100,
+          height: 100,
+          borderRadius: "50%",
+          background: "rgba(255, 107, 53, 0.08)",
+          transform: `translateY(${float}px)`,
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          bottom: 400,
+          left: 60,
+          width: 70,
+          height: 70,
+          borderRadius: "50%",
+          background: "rgba(139, 92, 246, 0.08)",
+          transform: `translateY(${-float}px)`,
         }}
       />
 
       {/* Title */}
       <div
         style={{
-          position: "absolute",
-          top: 100,
           opacity: interpolate(frame, [0, 30], [0, 1]),
+          transform: `translateY(${interpolate(frame, [0, 30], [-40, 0])}px)`,
+          marginBottom: 50,
         }}
       >
         <h2
           style={{
             fontFamily: "system-ui, -apple-system, sans-serif",
-            fontSize: 62,
+            fontSize: 58,
             fontWeight: 700,
-            color: "white",
+            color: "#1a1a2e",
             margin: 0,
+            textAlign: "center",
           }}
         >
           Dead Simple.{" "}
@@ -106,52 +128,61 @@ export const HowItWorksScene: React.FC = () => {
         </h2>
       </div>
 
-      {/* Steps */}
+      {/* Steps - vertical layout */}
       <div
         style={{
           display: "flex",
-          gap: 100,
-          marginTop: 40,
+          flexDirection: "column",
+          gap: 35,
+          width: "100%",
+          maxWidth: 500,
         }}
       >
         {steps.map((step, i) => {
-          const delay = i * 35 + 40;
+          const delay = i * 30 + 40;
           const stepSpring = spring({
             frame: frame - delay,
             fps,
             config: { damping: 14, stiffness: 80 },
           });
 
+          // Slide from alternating sides
+          const slideX = i % 2 === 0 ? -150 : 150;
+
           return (
             <div
               key={i}
               style={{
                 display: "flex",
-                flexDirection: "column",
                 alignItems: "center",
-                gap: 28,
-                transform: `scale(${stepSpring})`,
+                gap: 25,
+                padding: "30px 35px",
+                background: "white",
+                borderRadius: 28,
+                boxShadow: "0 8px 30px rgba(0, 0, 0, 0.06)",
+                border: "2px solid rgba(0, 0, 0, 0.04)",
+                transform: `translateX(${interpolate(stepSpring, [0, 1], [slideX, 0])}px)`,
                 opacity: stepSpring,
-                maxWidth: 320,
               }}
             >
-              {/* Step number */}
+              {/* Step number circle */}
               <div
                 style={{
-                  width: 90,
-                  height: 90,
+                  width: 70,
+                  height: 70,
                   borderRadius: "50%",
                   background: step.gradient,
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  boxShadow: "0 15px 50px rgba(255, 107, 53, 0.3)",
+                  boxShadow: "0 10px 30px rgba(255, 107, 53, 0.25)",
+                  flexShrink: 0,
                 }}
               >
                 <span
                   style={{
                     fontFamily: "system-ui, -apple-system, sans-serif",
-                    fontSize: 42,
+                    fontSize: 36,
                     fontWeight: 800,
                     color: "white",
                   }}
@@ -160,118 +191,122 @@ export const HowItWorksScene: React.FC = () => {
                 </span>
               </div>
 
-              {/* Icon */}
-              <div
-                style={{
-                  width: 80,
-                  height: 80,
-                  borderRadius: 20,
-                  background: "rgba(255, 255, 255, 0.05)",
-                  border: "2px solid rgba(255, 255, 255, 0.1)",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <step.Icon size={40} color="#FF6B35" />
+              <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                <h3
+                  style={{
+                    fontFamily: "system-ui, -apple-system, sans-serif",
+                    fontSize: 36,
+                    fontWeight: 700,
+                    color: "#1a1a2e",
+                    margin: 0,
+                  }}
+                >
+                  {step.title}
+                </h3>
+                <p
+                  style={{
+                    fontFamily: "system-ui, -apple-system, sans-serif",
+                    fontSize: 22,
+                    color: "#666",
+                    margin: 0,
+                  }}
+                >
+                  {step.desc}
+                </p>
               </div>
-
-              {/* Title */}
-              <h3
-                style={{
-                  fontFamily: "system-ui, -apple-system, sans-serif",
-                  fontSize: 36,
-                  fontWeight: 700,
-                  color: "white",
-                  margin: 0,
-                }}
-              >
-                {step.title}
-              </h3>
-
-              {/* Description */}
-              <p
-                style={{
-                  fontFamily: "system-ui, -apple-system, sans-serif",
-                  fontSize: 20,
-                  color: "rgba(255, 255, 255, 0.6)",
-                  margin: 0,
-                  textAlign: "center",
-                  lineHeight: 1.5,
-                }}
-              >
-                {step.desc}
-              </p>
             </div>
           );
         })}
       </div>
 
-      {/* Channel badges with real logos */}
+      {/* Channel icons - flowing in from bottom */}
       <div
         style={{
           position: "absolute",
-          bottom: 90,
+          bottom: 120,
+          left: 0,
+          right: 0,
           display: "flex",
-          gap: 24,
-          flexWrap: "wrap",
-          justifyContent: "center",
-          maxWidth: 1500,
-          opacity: interpolate(frame, [160, 200], [0, 1], {
-            extrapolateRight: "clamp",
-          }),
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 20,
+          opacity: interpolate(frame, [160, 190], [0, 1], { extrapolateRight: "clamp" }),
         }}
       >
-        {channels.map((channel, i) => {
-          const badgeDelay = i * 5 + 160;
-          const badgeSpring = spring({
-            frame: frame - badgeDelay,
-            fps,
-            config: { damping: 15, stiffness: 150 },
-          });
+        <span
+          style={{
+            fontFamily: "system-ui, -apple-system, sans-serif",
+            fontSize: 26,
+            color: "#666",
+            fontWeight: 500,
+          }}
+        >
+          Share via any channel
+        </span>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            gap: 15,
+            maxWidth: 500,
+          }}
+        >
+          {channels.map((channel, i) => {
+            const badgeDelay = i * 4 + 160;
+            const badgeSpring = spring({
+              frame: frame - badgeDelay,
+              fps,
+              config: { damping: 12, stiffness: 150 },
+            });
 
-          return (
-            <div
-              key={i}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 12,
-                padding: "14px 24px",
-                background: "rgba(255, 255, 255, 0.08)",
-                borderRadius: 50,
-                border: "1px solid rgba(255, 255, 255, 0.12)",
-                transform: `scale(${badgeSpring})`,
-                backdropFilter: "blur(10px)",
-              }}
-            >
+            // Slide from bottom
+            const slideY = 50;
+
+            return (
               <div
+                key={i}
                 style={{
-                  width: 32,
-                  height: 32,
-                  borderRadius: 8,
-                  background: channel.bg,
                   display: "flex",
-                  justifyContent: "center",
                   alignItems: "center",
-                  overflow: "hidden",
+                  gap: 10,
+                  padding: "12px 20px",
+                  background: "white",
+                  borderRadius: 50,
+                  border: "2px solid rgba(0, 0, 0, 0.06)",
+                  boxShadow: "0 4px 15px rgba(0, 0, 0, 0.05)",
+                  transform: `translateY(${interpolate(badgeSpring, [0, 1], [slideY, 0])}px)`,
+                  opacity: badgeSpring,
                 }}
               >
-                <channel.Icon size={20} />
+                <div
+                  style={{
+                    width: 32,
+                    height: 32,
+                    borderRadius: 10,
+                    background: channel.bg,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    overflow: "hidden",
+                  }}
+                >
+                  <channel.Icon size={18} />
+                </div>
+                <span
+                  style={{
+                    fontFamily: "system-ui, -apple-system, sans-serif",
+                    fontSize: 18,
+                    color: "#1a1a2e",
+                    fontWeight: 600,
+                  }}
+                >
+                  {channel.name}
+                </span>
               </div>
-              <span
-                style={{
-                  fontFamily: "system-ui, -apple-system, sans-serif",
-                  fontSize: 18,
-                  color: "white",
-                  fontWeight: 600,
-                }}
-              >
-                {channel.name}
-              </span>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </AbsoluteFill>
   );

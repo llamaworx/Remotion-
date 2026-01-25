@@ -26,14 +26,14 @@ export const RemotionRoot: React.FC = () => {
         }}
       />
 
-      {/* Voice Links Viral Video - Change useCase for daily videos */}
+      {/* Voice Links Viral Video - Mobile Friendly */}
       <Composition
         id="VoiceLinksVideo"
         component={VoiceLinksVideo}
         durationInFrames={1350}
         fps={30}
-        width={1920}
-        height={1080}
+        width={1080}
+        height={1920}
         defaultProps={{
           useCase: {
             title: "Post-Purchase Product Support",

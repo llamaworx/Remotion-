@@ -6,41 +6,88 @@ import {
   spring,
   useVideoConfig,
 } from "remotion";
+import { BolkaLogo } from "../../../components/Icons";
 
 export const HookScene: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Text reveal animation - slower timing
-  const line1Spring = spring({ frame, fps, config: { damping: 15, stiffness: 80 } });
-  const line2Spring = spring({ frame: frame - 25, fps, config: { damping: 15, stiffness: 80 } });
-  const line3Spring = spring({ frame: frame - 50, fps, config: { damping: 15, stiffness: 80 } });
+  // Text reveal animation with slide from left
+  const line1Spring = spring({ frame, fps, config: { damping: 12, stiffness: 80 } });
+  const line2Spring = spring({ frame: frame - 20, fps, config: { damping: 12, stiffness: 80 } });
+  const line3Spring = spring({ frame: frame - 40, fps, config: { damping: 12, stiffness: 80 } });
 
-  const line1Y = interpolate(line1Spring, [0, 1], [80, 0]);
-  const line2Y = interpolate(line2Spring, [0, 1], [80, 0]);
-  const line3Y = interpolate(line3Spring, [0, 1], [80, 0]);
+  const line1X = interpolate(line1Spring, [0, 1], [-100, 0]);
+  const line2X = interpolate(line2Spring, [0, 1], [100, 0]);
+  const line3X = interpolate(line3Spring, [0, 1], [-100, 0]);
 
-  // Question mark icon animation
-  const iconSpring = spring({ frame: frame - 75, fps, config: { damping: 12, stiffness: 100 } });
-  const iconPulse = Math.sin(frame * 0.08) * 0.05 + 1;
+  // Logo animation
+  const logoSpring = spring({ frame: frame - 70, fps, config: { damping: 14, stiffness: 80 } });
+  const logoPulse = Math.sin(frame * 0.08) * 0.05 + 1;
+
+  // Floating icons animation
+  const floatOffset1 = Math.sin(frame * 0.05) * 15;
+  const floatOffset2 = Math.cos(frame * 0.04) * 20;
+  const floatOffset3 = Math.sin(frame * 0.06) * 12;
 
   return (
     <AbsoluteFill
       style={{
         justifyContent: "center",
         alignItems: "center",
-        padding: 100,
+        padding: 60,
       }}
     >
-      {/* Gradient accent */}
+      {/* Decorative floating circles */}
       <div
         style={{
           position: "absolute",
-          width: 1000,
-          height: 1000,
+          top: 150,
+          right: 80,
+          width: 120,
+          height: 120,
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(255, 107, 53, 0.12) 0%, transparent 70%)",
-          filter: "blur(100px)",
+          background: "linear-gradient(135deg, rgba(255, 107, 53, 0.15) 0%, rgba(255, 140, 66, 0.08) 100%)",
+          transform: `translateY(${floatOffset1}px)`,
+          opacity: interpolate(frame, [0, 30], [0, 1]),
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          top: 400,
+          left: 60,
+          width: 80,
+          height: 80,
+          borderRadius: "50%",
+          background: "linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(168, 85, 247, 0.06) 100%)",
+          transform: `translateY(${floatOffset2}px)`,
+          opacity: interpolate(frame, [10, 40], [0, 1]),
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          bottom: 300,
+          right: 100,
+          width: 60,
+          height: 60,
+          borderRadius: "50%",
+          background: "linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(52, 211, 153, 0.06) 100%)",
+          transform: `translateY(${floatOffset3}px)`,
+          opacity: interpolate(frame, [20, 50], [0, 1]),
+        }}
+      />
+
+      {/* Gradient accent blob */}
+      <div
+        style={{
+          position: "absolute",
+          width: 600,
+          height: 600,
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(255, 107, 53, 0.08) 0%, transparent 70%)",
+          filter: "blur(60px)",
         }}
       />
 
@@ -49,7 +96,7 @@ export const HookScene: React.FC = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: 30,
+          gap: 25,
         }}
       >
         {/* Hook question */}
@@ -57,12 +104,12 @@ export const HookScene: React.FC = () => {
           <h1
             style={{
               fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: 82,
+              fontSize: 72,
               fontWeight: 800,
-              color: "white",
+              color: "#1a1a2e",
               margin: 0,
               textAlign: "center",
-              transform: `translateY(${line1Y}px)`,
+              transform: `translateX(${line1X}px)`,
               opacity: line1Spring,
             }}
           >
@@ -74,12 +121,14 @@ export const HookScene: React.FC = () => {
           <h1
             style={{
               fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: 82,
+              fontSize: 68,
               fontWeight: 800,
-              color: "#FF6B35",
+              background: "linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
               margin: 0,
               textAlign: "center",
-              transform: `translateY(${line2Y}px)`,
+              transform: `translateX(${line2X}px)`,
               opacity: line2Spring,
             }}
           >
@@ -91,12 +140,12 @@ export const HookScene: React.FC = () => {
           <h1
             style={{
               fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: 82,
+              fontSize: 72,
               fontWeight: 800,
-              color: "white",
+              color: "#1a1a2e",
               margin: 0,
               textAlign: "center",
-              transform: `translateY(${line3Y}px)`,
+              transform: `translateX(${line3X}px)`,
               opacity: line3Spring,
             }}
           >
@@ -104,41 +153,16 @@ export const HookScene: React.FC = () => {
           </h1>
         </div>
 
-        {/* Question mark icon - professional SVG */}
+        {/* Bolka Logo */}
         <div
           style={{
-            marginTop: 50,
-            opacity: iconSpring,
-            transform: `scale(${iconSpring * iconPulse})`,
+            marginTop: 80,
+            opacity: logoSpring,
+            transform: `scale(${logoSpring * logoPulse})`,
+            filter: "drop-shadow(0 20px 40px rgba(255, 107, 53, 0.3))",
           }}
         >
-          <div
-            style={{
-              width: 100,
-              height: 100,
-              borderRadius: "50%",
-              background: "linear-gradient(135deg, rgba(255, 107, 53, 0.2) 0%, rgba(255, 140, 66, 0.1) 100%)",
-              border: "3px solid rgba(255, 107, 53, 0.5)",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <svg
-              width="50"
-              height="50"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#FF6B35"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="12" cy="12" r="10" />
-              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-              <line x1="12" y1="17" x2="12.01" y2="17" />
-            </svg>
-          </div>
+          <BolkaLogo size={180} />
         </div>
       </div>
     </AbsoluteFill>

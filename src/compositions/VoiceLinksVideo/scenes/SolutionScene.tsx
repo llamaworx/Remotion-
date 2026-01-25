@@ -17,32 +17,73 @@ export const SolutionScene: React.FC = () => {
   const logoScale = interpolate(logoSpring, [0, 1], [0, 1]);
   const logoRotate = interpolate(logoSpring, [0, 1], [-180, 0]);
 
-  // Text animations
-  const textSpring = spring({ frame: frame - 45, fps, config: { damping: 15, stiffness: 80 } });
-  const taglineSpring = spring({ frame: frame - 75, fps, config: { damping: 15, stiffness: 80 } });
-  const subtitleSpring = spring({ frame: frame - 110, fps, config: { damping: 15, stiffness: 80 } });
+  // Text animations with slides
+  const textSpring = spring({ frame: frame - 40, fps, config: { damping: 15, stiffness: 80 } });
+  const taglineSpring = spring({ frame: frame - 70, fps, config: { damping: 15, stiffness: 80 } });
+  const subtitleSpring = spring({ frame: frame - 100, fps, config: { damping: 15, stiffness: 80 } });
 
-  // Glow pulse
-  const glowPulse = Math.sin(frame * 0.08) * 0.3 + 0.7;
+  // Floating circles animation
+  const float1 = Math.sin(frame * 0.04) * 15;
+  const float2 = Math.cos(frame * 0.05) * 12;
+  const float3 = Math.sin(frame * 0.03) * 18;
 
   return (
     <AbsoluteFill
       style={{
         justifyContent: "center",
         alignItems: "center",
-        background: "radial-gradient(ellipse at center, rgba(255, 107, 53, 0.08) 0%, transparent 50%)",
       }}
     >
+      {/* Decorative floating circles */}
+      <div
+        style={{
+          position: "absolute",
+          top: 200,
+          right: 100,
+          width: 150,
+          height: 150,
+          borderRadius: "50%",
+          background: "linear-gradient(135deg, rgba(255, 107, 53, 0.12) 0%, rgba(255, 140, 66, 0.06) 100%)",
+          transform: `translateY(${float1}px)`,
+          opacity: interpolate(frame, [0, 30], [0, 1]),
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          bottom: 350,
+          left: 80,
+          width: 100,
+          height: 100,
+          borderRadius: "50%",
+          background: "linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(168, 85, 247, 0.05) 100%)",
+          transform: `translateY(${float2}px)`,
+          opacity: interpolate(frame, [10, 40], [0, 1]),
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          top: 600,
+          right: 60,
+          width: 70,
+          height: 70,
+          borderRadius: "50%",
+          background: "linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(52, 211, 153, 0.05) 100%)",
+          transform: `translateY(${float3}px)`,
+          opacity: interpolate(frame, [20, 50], [0, 1]),
+        }}
+      />
+
       {/* Background glow */}
       <div
         style={{
           position: "absolute",
-          width: 800,
-          height: 800,
+          width: 500,
+          height: 500,
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(255, 107, 53, 0.25) 0%, transparent 70%)",
-          filter: "blur(80px)",
-          opacity: glowPulse,
+          background: "radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%)",
+          filter: "blur(60px)",
         }}
       />
 
@@ -51,51 +92,51 @@ export const SolutionScene: React.FC = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: 35,
+          gap: 40,
         }}
       >
-        {/* Introducing text */}
+        {/* Introducing text - sliding from left */}
         <div
           style={{
             opacity: interpolate(frame, [0, 30], [0, 1]),
-            transform: `translateY(${interpolate(frame, [0, 30], [-30, 0])}px)`,
+            transform: `translateX(${interpolate(frame, [0, 30], [-100, 0])}px)`,
           }}
         >
           <span
             style={{
               fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: 34,
+              fontSize: 36,
               fontWeight: 500,
-              color: "rgba(255, 255, 255, 0.6)",
+              color: "#666",
               textTransform: "uppercase",
-              letterSpacing: 10,
+              letterSpacing: 12,
             }}
           >
             Introducing
           </span>
         </div>
 
-        {/* Bolka Original Logo - Swirl */}
+        {/* Bolka Logo */}
         <div
           style={{
             transform: `scale(${logoScale}) rotate(${logoRotate}deg)`,
-            filter: `drop-shadow(0 0 60px rgba(255, 107, 53, ${glowPulse}))`,
+            filter: "drop-shadow(0 30px 60px rgba(255, 107, 53, 0.4))",
           }}
         >
-          <BolkaLogo size={200} />
+          <BolkaLogo size={220} />
         </div>
 
-        {/* Brand name */}
+        {/* Brand name - sliding from right */}
         <h1
           style={{
             fontFamily: "system-ui, -apple-system, sans-serif",
-            fontSize: 110,
+            fontSize: 120,
             fontWeight: 800,
             margin: 0,
             opacity: textSpring,
-            transform: `translateY(${interpolate(textSpring, [0, 1], [40, 0])}px)`,
-            letterSpacing: 6,
-            background: "linear-gradient(90deg, #FFFFFF 0%, #E0E0E0 100%)",
+            transform: `translateX(${interpolate(textSpring, [0, 1], [100, 0])}px)`,
+            letterSpacing: 8,
+            background: "linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
           }}
@@ -103,28 +144,28 @@ export const SolutionScene: React.FC = () => {
           BOLKA
         </h1>
 
-        {/* Voice Links badge */}
+        {/* Voice Links badge - scaling up */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
             gap: 20,
             opacity: taglineSpring,
-            transform: `translateY(${interpolate(taglineSpring, [0, 1], [30, 0])}px)`,
+            transform: `scale(${taglineSpring})`,
           }}
         >
           <div
             style={{
-              padding: "20px 50px",
+              padding: "24px 60px",
               background: "linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%)",
-              borderRadius: 50,
-              boxShadow: "0 15px 50px rgba(255, 107, 53, 0.4)",
+              borderRadius: 60,
+              boxShadow: "0 20px 60px rgba(255, 107, 53, 0.35)",
             }}
           >
             <span
               style={{
                 fontFamily: "system-ui, -apple-system, sans-serif",
-                fontSize: 42,
+                fontSize: 48,
                 fontWeight: 700,
                 color: "white",
               }}
@@ -134,16 +175,16 @@ export const SolutionScene: React.FC = () => {
           </div>
         </div>
 
-        {/* Tagline */}
+        {/* Tagline - sliding from bottom */}
         <p
           style={{
             fontFamily: "system-ui, -apple-system, sans-serif",
-            fontSize: 32,
-            color: "rgba(255, 255, 255, 0.7)",
+            fontSize: 38,
+            color: "#555",
             margin: 0,
-            marginTop: 25,
+            marginTop: 30,
             opacity: subtitleSpring,
-            transform: `translateY(${interpolate(subtitleSpring, [0, 1], [20, 0])}px)`,
+            transform: `translateY(${interpolate(subtitleSpring, [0, 1], [50, 0])}px)`,
           }}
         >
           Voice AI Anywhere
