@@ -31,7 +31,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="VoiceLinksVideo"
         component={VoiceLinksVideo}
-        durationInFrames={1350}
+        durationInFrames={1470}
         fps={30}
         width={1080}
         height={1920}

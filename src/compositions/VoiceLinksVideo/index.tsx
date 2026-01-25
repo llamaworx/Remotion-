@@ -7,6 +7,7 @@ import { AnalogyScene } from "./scenes/AnalogyScene";
 import { HowItWorksScene } from "./scenes/HowItWorksScene";
 import { UseCaseScene } from "./scenes/UseCaseScene";
 import { CTAScene } from "./scenes/CTAScene";
+import { EndCardScene } from "./scenes/EndCardScene";
 
 export interface VoiceLinksVideoProps {
   useCase: {
@@ -64,6 +65,11 @@ export const VoiceLinksVideo: React.FC<VoiceLinksVideoProps> = ({
       {/* CTA - Get Started (5s) */}
       <Sequence from={1200} durationInFrames={150}>
         <CTAScene />
+      </Sequence>
+
+      {/* End Card - Branding with music (4s) */}
+      <Sequence from={1350} durationInFrames={120}>
+        <EndCardScene />
       </Sequence>
     </AbsoluteFill>
   );
