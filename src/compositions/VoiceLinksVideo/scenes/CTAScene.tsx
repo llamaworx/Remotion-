@@ -8,6 +8,57 @@ import {
 } from "remotion";
 import { BolkaLogo, ArrowRightIcon } from "../../../components/Icons";
 
+// QR Code component for bolka.ai/share
+// This is a visual representation - for production, replace with actual QR code image
+const QRCode: React.FC<{ size: number }> = ({ size }) => {
+  // QR code pattern for https://bolka.ai/share (simplified visual representation)
+  const modules = [
+    [1,1,1,1,1,1,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1],
+    [1,0,0,0,0,0,1,0,0,1,0,1,0,0,1,0,0,0,0,0,1],
+    [1,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,0,1],
+    [1,0,1,1,1,0,1,0,0,1,1,1,0,0,1,0,1,1,1,0,1],
+    [1,0,1,1,1,0,1,0,1,0,0,1,1,0,1,0,1,1,1,0,1],
+    [1,0,0,0,0,0,1,0,0,1,0,0,1,0,1,0,0,0,0,0,1],
+    [1,1,1,1,1,1,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1],
+    [0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0],
+    [1,0,1,1,0,1,1,1,1,0,1,1,0,1,1,0,0,1,1,0,1],
+    [0,1,0,0,1,0,0,0,1,1,0,0,1,0,1,1,0,1,0,1,0],
+    [1,1,1,0,1,1,1,0,0,1,1,1,0,1,0,0,1,0,1,0,1],
+    [0,1,0,1,0,0,0,0,1,0,0,1,1,0,1,0,1,1,0,1,0],
+    [1,0,1,0,1,1,1,0,1,1,0,0,0,1,0,1,0,0,1,0,1],
+    [0,0,0,0,0,0,0,0,1,0,1,0,1,0,1,0,0,1,0,1,0],
+    [1,1,1,1,1,1,1,0,0,1,0,1,0,1,0,1,1,0,1,0,1],
+    [1,0,0,0,0,0,1,0,1,0,1,1,1,0,1,0,0,1,1,1,0],
+    [1,0,1,1,1,0,1,0,1,1,0,0,0,1,0,1,0,0,1,0,1],
+    [1,0,1,1,1,0,1,0,0,0,1,0,1,0,1,0,1,1,0,1,0],
+    [1,0,1,1,1,0,1,0,1,1,1,1,0,1,0,1,0,0,1,0,1],
+    [1,0,0,0,0,0,1,0,0,1,0,0,1,0,1,0,1,1,1,1,0],
+    [1,1,1,1,1,1,1,0,1,0,1,1,0,1,0,1,0,0,1,0,1],
+  ];
+
+  const cellSize = size / 21;
+
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+      <rect width={size} height={size} fill="white" rx={8} />
+      {modules.map((row, y) =>
+        row.map((cell, x) =>
+          cell ? (
+            <rect
+              key={`${x}-${y}`}
+              x={x * cellSize}
+              y={y * cellSize}
+              width={cellSize}
+              height={cellSize}
+              fill="#1a1a1a"
+            />
+          ) : null
+        )
+      )}
+    </svg>
+  );
+};
+
 export const CTAScene: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -100,35 +151,77 @@ export const CTAScene: React.FC = () => {
           Free to try. No credit card required.
         </p>
 
-        {/* CTA Button */}
+        {/* CTA Button and QR Code */}
         <div
           style={{
-            transform: `scale(${pulse})`,
+            display: "flex",
+            alignItems: "center",
+            gap: 60,
             marginTop: 30,
           }}
         >
+          {/* CTA Button */}
           <div
             style={{
-              padding: "28px 70px",
-              background: "linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%)",
-              borderRadius: 60,
-              display: "flex",
-              alignItems: "center",
-              gap: 20,
-              boxShadow: "0 0 60px rgba(255, 107, 53, 0.5)",
+              transform: `scale(${pulse})`,
             }}
           >
+            <div
+              style={{
+                padding: "28px 70px",
+                background: "linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%)",
+                borderRadius: 60,
+                display: "flex",
+                alignItems: "center",
+                gap: 20,
+                boxShadow: "0 0 60px rgba(255, 107, 53, 0.5)",
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: "system-ui, -apple-system, sans-serif",
+                  fontSize: 36,
+                  fontWeight: 700,
+                  color: "white",
+                }}
+              >
+                bolka.ai/share
+              </span>
+              <ArrowRightIcon size={32} color="white" />
+            </div>
+          </div>
+
+          {/* QR Code */}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 12,
+              opacity: interpolate(frame, [40, 70], [0, 1], { extrapolateRight: "clamp" }),
+              transform: `scale(${interpolate(frame, [40, 70], [0.8, 1], { extrapolateRight: "clamp" })})`,
+            }}
+          >
+            <div
+              style={{
+                padding: 12,
+                background: "white",
+                borderRadius: 16,
+                boxShadow: "0 10px 40px rgba(0, 0, 0, 0.3)",
+              }}
+            >
+              <QRCode size={140} />
+            </div>
             <span
               style={{
                 fontFamily: "system-ui, -apple-system, sans-serif",
-                fontSize: 36,
-                fontWeight: 700,
-                color: "white",
+                fontSize: 18,
+                color: "rgba(255, 255, 255, 0.6)",
+                fontWeight: 500,
               }}
             >
-              bolka.ai/share
+              Scan to visit
             </span>
-            <ArrowRightIcon size={32} color="white" />
           </div>
         </div>
 
@@ -137,7 +230,7 @@ export const CTAScene: React.FC = () => {
           style={{
             display: "flex",
             gap: 40,
-            marginTop: 40,
+            marginTop: 50,
             opacity: interpolate(frame, [80, 110], [0, 1], { extrapolateRight: "clamp" }),
           }}
         >
