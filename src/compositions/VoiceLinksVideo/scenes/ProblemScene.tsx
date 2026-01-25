@@ -19,7 +19,6 @@ export const ProblemScene: React.FC = () => {
     { Icon: DollarIcon, text: "High Costs", subtext: "$15+ per call", gradient: "linear-gradient(135deg, #E53935 0%, #FF6659 100%)" },
   ];
 
-  // Floating animation
   const floatOffset = Math.sin(frame * 0.04) * 8;
 
   return (
@@ -27,46 +26,46 @@ export const ProblemScene: React.FC = () => {
       style={{
         justifyContent: "center",
         alignItems: "center",
-        padding: 50,
+        padding: 40,
       }}
     >
       {/* Background decorative elements */}
       <div
         style={{
           position: "absolute",
-          top: 100,
-          left: 80,
-          width: 100,
-          height: 100,
+          top: 80,
+          left: 60,
+          width: 140,
+          height: 140,
           borderRadius: "50%",
-          background: "rgba(255, 100, 100, 0.08)",
+          background: "rgba(255, 100, 100, 0.1)",
           transform: `translateY(${floatOffset}px)`,
         }}
       />
       <div
         style={{
           position: "absolute",
-          bottom: 200,
-          right: 60,
-          width: 80,
-          height: 80,
+          bottom: 150,
+          right: 40,
+          width: 100,
+          height: 100,
           borderRadius: "50%",
-          background: "rgba(255, 100, 100, 0.06)",
+          background: "rgba(255, 100, 100, 0.08)",
           transform: `translateY(${-floatOffset}px)`,
         }}
       />
 
-      {/* Title */}
+      {/* Title - BIGGER */}
       <div
         style={{
           position: "absolute",
-          top: 180,
+          top: 140,
           left: 0,
           right: 0,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: 15,
+          gap: 10,
           opacity: interpolate(frame, [0, 25], [0, 1]),
           transform: `translateX(${interpolate(frame, [0, 25], [-80, 0])}px)`,
         }}
@@ -74,7 +73,7 @@ export const ProblemScene: React.FC = () => {
         <h2
           style={{
             fontFamily: "system-ui, -apple-system, sans-serif",
-            fontSize: 58,
+            fontSize: 76,
             fontWeight: 700,
             color: "#1a1a2e",
             margin: 0,
@@ -86,7 +85,7 @@ export const ProblemScene: React.FC = () => {
         <h2
           style={{
             fontFamily: "system-ui, -apple-system, sans-serif",
-            fontSize: 58,
+            fontSize: 76,
             fontWeight: 700,
             margin: 0,
             textAlign: "center",
@@ -105,13 +104,13 @@ export const ProblemScene: React.FC = () => {
         </h2>
       </div>
 
-      {/* Problem cards - vertical layout for mobile */}
+      {/* Problem cards - BIGGER */}
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: 30,
-          marginTop: 120,
+          gap: 28,
+          marginTop: 180,
         }}
       >
         {problems.map((problem, i) => {
@@ -122,7 +121,6 @@ export const ProblemScene: React.FC = () => {
             config: { damping: 14, stiffness: 90 },
           });
 
-          // Alternate slide direction
           const slideX = i % 2 === 0 ? -120 : 120;
 
           return (
@@ -131,39 +129,39 @@ export const ProblemScene: React.FC = () => {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: 25,
-                padding: "28px 40px",
+                gap: 30,
+                padding: "32px 45px",
                 background: "white",
-                borderRadius: 24,
+                borderRadius: 28,
                 border: "2px solid rgba(255, 100, 100, 0.15)",
-                boxShadow: "0 8px 30px rgba(255, 100, 100, 0.1)",
+                boxShadow: "0 10px 40px rgba(255, 100, 100, 0.12)",
                 transform: `translateX(${interpolate(cardSpring, [0, 1], [slideX, 0])}px) scale(${cardSpring})`,
                 opacity: cardSpring,
-                minWidth: 340,
+                minWidth: 420,
               }}
             >
-              {/* Icon container with gradient */}
+              {/* Icon container - BIGGER */}
               <div
                 style={{
-                  width: 70,
-                  height: 70,
-                  borderRadius: 20,
+                  width: 90,
+                  height: 90,
+                  borderRadius: 24,
                   background: problem.gradient,
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  boxShadow: "0 8px 25px rgba(255, 68, 68, 0.25)",
+                  boxShadow: "0 10px 30px rgba(255, 68, 68, 0.3)",
                   flexShrink: 0,
                 }}
               >
-                <problem.Icon size={36} color="white" />
+                <problem.Icon size={48} color="white" />
               </div>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                 <span
                   style={{
                     fontFamily: "system-ui, -apple-system, sans-serif",
-                    fontSize: 32,
+                    fontSize: 44,
                     fontWeight: 700,
                     color: "#1a1a2e",
                   }}
@@ -173,7 +171,7 @@ export const ProblemScene: React.FC = () => {
                 <span
                   style={{
                     fontFamily: "system-ui, -apple-system, sans-serif",
-                    fontSize: 22,
+                    fontSize: 32,
                     color: "#666",
                   }}
                 >
@@ -185,7 +183,7 @@ export const ProblemScene: React.FC = () => {
         })}
       </div>
 
-      {/* Red X overlay at the end */}
+      {/* Red X overlay */}
       <div
         style={{
           position: "absolute",
@@ -193,7 +191,7 @@ export const ProblemScene: React.FC = () => {
           transform: `scale(${interpolate(frame, [140, 165], [2.5, 1], { extrapolateRight: "clamp" })})`,
         }}
       >
-        <svg width="200" height="200" viewBox="0 0 24 24" fill="none" stroke="#FF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg width="250" height="250" viewBox="0 0 24 24" fill="none" stroke="#FF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <circle cx="12" cy="12" r="10" fill="rgba(255, 68, 68, 0.1)" />
           <line x1="15" y1="9" x2="9" y2="15" />
           <line x1="9" y1="9" x2="15" y2="15" />

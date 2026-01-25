@@ -36,13 +36,11 @@ export const UseCaseScene: React.FC<UseCaseSceneProps> = ({ useCase }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Animations
   const industrySpring = spring({ frame, fps, config: { damping: 14, stiffness: 80 } });
   const titleSpring = spring({ frame: frame - 25, fps, config: { damping: 14, stiffness: 80 } });
   const scenarioSpring = spring({ frame: frame - 55, fps, config: { damping: 14, stiffness: 80 } });
   const benefitSpring = spring({ frame: frame - 120, fps, config: { damping: 14, stiffness: 80 } });
 
-  // Floating animation
   const float = Math.sin(frame * 0.04) * 8;
   const float2 = Math.cos(frame * 0.05) * 10;
 
@@ -51,31 +49,31 @@ export const UseCaseScene: React.FC<UseCaseSceneProps> = ({ useCase }) => {
       style={{
         justifyContent: "center",
         alignItems: "center",
-        padding: 50,
+        padding: 40,
       }}
     >
       {/* Decorative floating circles */}
       <div
         style={{
           position: "absolute",
-          top: 200,
-          right: 100,
-          width: 120,
-          height: 120,
+          top: 180,
+          right: 80,
+          width: 150,
+          height: 150,
           borderRadius: "50%",
-          background: "linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 140, 66, 0.05) 100%)",
+          background: "linear-gradient(135deg, rgba(255, 107, 53, 0.12) 0%, rgba(255, 140, 66, 0.06) 100%)",
           transform: `translateY(${float}px)`,
         }}
       />
       <div
         style={{
           position: "absolute",
-          bottom: 300,
-          left: 80,
-          width: 80,
-          height: 80,
+          bottom: 280,
+          left: 60,
+          width: 100,
+          height: 100,
           borderRadius: "50%",
-          background: "linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(129, 199, 132, 0.05) 100%)",
+          background: "linear-gradient(135deg, rgba(76, 175, 80, 0.12) 0%, rgba(129, 199, 132, 0.06) 100%)",
           transform: `translateY(${float2}px)`,
         }}
       />
@@ -85,85 +83,85 @@ export const UseCaseScene: React.FC<UseCaseSceneProps> = ({ useCase }) => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: 40,
+          gap: 35,
           zIndex: 1,
-          maxWidth: 500,
+          maxWidth: 580,
         }}
       >
-        {/* "Use Case" label - slides from left */}
+        {/* "Use Case" label - BIGGER */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 14,
+            gap: 16,
             opacity: interpolate(frame, [0, 20], [0, 1]),
             transform: `translateX(${interpolate(frame, [0, 20], [-80, 0])}px)`,
           }}
         >
-          <TargetIcon size={28} color="#888" />
+          <TargetIcon size={36} color="#888" />
           <span
             style={{
               fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: 28,
+              fontSize: 36,
               fontWeight: 600,
               color: "#888",
               textTransform: "uppercase",
-              letterSpacing: 6,
+              letterSpacing: 8,
             }}
           >
             Use Case
           </span>
         </div>
 
-        {/* Industry badge - scales in */}
+        {/* Industry badge - BIGGER */}
         <div
           style={{
-            padding: "18px 45px",
+            padding: "22px 55px",
             background: "linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%)",
-            borderRadius: 50,
+            borderRadius: 60,
             transform: `scale(${industrySpring})`,
-            boxShadow: "0 15px 40px rgba(255, 107, 53, 0.3)",
+            boxShadow: "0 18px 50px rgba(255, 107, 53, 0.35)",
           }}
         >
           <span
             style={{
               fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: 28,
+              fontSize: 36,
               fontWeight: 700,
               color: "white",
               textTransform: "uppercase",
-              letterSpacing: 4,
+              letterSpacing: 5,
             }}
           >
             {useCase.industry}
           </span>
         </div>
 
-        {/* Title - slides from right */}
+        {/* Title - BIGGER */}
         <h2
           style={{
             fontFamily: "system-ui, -apple-system, sans-serif",
-            fontSize: 56,
+            fontSize: 72,
             fontWeight: 800,
             color: "#1a1a2e",
             margin: 0,
             textAlign: "center",
             opacity: titleSpring,
             transform: `translateX(${interpolate(titleSpring, [0, 1], [100, 0])}px)`,
-            lineHeight: 1.2,
+            lineHeight: 1.15,
           }}
         >
           {useCase.title}
         </h2>
 
-        {/* Scenario card - slides from bottom */}
+        {/* Scenario card - BIGGER */}
         <div
           style={{
-            padding: "40px 35px",
+            padding: "45px 40px",
             background: "white",
-            borderRadius: 28,
+            borderRadius: 32,
             border: "2px solid rgba(0, 0, 0, 0.06)",
-            boxShadow: "0 15px 50px rgba(0, 0, 0, 0.06)",
+            boxShadow: "0 18px 60px rgba(0, 0, 0, 0.07)",
             transform: `translateY(${interpolate(scenarioSpring, [0, 1], [80, float])}px)`,
             opacity: scenarioSpring,
           }}
@@ -171,11 +169,11 @@ export const UseCaseScene: React.FC<UseCaseSceneProps> = ({ useCase }) => {
           <p
             style={{
               fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: 28,
+              fontSize: 36,
               color: "#444",
               margin: 0,
               textAlign: "center",
-              lineHeight: 1.6,
+              lineHeight: 1.5,
               fontStyle: "italic",
             }}
           >
@@ -183,39 +181,39 @@ export const UseCaseScene: React.FC<UseCaseSceneProps> = ({ useCase }) => {
           </p>
         </div>
 
-        {/* Benefit - slides from left */}
+        {/* Benefit - BIGGER */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 18,
-            marginTop: 20,
+            gap: 20,
+            marginTop: 25,
             opacity: benefitSpring,
             transform: `translateX(${interpolate(benefitSpring, [0, 1], [-100, 0])}px)`,
-            padding: "20px 35px",
-            background: "rgba(76, 175, 80, 0.08)",
-            borderRadius: 60,
-            border: "2px solid rgba(76, 175, 80, 0.2)",
+            padding: "24px 40px",
+            background: "rgba(76, 175, 80, 0.1)",
+            borderRadius: 70,
+            border: "3px solid rgba(76, 175, 80, 0.25)",
           }}
         >
           <div
             style={{
-              width: 50,
-              height: 50,
+              width: 60,
+              height: 60,
               borderRadius: "50%",
               background: "linear-gradient(135deg, #4CAF50 0%, #81C784 100%)",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              boxShadow: "0 8px 25px rgba(76, 175, 80, 0.3)",
+              boxShadow: "0 10px 30px rgba(76, 175, 80, 0.35)",
             }}
           >
-            <CheckCircleIcon size={28} color="white" />
+            <CheckCircleIcon size={34} color="white" />
           </div>
           <span
             style={{
               fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: 32,
+              fontSize: 42,
               fontWeight: 700,
               color: "#2E7D32",
             }}

@@ -29,7 +29,7 @@ export const HowItWorksScene: React.FC = () => {
       number: "1",
       Icon: SparklesIcon,
       title: "Create",
-      desc: "Build your Voice AI in minutes",
+      desc: "Build your Voice AI",
       gradient: "linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%)",
     },
     {
@@ -55,11 +55,8 @@ export const HowItWorksScene: React.FC = () => {
     { name: "Facebook", Icon: FacebookIcon, bg: "#1877F2" },
     { name: "Instagram", Icon: InstagramIcon, bg: "linear-gradient(135deg, #833AB4 0%, #F77737 50%, #FCAF45 100%)" },
     { name: "TikTok", Icon: TikTokIcon, bg: "#000000" },
-    { name: "QR Code", Icon: QRCodeIcon, bg: "linear-gradient(135deg, #1a1a1a 0%, #333333 100%)" },
-    { name: "Print", Icon: PrintIcon, bg: "linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)" },
   ];
 
-  // Floating animation
   const float = Math.sin(frame * 0.04) * 10;
 
   return (
@@ -67,37 +64,37 @@ export const HowItWorksScene: React.FC = () => {
       style={{
         justifyContent: "flex-start",
         alignItems: "center",
-        paddingTop: 120,
-        padding: 50,
+        paddingTop: 100,
+        padding: 40,
       }}
     >
       {/* Background decorative elements */}
       <div
         style={{
           position: "absolute",
-          top: 200,
-          right: 80,
-          width: 100,
-          height: 100,
+          top: 180,
+          right: 60,
+          width: 130,
+          height: 130,
           borderRadius: "50%",
-          background: "rgba(255, 107, 53, 0.08)",
+          background: "rgba(255, 107, 53, 0.1)",
           transform: `translateY(${float}px)`,
         }}
       />
       <div
         style={{
           position: "absolute",
-          bottom: 400,
-          left: 60,
-          width: 70,
-          height: 70,
+          bottom: 350,
+          left: 50,
+          width: 90,
+          height: 90,
           borderRadius: "50%",
-          background: "rgba(139, 92, 246, 0.08)",
+          background: "rgba(139, 92, 246, 0.1)",
           transform: `translateY(${-float}px)`,
         }}
       />
 
-      {/* Title */}
+      {/* Title - BIGGER */}
       <div
         style={{
           opacity: interpolate(frame, [0, 30], [0, 1]),
@@ -108,7 +105,7 @@ export const HowItWorksScene: React.FC = () => {
         <h2
           style={{
             fontFamily: "system-ui, -apple-system, sans-serif",
-            fontSize: 58,
+            fontSize: 76,
             fontWeight: 700,
             color: "#1a1a2e",
             margin: 0,
@@ -128,14 +125,14 @@ export const HowItWorksScene: React.FC = () => {
         </h2>
       </div>
 
-      {/* Steps - vertical layout */}
+      {/* Steps - BIGGER */}
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: 35,
+          gap: 32,
           width: "100%",
-          maxWidth: 500,
+          maxWidth: 580,
         }}
       >
         {steps.map((step, i) => {
@@ -146,7 +143,6 @@ export const HowItWorksScene: React.FC = () => {
             config: { damping: 14, stiffness: 80 },
           });
 
-          // Slide from alternating sides
           const slideX = i % 2 === 0 ? -150 : 150;
 
           return (
@@ -155,34 +151,34 @@ export const HowItWorksScene: React.FC = () => {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: 25,
-                padding: "30px 35px",
+                gap: 28,
+                padding: "34px 40px",
                 background: "white",
-                borderRadius: 28,
-                boxShadow: "0 8px 30px rgba(0, 0, 0, 0.06)",
+                borderRadius: 32,
+                boxShadow: "0 10px 40px rgba(0, 0, 0, 0.07)",
                 border: "2px solid rgba(0, 0, 0, 0.04)",
                 transform: `translateX(${interpolate(stepSpring, [0, 1], [slideX, 0])}px)`,
                 opacity: stepSpring,
               }}
             >
-              {/* Step number circle */}
+              {/* Step number circle - BIGGER */}
               <div
                 style={{
-                  width: 70,
-                  height: 70,
+                  width: 90,
+                  height: 90,
                   borderRadius: "50%",
                   background: step.gradient,
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  boxShadow: "0 10px 30px rgba(255, 107, 53, 0.25)",
+                  boxShadow: "0 12px 35px rgba(255, 107, 53, 0.3)",
                   flexShrink: 0,
                 }}
               >
                 <span
                   style={{
                     fontFamily: "system-ui, -apple-system, sans-serif",
-                    fontSize: 36,
+                    fontSize: 48,
                     fontWeight: 800,
                     color: "white",
                   }}
@@ -191,11 +187,11 @@ export const HowItWorksScene: React.FC = () => {
                 </span>
               </div>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                 <h3
                   style={{
                     fontFamily: "system-ui, -apple-system, sans-serif",
-                    fontSize: 36,
+                    fontSize: 48,
                     fontWeight: 700,
                     color: "#1a1a2e",
                     margin: 0,
@@ -206,7 +202,7 @@ export const HowItWorksScene: React.FC = () => {
                 <p
                   style={{
                     fontFamily: "system-ui, -apple-system, sans-serif",
-                    fontSize: 22,
+                    fontSize: 30,
                     color: "#666",
                     margin: 0,
                   }}
@@ -219,24 +215,24 @@ export const HowItWorksScene: React.FC = () => {
         })}
       </div>
 
-      {/* Channel icons - flowing in from bottom */}
+      {/* Channel icons - BIGGER */}
       <div
         style={{
           position: "absolute",
-          bottom: 120,
+          bottom: 100,
           left: 0,
           right: 0,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: 20,
+          gap: 25,
           opacity: interpolate(frame, [160, 190], [0, 1], { extrapolateRight: "clamp" }),
         }}
       >
         <span
           style={{
             fontFamily: "system-ui, -apple-system, sans-serif",
-            fontSize: 26,
+            fontSize: 34,
             color: "#666",
             fontWeight: 500,
           }}
@@ -248,8 +244,8 @@ export const HowItWorksScene: React.FC = () => {
             display: "flex",
             flexWrap: "wrap",
             justifyContent: "center",
-            gap: 15,
-            maxWidth: 500,
+            gap: 18,
+            maxWidth: 600,
           }}
         >
           {channels.map((channel, i) => {
@@ -260,7 +256,6 @@ export const HowItWorksScene: React.FC = () => {
               config: { damping: 12, stiffness: 150 },
             });
 
-            // Slide from bottom
             const slideY = 50;
 
             return (
@@ -269,21 +264,21 @@ export const HowItWorksScene: React.FC = () => {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: 10,
-                  padding: "12px 20px",
+                  gap: 12,
+                  padding: "16px 24px",
                   background: "white",
-                  borderRadius: 50,
+                  borderRadius: 60,
                   border: "2px solid rgba(0, 0, 0, 0.06)",
-                  boxShadow: "0 4px 15px rgba(0, 0, 0, 0.05)",
+                  boxShadow: "0 6px 20px rgba(0, 0, 0, 0.06)",
                   transform: `translateY(${interpolate(badgeSpring, [0, 1], [slideY, 0])}px)`,
                   opacity: badgeSpring,
                 }}
               >
                 <div
                   style={{
-                    width: 32,
-                    height: 32,
-                    borderRadius: 10,
+                    width: 40,
+                    height: 40,
+                    borderRadius: 12,
                     background: channel.bg,
                     display: "flex",
                     justifyContent: "center",
@@ -291,12 +286,12 @@ export const HowItWorksScene: React.FC = () => {
                     overflow: "hidden",
                   }}
                 >
-                  <channel.Icon size={18} />
+                  <channel.Icon size={22} />
                 </div>
                 <span
                   style={{
                     fontFamily: "system-ui, -apple-system, sans-serif",
-                    fontSize: 18,
+                    fontSize: 24,
                     color: "#1a1a2e",
                     fontWeight: 600,
                   }}

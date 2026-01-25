@@ -61,7 +61,6 @@ export const CTAScene: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Animations
   const contentSpring = spring({
     frame,
     fps,
@@ -77,43 +76,43 @@ export const CTAScene: React.FC = () => {
       style={{
         justifyContent: "center",
         alignItems: "center",
-        padding: 50,
+        padding: 40,
       }}
     >
       {/* Decorative floating circles */}
       <div
         style={{
           position: "absolute",
-          top: 250,
-          right: 100,
-          width: 150,
-          height: 150,
+          top: 200,
+          right: 80,
+          width: 180,
+          height: 180,
           borderRadius: "50%",
-          background: "linear-gradient(135deg, rgba(255, 107, 53, 0.12) 0%, rgba(255, 140, 66, 0.06) 100%)",
+          background: "linear-gradient(135deg, rgba(255, 107, 53, 0.15) 0%, rgba(255, 140, 66, 0.08) 100%)",
           transform: `translateY(${float}px)`,
         }}
       />
       <div
         style={{
           position: "absolute",
-          bottom: 400,
-          left: 80,
-          width: 100,
-          height: 100,
+          bottom: 350,
+          left: 60,
+          width: 130,
+          height: 130,
           borderRadius: "50%",
-          background: "linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(168, 85, 247, 0.05) 100%)",
+          background: "linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(168, 85, 247, 0.06) 100%)",
           transform: `translateY(${float2}px)`,
         }}
       />
       <div
         style={{
           position: "absolute",
-          top: 600,
-          left: 120,
-          width: 60,
-          height: 60,
+          top: 550,
+          left: 100,
+          width: 80,
+          height: 80,
           borderRadius: "50%",
-          background: "linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(52, 211, 153, 0.05) 100%)",
+          background: "linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(52, 211, 153, 0.06) 100%)",
           transform: `translateY(${-float}px)`,
         }}
       />
@@ -123,22 +122,22 @@ export const CTAScene: React.FC = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: 40,
+          gap: 35,
           transform: `scale(${interpolate(contentSpring, [0, 1], [0.9, 1])})`,
           opacity: contentSpring,
         }}
       >
-        {/* Bolka Logo - slides from top */}
+        {/* Bolka Logo - BIGGER */}
         <div
           style={{
-            filter: "drop-shadow(0 25px 50px rgba(255, 107, 53, 0.35))",
+            filter: "drop-shadow(0 30px 60px rgba(255, 107, 53, 0.4))",
             transform: `translateY(${interpolate(contentSpring, [0, 1], [-50, 0])}px)`,
           }}
         >
-          <BolkaLogo size={180} />
+          <BolkaLogo size={220} />
         </div>
 
-        {/* Main CTA text - slides from left */}
+        {/* Main CTA text - BIGGER */}
         <div
           style={{
             display: "flex",
@@ -152,7 +151,7 @@ export const CTAScene: React.FC = () => {
           <h1
             style={{
               fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: 72,
+              fontSize: 92,
               fontWeight: 800,
               color: "#1a1a2e",
               margin: 0,
@@ -164,7 +163,7 @@ export const CTAScene: React.FC = () => {
           <h1
             style={{
               fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: 72,
+              fontSize: 92,
               fontWeight: 800,
               margin: 0,
               textAlign: "center",
@@ -177,11 +176,11 @@ export const CTAScene: React.FC = () => {
           </h1>
         </div>
 
-        {/* Subtitle - slides from right */}
+        {/* Subtitle - BIGGER */}
         <p
           style={{
             fontFamily: "system-ui, -apple-system, sans-serif",
-            fontSize: 32,
+            fontSize: 42,
             color: "#666",
             margin: 0,
             opacity: interpolate(frame, [40, 70], [0, 1], { extrapolateRight: "clamp" }),
@@ -191,66 +190,66 @@ export const CTAScene: React.FC = () => {
           Free to try. No credit card.
         </p>
 
-        {/* CTA Button - scales in with pulse */}
+        {/* CTA Button - BIGGER */}
         <div
           style={{
             transform: `scale(${pulse})`,
-            marginTop: 20,
+            marginTop: 25,
             opacity: interpolate(frame, [50, 80], [0, 1], { extrapolateRight: "clamp" }),
           }}
         >
           <div
             style={{
-              padding: "28px 60px",
+              padding: "32px 70px",
               background: "linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%)",
-              borderRadius: 60,
+              borderRadius: 70,
               display: "flex",
               alignItems: "center",
-              gap: 18,
-              boxShadow: "0 20px 60px rgba(255, 107, 53, 0.4)",
+              gap: 20,
+              boxShadow: "0 25px 70px rgba(255, 107, 53, 0.45)",
             }}
           >
             <span
               style={{
                 fontFamily: "system-ui, -apple-system, sans-serif",
-                fontSize: 38,
+                fontSize: 50,
                 fontWeight: 700,
                 color: "white",
               }}
             >
               bolka.ai/share
             </span>
-            <ArrowRightIcon size={32} color="white" />
+            <ArrowRightIcon size={40} color="white" />
           </div>
         </div>
 
-        {/* QR Code - slides from bottom */}
+        {/* QR Code - BIGGER */}
         <div
           style={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            gap: 15,
-            marginTop: 30,
+            gap: 18,
+            marginTop: 35,
             opacity: interpolate(frame, [70, 100], [0, 1], { extrapolateRight: "clamp" }),
             transform: `translateY(${interpolate(frame, [70, 100], [60, 0], { extrapolateRight: "clamp" })}px)`,
           }}
         >
           <div
             style={{
-              padding: 15,
+              padding: 18,
               background: "white",
-              borderRadius: 20,
-              boxShadow: "0 15px 50px rgba(0, 0, 0, 0.1)",
-              border: "3px solid rgba(255, 107, 53, 0.2)",
+              borderRadius: 24,
+              boxShadow: "0 18px 60px rgba(0, 0, 0, 0.12)",
+              border: "3px solid rgba(255, 107, 53, 0.25)",
             }}
           >
-            <QRCode size={160} />
+            <QRCode size={200} />
           </div>
           <span
             style={{
               fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: 22,
+              fontSize: 30,
               color: "#888",
               fontWeight: 500,
             }}
@@ -259,19 +258,19 @@ export const CTAScene: React.FC = () => {
           </span>
         </div>
 
-        {/* Social handles */}
+        {/* Social handles - BIGGER */}
         <div
           style={{
             display: "flex",
             gap: 40,
-            marginTop: 20,
+            marginTop: 25,
             opacity: interpolate(frame, [100, 130], [0, 1], { extrapolateRight: "clamp" }),
           }}
         >
           <span
             style={{
               fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: 26,
+              fontSize: 34,
               color: "#aaa",
             }}
           >

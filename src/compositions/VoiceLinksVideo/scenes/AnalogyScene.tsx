@@ -38,7 +38,6 @@ export const AnalogyScene: React.FC = () => {
     },
   ];
 
-  // Floating decorative elements
   const float1 = Math.sin(frame * 0.04) * 12;
   const float2 = Math.cos(frame * 0.05) * 15;
 
@@ -47,40 +46,40 @@ export const AnalogyScene: React.FC = () => {
       style={{
         justifyContent: "center",
         alignItems: "center",
-        padding: 50,
+        padding: 40,
       }}
     >
       {/* Decorative elements */}
       <div
         style={{
           position: "absolute",
-          top: 150,
-          left: 80,
-          width: 90,
-          height: 90,
+          top: 120,
+          left: 60,
+          width: 120,
+          height: 120,
           borderRadius: "50%",
-          background: "rgba(76, 175, 80, 0.1)",
+          background: "rgba(76, 175, 80, 0.12)",
           transform: `translateY(${float1}px)`,
         }}
       />
       <div
         style={{
           position: "absolute",
-          bottom: 200,
-          right: 100,
-          width: 70,
-          height: 70,
+          bottom: 180,
+          right: 80,
+          width: 90,
+          height: 90,
           borderRadius: "50%",
-          background: "rgba(33, 150, 243, 0.1)",
+          background: "rgba(33, 150, 243, 0.12)",
           transform: `translateY(${float2}px)`,
         }}
       />
 
-      {/* Title */}
+      {/* Title - BIGGER */}
       <div
         style={{
           position: "absolute",
-          top: 180,
+          top: 150,
           left: 0,
           right: 0,
           display: "flex",
@@ -94,7 +93,7 @@ export const AnalogyScene: React.FC = () => {
         <h2
           style={{
             fontFamily: "system-ui, -apple-system, sans-serif",
-            fontSize: 52,
+            fontSize: 68,
             fontWeight: 700,
             color: "#1a1a2e",
             margin: 0,
@@ -106,7 +105,7 @@ export const AnalogyScene: React.FC = () => {
         <h2
           style={{
             fontFamily: "system-ui, -apple-system, sans-serif",
-            fontSize: 52,
+            fontSize: 68,
             fontWeight: 700,
             color: "#1a1a2e",
             margin: 0,
@@ -117,13 +116,13 @@ export const AnalogyScene: React.FC = () => {
         </h2>
       </div>
 
-      {/* Comparison cards - vertical layout for mobile */}
+      {/* Comparison cards - BIGGER */}
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: 35,
-          marginTop: 150,
+          gap: 32,
+          marginTop: 180,
         }}
       >
         {comparisons.map((item, i) => {
@@ -137,7 +136,6 @@ export const AnalogyScene: React.FC = () => {
           const isVoiceLink = item.highlight;
           const glowPulse = isVoiceLink ? Math.sin(frame * 0.1) * 0.3 + 0.7 : 0;
 
-          // Slide from alternating directions
           const slideX = i === 0 ? -120 : i === 1 ? 120 : 0;
           const slideY = i === 2 ? 50 : 0;
 
@@ -147,54 +145,54 @@ export const AnalogyScene: React.FC = () => {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: 25,
-                padding: isVoiceLink ? "35px 45px" : "28px 40px",
+                gap: 30,
+                padding: isVoiceLink ? "38px 50px" : "32px 45px",
                 background: isVoiceLink
-                  ? "linear-gradient(135deg, rgba(255, 107, 53, 0.08) 0%, rgba(255, 140, 66, 0.04) 100%)"
+                  ? "linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 140, 66, 0.05) 100%)"
                   : "white",
-                borderRadius: 28,
-                border: `3px solid ${isVoiceLink ? "rgba(255, 107, 53, 0.4)" : "rgba(0, 0, 0, 0.06)"}`,
+                borderRadius: 32,
+                border: `3px solid ${isVoiceLink ? "rgba(255, 107, 53, 0.5)" : "rgba(0, 0, 0, 0.06)"}`,
                 transform: `translateX(${interpolate(cardSpring, [0, 1], [slideX, 0])}px) translateY(${interpolate(cardSpring, [0, 1], [slideY, 0])}px) scale(${isVoiceLink ? cardSpring * 1.05 : cardSpring})`,
                 opacity: cardSpring,
                 boxShadow: isVoiceLink
-                  ? `0 15px 50px rgba(255, 107, 53, ${0.15 + glowPulse * 0.15})`
-                  : "0 8px 30px rgba(0, 0, 0, 0.06)",
-                minWidth: 380,
+                  ? `0 20px 60px rgba(255, 107, 53, ${0.18 + glowPulse * 0.15})`
+                  : "0 10px 40px rgba(0, 0, 0, 0.06)",
+                minWidth: 460,
               }}
             >
-              {/* Icon container */}
+              {/* Icon container - BIGGER */}
               {item.useBolkaLogo ? (
                 <div
                   style={{
-                    filter: `drop-shadow(0 8px 20px rgba(255, 107, 53, 0.3))`,
+                    filter: `drop-shadow(0 10px 25px rgba(255, 107, 53, 0.35))`,
                     flexShrink: 0,
                   }}
                 >
-                  <BolkaLogo size={80} />
+                  <BolkaLogo size={100} />
                 </div>
               ) : (
                 <div
                   style={{
-                    width: 70,
-                    height: 70,
-                    borderRadius: 20,
+                    width: 90,
+                    height: 90,
+                    borderRadius: 24,
                     background: item.gradient,
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    boxShadow: `0 8px 25px ${item.color}30`,
+                    boxShadow: `0 10px 30px ${item.color}40`,
                     flexShrink: 0,
                   }}
                 >
-                  <item.Icon size={36} color="white" />
+                  <item.Icon size={48} color="white" />
                 </div>
               )}
 
-              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 <span
                   style={{
                     fontFamily: "system-ui, -apple-system, sans-serif",
-                    fontSize: isVoiceLink ? 36 : 32,
+                    fontSize: isVoiceLink ? 48 : 44,
                     fontWeight: 700,
                     background: isVoiceLink ? item.gradient : "none",
                     WebkitBackgroundClip: isVoiceLink ? "text" : "none",
@@ -207,7 +205,7 @@ export const AnalogyScene: React.FC = () => {
                 <span
                   style={{
                     fontFamily: "system-ui, -apple-system, sans-serif",
-                    fontSize: 22,
+                    fontSize: 30,
                     color: "#666",
                   }}
                 >
@@ -219,11 +217,11 @@ export const AnalogyScene: React.FC = () => {
         })}
       </div>
 
-      {/* Bottom text */}
+      {/* Bottom text - BIGGER */}
       <div
         style={{
           position: "absolute",
-          bottom: 180,
+          bottom: 150,
           left: 0,
           right: 0,
           display: "flex",
@@ -235,7 +233,7 @@ export const AnalogyScene: React.FC = () => {
         <p
           style={{
             fontFamily: "system-ui, -apple-system, sans-serif",
-            fontSize: 38,
+            fontSize: 50,
             fontWeight: 600,
             background: "linear-gradient(90deg, #FF6B35 0%, #FF8C42 100%)",
             WebkitBackgroundClip: "text",
