@@ -1,3 +1,4 @@
+import React from "react";
 import { Composition, staticFile } from "remotion";
 import { BolkaProductVideo } from "./compositions/BolkaProductVideo";
 import { VoiceLinksVideo } from "./compositions/VoiceLinksVideo";
