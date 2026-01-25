@@ -12,12 +12,15 @@ export const SolutionScene: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Logo animation
+  // Logo animation - scale up with rotation
   const logoSpring = spring({ frame, fps, config: { damping: 14, stiffness: 80 } });
   const logoScale = interpolate(logoSpring, [0, 1], [0, 1]);
   const logoRotate = interpolate(logoSpring, [0, 1], [-180, 0]);
 
-  // Text animations
+  // Text animations - fade and scale
+  const introOpacity = interpolate(frame, [0, 35], [0, 1], { extrapolateRight: "clamp" });
+  const introScale = interpolate(frame, [0, 35], [0.85, 1], { extrapolateRight: "clamp" });
+
   const textSpring = spring({ frame: frame - 40, fps, config: { damping: 15, stiffness: 80 } });
   const taglineSpring = spring({ frame: frame - 70, fps, config: { damping: 15, stiffness: 80 } });
   const subtitleSpring = spring({ frame: frame - 100, fps, config: { damping: 15, stiffness: 80 } });
@@ -26,6 +29,9 @@ export const SolutionScene: React.FC = () => {
   const float1 = Math.sin(frame * 0.04) * 15;
   const float2 = Math.cos(frame * 0.05) * 12;
   const float3 = Math.sin(frame * 0.03) * 18;
+
+  // Glow pulse effect
+  const glowPulse = Math.sin(frame * 0.08) * 0.2 + 0.8;
 
   return (
     <AbsoluteFill
@@ -82,7 +88,7 @@ export const SolutionScene: React.FC = () => {
           width: 600,
           height: 600,
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(255, 107, 53, 0.12) 0%, transparent 70%)",
+          background: `radial-gradient(circle, rgba(255, 107, 53, ${0.08 + glowPulse * 0.06}) 0%, transparent 70%)`,
           filter: "blur(60px)",
         }}
       />
@@ -95,11 +101,11 @@ export const SolutionScene: React.FC = () => {
           gap: 35,
         }}
       >
-        {/* Introducing text - BIGGER */}
+        {/* Introducing text - fade and scale */}
         <div
           style={{
-            opacity: interpolate(frame, [0, 30], [0, 1]),
-            transform: `translateX(${interpolate(frame, [0, 30], [-100, 0])}px)`,
+            opacity: introOpacity,
+            transform: `scale(${introScale})`,
           }}
         >
           <span
@@ -116,17 +122,17 @@ export const SolutionScene: React.FC = () => {
           </span>
         </div>
 
-        {/* Bolka Logo - BIGGER */}
+        {/* Bolka Logo - scale with rotation */}
         <div
           style={{
             transform: `scale(${logoScale}) rotate(${logoRotate}deg)`,
-            filter: "drop-shadow(0 35px 70px rgba(255, 107, 53, 0.45))",
+            filter: `drop-shadow(0 35px 70px rgba(255, 107, 53, ${0.35 + glowPulse * 0.15}))`,
           }}
         >
           <BolkaLogo size={280} />
         </div>
 
-        {/* Brand name - BIGGER */}
+        {/* Brand name - fade and scale */}
         <h1
           style={{
             fontFamily: "system-ui, -apple-system, sans-serif",
@@ -134,7 +140,7 @@ export const SolutionScene: React.FC = () => {
             fontWeight: 800,
             margin: 0,
             opacity: textSpring,
-            transform: `translateX(${interpolate(textSpring, [0, 1], [100, 0])}px)`,
+            transform: `scale(${textSpring})`,
             letterSpacing: 10,
             background: "linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%)",
             WebkitBackgroundClip: "text",
@@ -144,7 +150,7 @@ export const SolutionScene: React.FC = () => {
           BOLKA
         </h1>
 
-        {/* Voice Links badge - BIGGER */}
+        {/* Voice Links badge - scale up */}
         <div
           style={{
             display: "flex",
@@ -159,7 +165,7 @@ export const SolutionScene: React.FC = () => {
               padding: "28px 70px",
               background: "linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%)",
               borderRadius: 70,
-              boxShadow: "0 25px 70px rgba(255, 107, 53, 0.4)",
+              boxShadow: `0 25px 70px rgba(255, 107, 53, ${0.3 + glowPulse * 0.15})`,
             }}
           >
             <span
@@ -175,7 +181,7 @@ export const SolutionScene: React.FC = () => {
           </div>
         </div>
 
-        {/* Tagline - BIGGER */}
+        {/* Tagline - fade and scale */}
         <p
           style={{
             fontFamily: "system-ui, -apple-system, sans-serif",
@@ -184,7 +190,7 @@ export const SolutionScene: React.FC = () => {
             margin: 0,
             marginTop: 30,
             opacity: subtitleSpring,
-            transform: `translateY(${interpolate(subtitleSpring, [0, 1], [50, 0])}px)`,
+            transform: `scale(${subtitleSpring})`,
           }}
         >
           Voice AI Anywhere

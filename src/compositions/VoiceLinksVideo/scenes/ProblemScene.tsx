@@ -21,6 +21,10 @@ export const ProblemScene: React.FC = () => {
 
   const floatOffset = Math.sin(frame * 0.04) * 8;
 
+  // Title fade and scale in
+  const titleOpacity = interpolate(frame, [0, 30], [0, 1], { extrapolateRight: "clamp" });
+  const titleScale = interpolate(frame, [0, 30], [0.9, 1], { extrapolateRight: "clamp" });
+
   return (
     <AbsoluteFill
       style={{
@@ -55,7 +59,7 @@ export const ProblemScene: React.FC = () => {
         }}
       />
 
-      {/* Title - BIGGER */}
+      {/* Title - fade and scale in */}
       <div
         style={{
           position: "absolute",
@@ -66,8 +70,8 @@ export const ProblemScene: React.FC = () => {
           flexDirection: "column",
           alignItems: "center",
           gap: 10,
-          opacity: interpolate(frame, [0, 25], [0, 1]),
-          transform: `translateX(${interpolate(frame, [0, 25], [-80, 0])}px)`,
+          opacity: titleOpacity,
+          transform: `scale(${titleScale})`,
         }}
       >
         <h2
@@ -104,7 +108,7 @@ export const ProblemScene: React.FC = () => {
         </h2>
       </div>
 
-      {/* Problem cards - BIGGER */}
+      {/* Problem cards - fade in with staggered scale */}
       <div
         style={{
           display: "flex",
@@ -114,14 +118,15 @@ export const ProblemScene: React.FC = () => {
         }}
       >
         {problems.map((problem, i) => {
-          const delay = i * 15 + 30;
+          const delay = i * 12 + 35;
           const cardSpring = spring({
             frame: frame - delay,
             fps,
-            config: { damping: 14, stiffness: 90 },
+            config: { damping: 15, stiffness: 100 },
           });
 
-          const slideX = i % 2 === 0 ? -120 : 120;
+          // Gentle glow pulse for each card
+          const glowIntensity = Math.sin((frame - delay) * 0.08) * 0.15 + 0.85;
 
           return (
             <div
@@ -134,13 +139,13 @@ export const ProblemScene: React.FC = () => {
                 background: "white",
                 borderRadius: 28,
                 border: "2px solid rgba(255, 100, 100, 0.15)",
-                boxShadow: "0 10px 40px rgba(255, 100, 100, 0.12)",
-                transform: `translateX(${interpolate(cardSpring, [0, 1], [slideX, 0])}px) scale(${cardSpring})`,
+                boxShadow: `0 10px 40px rgba(255, 100, 100, ${0.08 + glowIntensity * 0.08})`,
+                transform: `scale(${cardSpring})`,
                 opacity: cardSpring,
                 minWidth: 420,
               }}
             >
-              {/* Icon container - BIGGER */}
+              {/* Icon container */}
               <div
                 style={{
                   width: 90,

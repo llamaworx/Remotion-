@@ -59,6 +59,10 @@ export const HowItWorksScene: React.FC = () => {
 
   const float = Math.sin(frame * 0.04) * 10;
 
+  // Title animation - fade and scale
+  const titleOpacity = interpolate(frame, [0, 30], [0, 1], { extrapolateRight: "clamp" });
+  const titleScale = interpolate(frame, [0, 30], [0.9, 1], { extrapolateRight: "clamp" });
+
   return (
     <AbsoluteFill
       style={{
@@ -94,11 +98,11 @@ export const HowItWorksScene: React.FC = () => {
         }}
       />
 
-      {/* Title - BIGGER */}
+      {/* Title - fade and scale */}
       <div
         style={{
-          opacity: interpolate(frame, [0, 30], [0, 1]),
-          transform: `translateY(${interpolate(frame, [0, 30], [-40, 0])}px)`,
+          opacity: titleOpacity,
+          transform: `scale(${titleScale})`,
           marginBottom: 50,
         }}
       >
@@ -125,7 +129,7 @@ export const HowItWorksScene: React.FC = () => {
         </h2>
       </div>
 
-      {/* Steps - BIGGER */}
+      {/* Steps - fade in with staggered scale */}
       <div
         style={{
           display: "flex",
@@ -136,14 +140,15 @@ export const HowItWorksScene: React.FC = () => {
         }}
       >
         {steps.map((step, i) => {
-          const delay = i * 30 + 40;
+          const delay = i * 25 + 40;
           const stepSpring = spring({
             frame: frame - delay,
             fps,
-            config: { damping: 14, stiffness: 80 },
+            config: { damping: 15, stiffness: 100 },
           });
 
-          const slideX = i % 2 === 0 ? -150 : 150;
+          // Subtle highlight effect
+          const highlight = Math.sin((frame - delay) * 0.06) * 0.1 + 0.9;
 
           return (
             <div
@@ -155,13 +160,13 @@ export const HowItWorksScene: React.FC = () => {
                 padding: "34px 40px",
                 background: "white",
                 borderRadius: 32,
-                boxShadow: "0 10px 40px rgba(0, 0, 0, 0.07)",
+                boxShadow: `0 10px 40px rgba(0, 0, 0, ${0.05 + highlight * 0.03})`,
                 border: "2px solid rgba(0, 0, 0, 0.04)",
-                transform: `translateX(${interpolate(stepSpring, [0, 1], [slideX, 0])}px)`,
+                transform: `scale(${stepSpring})`,
                 opacity: stepSpring,
               }}
             >
-              {/* Step number circle - BIGGER */}
+              {/* Step number circle */}
               <div
                 style={{
                   width: 90,
@@ -215,7 +220,7 @@ export const HowItWorksScene: React.FC = () => {
         })}
       </div>
 
-      {/* Channel icons - BIGGER */}
+      {/* Channel icons - fade in with scale */}
       <div
         style={{
           position: "absolute",
@@ -227,6 +232,7 @@ export const HowItWorksScene: React.FC = () => {
           alignItems: "center",
           gap: 25,
           opacity: interpolate(frame, [160, 190], [0, 1], { extrapolateRight: "clamp" }),
+          transform: `scale(${interpolate(frame, [160, 190], [0.9, 1], { extrapolateRight: "clamp" })})`,
         }}
       >
         <span
@@ -249,14 +255,12 @@ export const HowItWorksScene: React.FC = () => {
           }}
         >
           {channels.map((channel, i) => {
-            const badgeDelay = i * 4 + 160;
+            const badgeDelay = i * 6 + 165;
             const badgeSpring = spring({
               frame: frame - badgeDelay,
               fps,
-              config: { damping: 12, stiffness: 150 },
+              config: { damping: 14, stiffness: 120 },
             });
-
-            const slideY = 50;
 
             return (
               <div
@@ -270,7 +274,7 @@ export const HowItWorksScene: React.FC = () => {
                   borderRadius: 60,
                   border: "2px solid rgba(0, 0, 0, 0.06)",
                   boxShadow: "0 6px 20px rgba(0, 0, 0, 0.06)",
-                  transform: `translateY(${interpolate(badgeSpring, [0, 1], [slideY, 0])}px)`,
+                  transform: `scale(${badgeSpring})`,
                   opacity: badgeSpring,
                 }}
               >
