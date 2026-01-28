@@ -7,8 +7,8 @@ import {
   spring,
 } from "remotion";
 
-// Bolka Logo - LARGER
-const BolkaLogo: React.FC<{ size?: number }> = ({ size = 65 }) => (
+// Bolka Logo - MUCH LARGER
+const BolkaLogo: React.FC<{ size?: number }> = ({ size = 85 }) => (
   <svg width={size} height={size} viewBox="0 0 100 100">
     <defs>
       <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -29,21 +29,21 @@ const BolkaLogo: React.FC<{ size?: number }> = ({ size = 65 }) => (
   </svg>
 );
 
-// Mini Bolka widget indicator - LARGER
+// Mini Bolka widget indicator - MUCH LARGER
 const MiniWidget: React.FC<{ pulse: number }> = ({ pulse }) => (
   <div
     style={{
-      width: 24,
-      height: 24,
+      width: 32,
+      height: 32,
       background: "linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%)",
       borderRadius: "50%",
-      boxShadow: `0 0 ${10 + pulse * 8}px rgba(139, 92, 246, ${0.6 + pulse * 0.3})`,
+      boxShadow: `0 0 ${14 + pulse * 10}px rgba(139, 92, 246, ${0.65 + pulse * 0.35})`,
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
     }}
   >
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
       <rect x="9" y="2" width="6" height="11" rx="3" fill="white" />
       <path d="M5 10V11C5 14.866 8.13401 18 12 18" stroke="white" strokeWidth="2" />
     </svg>
@@ -67,11 +67,11 @@ const DeviceMockup: React.FC<{
   const opacity = interpolate(entrySpring, [0, 1], [0, 1]);
   const pulse = Math.sin(frame * 0.1 + delay) * 0.5 + 0.5;
 
-  // LARGER dimensions
+  // MUCH LARGER dimensions for visibility
   const dimensions = {
-    laptop: { width: 320, height: 210, screenWidth: 285, screenHeight: 175 },
-    tablet: { width: 160, height: 220, screenWidth: 140, screenHeight: 185 },
-    phone: { width: 95, height: 185, screenWidth: 82, screenHeight: 155 },
+    laptop: { width: 400, height: 260, screenWidth: 360, screenHeight: 220 },
+    tablet: { width: 200, height: 275, screenWidth: 175, screenHeight: 230 },
+    phone: { width: 120, height: 230, screenWidth: 100, screenHeight: 190 },
   };
 
   const d = dimensions[type];
@@ -213,13 +213,13 @@ export const FutureIsNowScene: React.FC = () => {
         }}
       />
 
-      {/* Multi-device display - LARGER */}
+      {/* Multi-device display - MUCH LARGER */}
       <div
         style={{
           display: "flex",
-          gap: 40,
+          gap: 55,
           alignItems: "flex-end",
-          marginBottom: 50,
+          marginBottom: 30,
         }}
       >
         <DeviceMockup type="phone" delay={8} frame={frame} fps={fps} />
@@ -227,11 +227,11 @@ export const FutureIsNowScene: React.FC = () => {
         <DeviceMockup type="tablet" delay={15} frame={frame} fps={fps} />
       </div>
 
-      {/* Bold text: "The world moved to 2030." - BIGGER */}
+      {/* Bold text: "The world moved to 2030." - MUCH BIGGER */}
       <div
         style={{
           position: "absolute",
-          top: 80,
+          top: 60,
           left: 0,
           right: 0,
           textAlign: "center",
@@ -242,7 +242,7 @@ export const FutureIsNowScene: React.FC = () => {
         <span
           style={{
             fontFamily: "system-ui",
-            fontSize: 64,
+            fontSize: 80,
             fontWeight: 800,
             color: "#F8FAFC",
             letterSpacing: "-0.03em",
@@ -256,7 +256,7 @@ export const FutureIsNowScene: React.FC = () => {
               WebkitTextFillColor: "transparent",
               display: "inline-block",
               transform: `scale(${year2030Scale})`,
-              filter: `drop-shadow(0 0 ${35 * yearGlow}px rgba(139, 92, 246, 0.6))`,
+              filter: `drop-shadow(0 0 ${45 * yearGlow}px rgba(139, 92, 246, 0.7))`,
             }}
           >
             2030
@@ -265,11 +265,11 @@ export const FutureIsNowScene: React.FC = () => {
         </span>
       </div>
 
-      {/* "In 2026." - BIGGER with ZOOM */}
+      {/* "In 2026." - MUCH BIGGER with ZOOM */}
       <div
         style={{
           position: "absolute",
-          top: 165,
+          top: 155,
           left: 0,
           right: 0,
           textAlign: "center",
@@ -279,7 +279,7 @@ export const FutureIsNowScene: React.FC = () => {
         <span
           style={{
             fontFamily: "system-ui",
-            fontSize: 88,
+            fontSize: 105,
             fontWeight: 900,
             background: "linear-gradient(90deg, #8B5CF6, #6366F1, #8B5CF6)",
             WebkitBackgroundClip: "text",
@@ -287,34 +287,34 @@ export const FutureIsNowScene: React.FC = () => {
             letterSpacing: "-0.02em",
             display: "inline-block",
             transform: `scale(${year2026Scale})`,
-            filter: `drop-shadow(0 0 ${40 * yearGlow}px rgba(139, 92, 246, 0.5))`,
+            filter: `drop-shadow(0 0 ${50 * yearGlow}px rgba(139, 92, 246, 0.6))`,
           }}
         >
           In 2026.
         </span>
       </div>
 
-      {/* Logo + "Bolka Embed" branding - BIGGER */}
+      {/* Logo + "Bolka Embed" branding - MUCH BIGGER */}
       <div
         style={{
           position: "absolute",
-          bottom: 155,
+          bottom: 150,
           left: 0,
           right: 0,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: 18,
+          gap: 22,
           opacity: interpolate(logoSpring, [0, 1], [0, 1]),
           transform: `translateY(${interpolate(logoSpring, [0, 1], [25, 0])}px)`,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-          <BolkaLogo size={70} />
+        <div style={{ display: "flex", alignItems: "center", gap: 22 }}>
+          <BolkaLogo size={85} />
           <span
             style={{
               fontFamily: "system-ui",
-              fontSize: 52,
+              fontSize: 68,
               fontWeight: 700,
               background: "linear-gradient(90deg, #8B5CF6, #6366F1)",
               WebkitBackgroundClip: "text",
@@ -327,7 +327,7 @@ export const FutureIsNowScene: React.FC = () => {
         <span
           style={{
             fontFamily: "system-ui",
-            fontSize: 28,
+            fontSize: 36,
             color: "#94A3B8",
             letterSpacing: "0.04em",
           }}
@@ -336,11 +336,11 @@ export const FutureIsNowScene: React.FC = () => {
         </span>
       </div>
 
-      {/* CTA Button - BIGGER with pulse */}
+      {/* CTA Button - MUCH BIGGER with pulse */}
       <div
         style={{
           position: "absolute",
-          bottom: 60,
+          bottom: 50,
           left: 0,
           right: 0,
           display: "flex",
@@ -352,15 +352,15 @@ export const FutureIsNowScene: React.FC = () => {
         <div
           style={{
             background: "linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%)",
-            padding: "20px 55px",
+            padding: "26px 70px",
             borderRadius: 60,
-            boxShadow: "0 12px 45px rgba(139, 92, 246, 0.5)",
+            boxShadow: "0 15px 55px rgba(139, 92, 246, 0.55)",
           }}
         >
           <span
             style={{
               fontFamily: "system-ui",
-              fontSize: 28,
+              fontSize: 38,
               fontWeight: 600,
               color: "white",
               letterSpacing: "0.02em",

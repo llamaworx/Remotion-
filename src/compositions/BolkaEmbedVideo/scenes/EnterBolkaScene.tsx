@@ -7,9 +7,9 @@ import {
   spring,
 } from "remotion";
 
-// Bolka Mic Icon with glow - LARGER
+// Bolka Mic Icon with glow - MUCH LARGER
 const BolkaMicIcon: React.FC<{ glowIntensity: number }> = ({ glowIntensity }) => (
-  <svg width="42" height="42" viewBox="0 0 24 24" fill="none">
+  <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
     <defs>
       <linearGradient id="micGradient" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" stopColor="#8B5CF6" />
@@ -41,7 +41,7 @@ const GlitchLine: React.FC<{ top: number; delay: number; frame: number }> = ({ t
   if (glitchFrame < 0 || glitchFrame > 8) return null;
 
   const offset = Math.sin(glitchFrame * 3) * 30;
-  const height = 3 + Math.random() * 8;
+  const height = 4 + Math.random() * 10;
 
   return (
     <div
@@ -122,15 +122,15 @@ export const EnterBolkaScene: React.FC = () => {
         </>
       )}
 
-      {/* Refreshed Website Browser - LARGER */}
+      {/* Refreshed Website Browser - MUCH LARGER */}
       <div
         style={{
-          width: 920,
-          height: 580,
+          width: 950,
+          height: 620,
           backgroundColor: "#1E293B",
-          borderRadius: 20,
+          borderRadius: 24,
           overflow: "hidden",
-          boxShadow: "0 25px 50px rgba(0,0,0,0.5), 0 0 100px rgba(139, 92, 246, 0.15)",
+          boxShadow: "0 30px 60px rgba(0,0,0,0.6), 0 0 120px rgba(139, 92, 246, 0.15)",
           position: "relative",
           opacity: cleanOpacity,
         }}
@@ -138,99 +138,99 @@ export const EnterBolkaScene: React.FC = () => {
         {/* Browser Chrome - cleaner */}
         <div
           style={{
-            height: 48,
+            height: 55,
             backgroundColor: "#334155",
             display: "flex",
             alignItems: "center",
-            padding: "0 18px",
-            gap: 10,
+            padding: "0 22px",
+            gap: 12,
           }}
         >
-          <div style={{ width: 14, height: 14, borderRadius: "50%", backgroundColor: "#EF4444" }} />
-          <div style={{ width: 14, height: 14, borderRadius: "50%", backgroundColor: "#F59E0B" }} />
-          <div style={{ width: 14, height: 14, borderRadius: "50%", backgroundColor: "#10B981" }} />
+          <div style={{ width: 16, height: 16, borderRadius: "50%", backgroundColor: "#EF4444" }} />
+          <div style={{ width: 16, height: 16, borderRadius: "50%", backgroundColor: "#F59E0B" }} />
+          <div style={{ width: 16, height: 16, borderRadius: "50%", backgroundColor: "#10B981" }} />
           <div
             style={{
-              marginLeft: 25,
+              marginLeft: 30,
               flex: 1,
-              height: 28,
+              height: 34,
               backgroundColor: "#1E293B",
-              borderRadius: 8,
+              borderRadius: 10,
               display: "flex",
               alignItems: "center",
-              paddingLeft: 15,
+              paddingLeft: 18,
               color: "#94A3B8",
-              fontSize: 14,
+              fontSize: 18,
               fontFamily: "system-ui",
             }}
           >
-            <span style={{ color: "#10B981", marginRight: 6 }}>🔒</span>
+            <span style={{ color: "#10B981", marginRight: 8 }}>🔒</span>
             www.your-website.com
           </div>
         </div>
 
         {/* Cleaner Website Content */}
-        <div style={{ padding: 35, position: "relative", height: "calc(100% - 48px)" }}>
+        <div style={{ padding: 40, position: "relative", height: "calc(100% - 55px)" }}>
           {/* Modern nav */}
-          <div style={{ display: "flex", gap: 28, marginBottom: 35, alignItems: "center" }}>
+          <div style={{ display: "flex", gap: 35, marginBottom: 40, alignItems: "center" }}>
             <div
               style={{
-                width: 110,
-                height: 32,
+                width: 130,
+                height: 40,
                 background: "linear-gradient(90deg, #8B5CF6, #6366F1)",
-                borderRadius: 8,
+                borderRadius: 10,
               }}
             />
-            <div style={{ width: 70, height: 20, backgroundColor: "#475569", borderRadius: 5 }} />
-            <div style={{ width: 80, height: 20, backgroundColor: "#475569", borderRadius: 5 }} />
-            <div style={{ width: 65, height: 20, backgroundColor: "#475569", borderRadius: 5 }} />
+            <div style={{ width: 85, height: 26, backgroundColor: "#475569", borderRadius: 6 }} />
+            <div style={{ width: 95, height: 26, backgroundColor: "#475569", borderRadius: 6 }} />
+            <div style={{ width: 80, height: 26, backgroundColor: "#475569", borderRadius: 6 }} />
           </div>
 
           {/* Hero section placeholder */}
-          <div style={{ width: "75%", height: 42, backgroundColor: "#475569", borderRadius: 10, marginBottom: 14 }} />
-          <div style={{ width: "55%", height: 26, backgroundColor: "#334155", borderRadius: 8, marginBottom: 40 }} />
+          <div style={{ width: "75%", height: 50, backgroundColor: "#475569", borderRadius: 12, marginBottom: 18 }} />
+          <div style={{ width: "55%", height: 32, backgroundColor: "#334155", borderRadius: 10, marginBottom: 45 }} />
 
           {/* Product cards */}
-          <div style={{ display: "flex", gap: 24 }}>
+          <div style={{ display: "flex", gap: 30 }}>
             {[0, 1, 2].map((i) => (
               <div
                 key={i}
                 style={{
-                  width: 220,
-                  height: 170,
+                  width: 250,
+                  height: 195,
                   backgroundColor: "#334155",
-                  borderRadius: 14,
+                  borderRadius: 18,
                   border: "1px solid #475569",
-                  padding: 18,
+                  padding: 22,
                 }}
               >
-                <div style={{ width: "100%", height: 90, backgroundColor: "#475569", borderRadius: 10, marginBottom: 12 }} />
-                <div style={{ width: "80%", height: 16, backgroundColor: "#475569", borderRadius: 5, marginBottom: 8 }} />
-                <div style={{ width: "60%", height: 14, backgroundColor: "#3B4557", borderRadius: 5 }} />
+                <div style={{ width: "100%", height: 105, backgroundColor: "#475569", borderRadius: 14, marginBottom: 15 }} />
+                <div style={{ width: "80%", height: 20, backgroundColor: "#475569", borderRadius: 6, marginBottom: 10 }} />
+                <div style={{ width: "60%", height: 16, backgroundColor: "#3B4557", borderRadius: 6 }} />
               </div>
             ))}
           </div>
 
-          {/* Bolka Widget Icon - Bottom Right - LARGER */}
+          {/* Bolka Widget Icon - Bottom Right - MUCH LARGER */}
           <div
             style={{
               position: "absolute",
-              bottom: 30,
-              right: 30,
+              bottom: 35,
+              right: 35,
               opacity: iconOpacity,
               transform: `scale(${iconScale})`,
             }}
           >
             <div
               style={{
-                width: 85,
-                height: 85,
+                width: 110,
+                height: 110,
                 background: "linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%)",
                 borderRadius: "50%",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                boxShadow: `0 6px 25px rgba(139, 92, 246, 0.5), 0 0 ${40 + glowPulse * 25}px rgba(139, 92, 246, ${0.4 + glowPulse * 0.4})`,
+                boxShadow: `0 8px 35px rgba(139, 92, 246, 0.55), 0 0 ${50 + glowPulse * 35}px rgba(139, 92, 246, ${0.45 + glowPulse * 0.4})`,
               }}
             >
               <BolkaMicIcon glowIntensity={glowPulse} />
@@ -239,11 +239,11 @@ export const EnterBolkaScene: React.FC = () => {
         </div>
       </div>
 
-      {/* "Meet Bolka Embed" text - BIGGER with ZOOM */}
+      {/* "Meet Bolka Embed" text - MUCH BIGGER with ZOOM */}
       <div
         style={{
           position: "absolute",
-          bottom: 140,
+          bottom: 120,
           left: 0,
           right: 0,
           textAlign: "center",
@@ -253,7 +253,7 @@ export const EnterBolkaScene: React.FC = () => {
         <span
           style={{
             fontFamily: "system-ui",
-            fontSize: 62,
+            fontSize: 85,
             fontWeight: 700,
             color: "#F8FAFC",
             letterSpacing: "-0.02em",
@@ -267,7 +267,7 @@ export const EnterBolkaScene: React.FC = () => {
               WebkitTextFillColor: "transparent",
               display: "inline-block",
               transform: `scale(${productScale})`,
-              textShadow: "0 0 40px rgba(139, 92, 246, 0.5)",
+              textShadow: "0 0 60px rgba(139, 92, 246, 0.6)",
             }}
           >
             Bolka Embed

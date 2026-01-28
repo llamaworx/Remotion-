@@ -7,8 +7,8 @@ import {
   spring,
 } from "remotion";
 
-// Mic icon - LARGER
-const MicIcon: React.FC<{ size?: number }> = ({ size = 32 }) => (
+// Mic icon - MUCH LARGER
+const MicIcon: React.FC<{ size?: number }> = ({ size = 40 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <rect x="9" y="2" width="6" height="11" rx="3" fill="white" />
     <path
@@ -23,7 +23,7 @@ const MicIcon: React.FC<{ size?: number }> = ({ size = 32 }) => (
 
 // Keyboard icon - LARGER
 const KeyboardIcon: React.FC = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
     <rect x="2" y="6" width="20" height="12" rx="2" stroke="#94A3B8" strokeWidth="1.5" />
     <rect x="5" y="9" width="2" height="2" rx="0.5" fill="#94A3B8" />
     <rect x="8" y="9" width="2" height="2" rx="0.5" fill="#94A3B8" />
@@ -34,14 +34,14 @@ const KeyboardIcon: React.FC = () => (
   </svg>
 );
 
-// Voice waveform animation - LARGER
+// Voice waveform animation - MUCH LARGER
 const Waveform: React.FC<{ frame: number; active: boolean }> = ({ frame, active }) => {
-  const bars = 14;
+  const bars = 16;
   return (
-    <div style={{ display: "flex", gap: 4, alignItems: "center", height: 50 }}>
+    <div style={{ display: "flex", gap: 6, alignItems: "center", height: 65 }}>
       {Array.from({ length: bars }).map((_, i) => {
-        const baseHeight = active ? 10 : 5;
-        const maxHeight = active ? 45 : 8;
+        const baseHeight = active ? 12 : 6;
+        const maxHeight = active ? 55 : 10;
         const height = active
           ? baseHeight + Math.abs(Math.sin((frame * 0.2 + i * 0.5))) * (maxHeight - baseHeight)
           : baseHeight;
@@ -49,10 +49,10 @@ const Waveform: React.FC<{ frame: number; active: boolean }> = ({ frame, active 
           <div
             key={i}
             style={{
-              width: 5,
+              width: 7,
               height,
               backgroundColor: active ? "#8B5CF6" : "#475569",
-              borderRadius: 3,
+              borderRadius: 4,
               transition: "height 0.1s ease",
             }}
           />
@@ -83,9 +83,9 @@ export const WidgetOpensScene: React.FC = () => {
     config: { damping: 12, stiffness: 120 },
   });
 
-  const widgetHeight = interpolate(expandSpring, [0, 1], [85, 420]);
-  const widgetWidth = interpolate(expandSpring, [0, 1], [85, 450]);
-  const widgetBorderRadius = interpolate(expandSpring, [0, 1], [42, 28]);
+  const widgetHeight = interpolate(expandSpring, [0, 1], [110, 520]);
+  const widgetWidth = interpolate(expandSpring, [0, 1], [110, 550]);
+  const widgetBorderRadius = interpolate(expandSpring, [0, 1], [55, 32]);
 
   // Content fade in (after widget expands - slower)
   const contentOpacity = interpolate(frame, [75, 100], [0, 1], {
@@ -122,41 +122,41 @@ export const WidgetOpensScene: React.FC = () => {
       {/* Website Browser (dimmed background) - LARGER */}
       <div
         style={{
-          width: 920,
-          height: 580,
+          width: 950,
+          height: 620,
           backgroundColor: "#1E293B",
-          borderRadius: 20,
+          borderRadius: 24,
           overflow: "hidden",
-          boxShadow: "0 25px 50px rgba(0,0,0,0.5)",
+          boxShadow: "0 30px 60px rgba(0,0,0,0.6)",
           position: "relative",
-          opacity: 0.6,
+          opacity: 0.55,
         }}
       >
         {/* Browser Chrome */}
         <div
           style={{
-            height: 48,
+            height: 55,
             backgroundColor: "#334155",
             display: "flex",
             alignItems: "center",
-            padding: "0 18px",
-            gap: 10,
+            padding: "0 22px",
+            gap: 12,
           }}
         >
-          <div style={{ width: 14, height: 14, borderRadius: "50%", backgroundColor: "#EF4444" }} />
-          <div style={{ width: 14, height: 14, borderRadius: "50%", backgroundColor: "#F59E0B" }} />
-          <div style={{ width: 14, height: 14, borderRadius: "50%", backgroundColor: "#10B981" }} />
+          <div style={{ width: 16, height: 16, borderRadius: "50%", backgroundColor: "#EF4444" }} />
+          <div style={{ width: 16, height: 16, borderRadius: "50%", backgroundColor: "#F59E0B" }} />
+          <div style={{ width: 16, height: 16, borderRadius: "50%", backgroundColor: "#10B981" }} />
         </div>
 
         {/* Blurred website content */}
-        <div style={{ padding: 35, filter: "blur(4px)", opacity: 0.4 }}>
-          <div style={{ display: "flex", gap: 28, marginBottom: 35 }}>
-            <div style={{ width: 110, height: 32, backgroundColor: "#475569", borderRadius: 8 }} />
-            <div style={{ width: 70, height: 22, backgroundColor: "#475569", borderRadius: 5 }} />
-            <div style={{ width: 80, height: 22, backgroundColor: "#475569", borderRadius: 5 }} />
+        <div style={{ padding: 40, filter: "blur(5px)", opacity: 0.35 }}>
+          <div style={{ display: "flex", gap: 32, marginBottom: 40 }}>
+            <div style={{ width: 130, height: 38, backgroundColor: "#475569", borderRadius: 10 }} />
+            <div style={{ width: 85, height: 28, backgroundColor: "#475569", borderRadius: 6 }} />
+            <div style={{ width: 95, height: 28, backgroundColor: "#475569", borderRadius: 6 }} />
           </div>
-          <div style={{ width: "75%", height: 42, backgroundColor: "#475569", borderRadius: 10, marginBottom: 14 }} />
-          <div style={{ width: "55%", height: 26, backgroundColor: "#334155", borderRadius: 8 }} />
+          <div style={{ width: "75%", height: 50, backgroundColor: "#475569", borderRadius: 12, marginBottom: 18 }} />
+          <div style={{ width: "55%", height: 32, backgroundColor: "#334155", borderRadius: 10 }} />
         </div>
       </div>
 
@@ -164,14 +164,14 @@ export const WidgetOpensScene: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          bottom: 130,
-          right: 150,
+          bottom: 110,
+          right: 130,
           width: widgetWidth,
           height: widgetHeight,
           background: "linear-gradient(180deg, #1E293B 0%, #0F172A 100%)",
           borderRadius: widgetBorderRadius,
-          boxShadow: `0 15px 50px rgba(0,0,0,0.6), 0 0 80px rgba(139, 92, 246, 0.25)`,
-          border: "2px solid rgba(139, 92, 246, 0.4)",
+          boxShadow: `0 20px 70px rgba(0,0,0,0.65), 0 0 100px rgba(139, 92, 246, 0.3)`,
+          border: "3px solid rgba(139, 92, 246, 0.45)",
           transform: `scale(${clickScale})`,
           overflow: "hidden",
         }}
@@ -188,7 +188,7 @@ export const WidgetOpensScene: React.FC = () => {
               background: "linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%)",
             }}
           >
-            <MicIcon size={42} />
+            <MicIcon size={55} />
           </div>
         )}
 
@@ -196,7 +196,7 @@ export const WidgetOpensScene: React.FC = () => {
         {frame >= 42 && (
           <div
             style={{
-              padding: 25,
+              padding: 32,
               height: "100%",
               display: "flex",
               flexDirection: "column",
@@ -208,14 +208,14 @@ export const WidgetOpensScene: React.FC = () => {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: 14,
-                marginBottom: 25,
+                gap: 18,
+                marginBottom: 32,
               }}
             >
               <div
                 style={{
-                  width: 48,
-                  height: 48,
+                  width: 62,
+                  height: 62,
                   background: "linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%)",
                   borderRadius: "50%",
                   display: "flex",
@@ -223,13 +223,13 @@ export const WidgetOpensScene: React.FC = () => {
                   alignItems: "center",
                 }}
               >
-                <MicIcon size={24} />
+                <MicIcon size={32} />
               </div>
               <div>
                 <div
                   style={{
                     fontFamily: "system-ui",
-                    fontSize: 20,
+                    fontSize: 28,
                     fontWeight: 600,
                     color: "#F8FAFC",
                   }}
@@ -239,7 +239,7 @@ export const WidgetOpensScene: React.FC = () => {
                 <div
                   style={{
                     fontFamily: "system-ui",
-                    fontSize: 14,
+                    fontSize: 18,
                     color: "#10B981",
                   }}
                 >
@@ -249,16 +249,16 @@ export const WidgetOpensScene: React.FC = () => {
             </div>
 
             {/* Chat area - LARGER */}
-            <div style={{ flex: 1, marginBottom: 20 }}>
+            <div style={{ flex: 1, marginBottom: 26 }}>
               <div
                 style={{
                   backgroundColor: "#334155",
-                  borderRadius: 16,
-                  padding: 20,
-                  marginBottom: 15,
+                  borderRadius: 22,
+                  padding: 26,
+                  marginBottom: 20,
                 }}
               >
-                <span style={{ fontFamily: "system-ui", fontSize: 18, color: "#E2E8F0" }}>
+                <span style={{ fontFamily: "system-ui", fontSize: 24, color: "#E2E8F0" }}>
                   Hi! How can I help you today?
                 </span>
               </div>
@@ -269,7 +269,7 @@ export const WidgetOpensScene: React.FC = () => {
                   style={{
                     display: "flex",
                     justifyContent: "center",
-                    marginTop: 25,
+                    marginTop: 30,
                   }}
                 >
                   <Waveform frame={frame} active={waveformActive} />
@@ -281,7 +281,7 @@ export const WidgetOpensScene: React.FC = () => {
             <div
               style={{
                 display: "flex",
-                gap: 14,
+                gap: 18,
                 alignItems: "center",
               }}
             >
@@ -289,18 +289,18 @@ export const WidgetOpensScene: React.FC = () => {
               <div
                 style={{
                   flex: 1,
-                  height: 58,
+                  height: 72,
                   backgroundColor: "#334155",
-                  borderRadius: 29,
+                  borderRadius: 36,
                   display: "flex",
                   alignItems: "center",
-                  padding: "0 20px",
-                  gap: 12,
-                  border: "1px solid #475569",
+                  padding: "0 26px",
+                  gap: 16,
+                  border: "2px solid #475569",
                 }}
               >
                 <KeyboardIcon />
-                <span style={{ fontFamily: "system-ui", fontSize: 16, color: "#64748B" }}>
+                <span style={{ fontFamily: "system-ui", fontSize: 22, color: "#64748B" }}>
                   Type a message...
                 </span>
               </div>
@@ -308,18 +308,18 @@ export const WidgetOpensScene: React.FC = () => {
               {/* Voice button with glow - LARGER */}
               <div
                 style={{
-                  width: 64,
-                  height: 64,
+                  width: 80,
+                  height: 80,
                   background: "linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%)",
                   borderRadius: "50%",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  boxShadow: `0 0 ${25 + glowPulse * 20}px rgba(139, 92, 246, ${0.5 + glowPulse * 0.4})`,
+                  boxShadow: `0 0 ${30 + glowPulse * 25}px rgba(139, 92, 246, ${0.55 + glowPulse * 0.45})`,
                   cursor: "pointer",
                 }}
               >
-                <MicIcon size={30} />
+                <MicIcon size={42} />
               </div>
             </div>
           </div>
@@ -331,29 +331,29 @@ export const WidgetOpensScene: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            bottom: interpolate(cursorProgress, [0, 1], [320, 145]),
-            right: interpolate(cursorProgress, [0, 1], [80, 165]),
-            width: 26,
-            height: 32,
+            bottom: interpolate(cursorProgress, [0, 1], [350, 125]),
+            right: interpolate(cursorProgress, [0, 1], [60, 145]),
+            width: 32,
+            height: 40,
             pointerEvents: "none",
           }}
         >
-          <svg width="26" height="32" viewBox="0 0 20 24" fill="none">
+          <svg width="32" height="40" viewBox="0 0 20 24" fill="none">
             <path
               d="M1 1L1 17L5.5 12.5L9 20L12 18.5L8.5 11.5L14 11.5L1 1Z"
               fill="white"
               stroke="#1E293B"
-              strokeWidth="2"
+              strokeWidth="2.5"
             />
           </svg>
         </div>
       )}
 
-      {/* Text + Voice. Your choice. - BIGGER */}
+      {/* Text + Voice. Your choice. - MUCH BIGGER */}
       <div
         style={{
           position: "absolute",
-          bottom: 80,
+          bottom: 60,
           left: 0,
           right: 0,
           textAlign: "center",
@@ -363,7 +363,7 @@ export const WidgetOpensScene: React.FC = () => {
         <span
           style={{
             fontFamily: "system-ui",
-            fontSize: 64,
+            fontSize: 82,
             fontWeight: 700,
             color: "#F8FAFC",
             letterSpacing: "-0.02em",
