@@ -7,8 +7,8 @@ import {
   spring,
 } from "remotion";
 
-// Mic icon
-const MicIcon: React.FC<{ size?: number; color?: string }> = ({ size = 28, color = "white" }) => (
+// Mic icon - LARGER
+const MicIcon: React.FC<{ size?: number; color?: string }> = ({ size = 32, color = "white" }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <rect x="9" y="2" width="6" height="11" rx="3" fill={color} />
     <path
@@ -21,43 +21,43 @@ const MicIcon: React.FC<{ size?: number; color?: string }> = ({ size = 28, color
   </svg>
 );
 
-// Dynamic waveform for voice conversation
+// Dynamic waveform for voice conversation - LARGER
 const ConversationWaveform: React.FC<{
   frame: number;
   isUser: boolean;
   intensity: number;
 }> = ({ frame, isUser, intensity }) => {
-  const bars = 20;
+  const bars = 16;
   const color = isUser ? "#3B82F6" : "#8B5CF6";
 
   return (
     <div
       style={{
         display: "flex",
-        gap: 3,
+        gap: 4,
         alignItems: "center",
         justifyContent: "center",
-        height: 60,
+        height: 70,
       }}
     >
       {Array.from({ length: bars }).map((_, i) => {
         const phase = isUser ? i * 0.4 : i * 0.3 + Math.PI;
-        const baseHeight = 6;
+        const baseHeight = 8;
         const waveHeight =
           baseHeight +
-          Math.abs(Math.sin(frame * 0.25 + phase)) * 45 * intensity +
-          Math.abs(Math.cos(frame * 0.15 + phase * 0.5)) * 20 * intensity;
+          Math.abs(Math.sin(frame * 0.25 + phase)) * 55 * intensity +
+          Math.abs(Math.cos(frame * 0.15 + phase * 0.5)) * 25 * intensity;
 
         return (
           <div
             key={i}
             style={{
-              width: 5,
+              width: 6,
               height: waveHeight,
               backgroundColor: color,
-              borderRadius: 3,
+              borderRadius: 4,
               opacity: 0.7 + intensity * 0.3,
-              boxShadow: intensity > 0.3 ? `0 0 10px ${color}` : "none",
+              boxShadow: intensity > 0.3 ? `0 0 12px ${color}` : "none",
             }}
           />
         );
@@ -66,7 +66,7 @@ const ConversationWaveform: React.FC<{
   );
 };
 
-// Circular audio visualizer
+// Circular audio visualizer - LARGER
 const CircularVisualizer: React.FC<{ frame: number; active: boolean; isAI: boolean }> = ({
   frame,
   active,
@@ -76,12 +76,12 @@ const CircularVisualizer: React.FC<{ frame: number; active: boolean; isAI: boole
   const baseColor = isAI ? "#8B5CF6" : "#3B82F6";
 
   return (
-    <div style={{ position: "relative", width: 120, height: 120 }}>
+    <div style={{ position: "relative", width: 140, height: 140 }}>
       {Array.from({ length: rings }).map((_, i) => {
         const scale = active
-          ? 1 + Math.sin(frame * 0.2 + i * 1.5) * 0.15 * (i + 1) * 0.3
+          ? 1 + Math.sin(frame * 0.2 + i * 1.5) * 0.18 * (i + 1) * 0.3
           : 1;
-        const opacity = active ? 0.3 - i * 0.08 : 0.1;
+        const opacity = active ? 0.35 - i * 0.08 : 0.1;
 
         return (
           <div
@@ -90,10 +90,10 @@ const CircularVisualizer: React.FC<{ frame: number; active: boolean; isAI: boole
               position: "absolute",
               top: "50%",
               left: "50%",
-              width: 80 + i * 30,
-              height: 80 + i * 30,
+              width: 95 + i * 35,
+              height: 95 + i * 35,
               borderRadius: "50%",
-              border: `2px solid ${baseColor}`,
+              border: `3px solid ${baseColor}`,
               transform: `translate(-50%, -50%) scale(${scale})`,
               opacity,
             }}
@@ -106,17 +106,17 @@ const CircularVisualizer: React.FC<{ frame: number; active: boolean; isAI: boole
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: 70,
-          height: 70,
+          width: 85,
+          height: 85,
           borderRadius: "50%",
           background: `linear-gradient(135deg, ${baseColor} 0%, ${isAI ? "#6366F1" : "#1D4ED8"} 100%)`,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          boxShadow: active ? `0 0 30px ${baseColor}` : "none",
+          boxShadow: active ? `0 0 40px ${baseColor}` : "none",
         }}
       >
-        <MicIcon size={28} />
+        <MicIcon size={36} />
       </div>
     </div>
   );
@@ -126,38 +126,46 @@ export const VoiceInActionScene: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Conversation timing
-  // 0-40: User speaking
-  // 40-50: Transition
-  // 50-100: AI responding
+  // Conversation timing - SLOWER for better readability
+  // 0-45: User speaking
+  // 45-55: Transition
+  // 55-100: AI responding
   // 100-120: Text reveal
 
-  const userSpeaking = frame < 40;
-  const aiSpeaking = frame >= 50 && frame < 100;
+  const userSpeaking = frame < 45;
+  const aiSpeaking = frame >= 55 && frame < 100;
 
   const userIntensity = userSpeaking
-    ? interpolate(frame, [0, 5, 35, 40], [0, 1, 1, 0], { extrapolateRight: "clamp" })
+    ? interpolate(frame, [0, 8, 38, 45], [0, 1, 1, 0], { extrapolateRight: "clamp" })
     : 0;
 
   const aiIntensity = aiSpeaking
-    ? interpolate(frame, [50, 55, 95, 100], [0, 1, 1, 0], { extrapolateRight: "clamp" })
+    ? interpolate(frame, [55, 62, 93, 100], [0, 1, 1, 0], { extrapolateRight: "clamp" })
     : 0;
 
   // Widget scale animation
   const widgetSpring = spring({
     frame,
     fps,
-    config: { damping: 20 },
+    config: { damping: 18 },
   });
 
-  // Text overlay
-  const textOpacity = interpolate(frame, [85, 100], [0, 1], {
+  // Text overlay - delayed more for reading
+  const textOpacity = interpolate(frame, [95, 110], [0, 1], {
     extrapolateRight: "clamp",
   });
 
-  const textSlide = interpolate(frame, [85, 105], [30, 0], {
+  const textSlide = interpolate(frame, [95, 115], [40, 0], {
     extrapolateRight: "clamp",
   });
+
+  // Zoom effect on tagline
+  const taglineZoom = spring({
+    frame: frame - 105,
+    fps,
+    config: { damping: 12 },
+  });
+  const taglineScale = interpolate(taglineZoom, [0, 1], [0.9, 1.02]);
 
   return (
     <AbsoluteFill
@@ -167,31 +175,31 @@ export const VoiceInActionScene: React.FC = () => {
         alignItems: "center",
       }}
     >
-      {/* Ambient background glow */}
+      {/* Ambient background glow - LARGER */}
       <div
         style={{
           position: "absolute",
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: 600,
-          height: 600,
+          width: 750,
+          height: 750,
           background: `radial-gradient(circle, ${
-            userSpeaking ? "rgba(59, 130, 246, 0.15)" : "rgba(139, 92, 246, 0.15)"
+            userSpeaking ? "rgba(59, 130, 246, 0.18)" : "rgba(139, 92, 246, 0.18)"
           } 0%, transparent 70%)`,
           transition: "background 0.5s ease",
         }}
       />
 
-      {/* Main conversation widget */}
+      {/* Main conversation widget - LARGER */}
       <div
         style={{
-          width: 700,
+          width: 800,
           background: "linear-gradient(180deg, #1E293B 0%, #0F172A 100%)",
-          borderRadius: 32,
-          padding: 40,
-          boxShadow: "0 25px 80px rgba(0,0,0,0.5), 0 0 100px rgba(139, 92, 246, 0.1)",
-          border: "1px solid rgba(139, 92, 246, 0.2)",
+          borderRadius: 36,
+          padding: 50,
+          boxShadow: "0 30px 100px rgba(0,0,0,0.5), 0 0 120px rgba(139, 92, 246, 0.12)",
+          border: "2px solid rgba(139, 92, 246, 0.25)",
           transform: `scale(${widgetSpring})`,
         }}
       >
@@ -200,16 +208,16 @@ export const VoiceInActionScene: React.FC = () => {
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: 30,
-            marginBottom: 30,
+            gap: 35,
+            marginBottom: 35,
           }}
         >
-          {/* User message */}
+          {/* User message - LARGER */}
           <div
             style={{
               display: "flex",
               justifyContent: "flex-end",
-              gap: 15,
+              gap: 18,
               alignItems: "center",
               opacity: userSpeaking ? 1 : 0.5,
               transition: "opacity 0.3s ease",
@@ -218,23 +226,23 @@ export const VoiceInActionScene: React.FC = () => {
             <div
               style={{
                 backgroundColor: "#3B82F6",
-                borderRadius: "20px 20px 4px 20px",
-                padding: "15px 20px",
-                maxWidth: 350,
+                borderRadius: "24px 24px 6px 24px",
+                padding: "18px 25px",
+                maxWidth: 420,
               }}
             >
               {userSpeaking ? (
                 <ConversationWaveform frame={frame} isUser={true} intensity={userIntensity} />
               ) : (
-                <span style={{ fontFamily: "system-ui", fontSize: 16, color: "white" }}>
+                <span style={{ fontFamily: "system-ui", fontSize: 20, color: "white" }}>
                   "How do I return my order?"
                 </span>
               )}
             </div>
             <div
               style={{
-                width: 45,
-                height: 45,
+                width: 55,
+                height: 55,
                 borderRadius: "50%",
                 backgroundColor: "#3B82F6",
                 display: "flex",
@@ -243,34 +251,34 @@ export const VoiceInActionScene: React.FC = () => {
                 flexShrink: 0,
               }}
             >
-              <span style={{ fontSize: 20 }}>👤</span>
+              <span style={{ fontSize: 26 }}>👤</span>
             </div>
           </div>
 
-          {/* AI Response */}
-          {frame >= 45 && (
+          {/* AI Response - LARGER */}
+          {frame >= 50 && (
             <div
               style={{
                 display: "flex",
                 justifyContent: "flex-start",
-                gap: 15,
+                gap: 18,
                 alignItems: "center",
-                opacity: interpolate(frame, [45, 50], [0, 1], { extrapolateRight: "clamp" }),
+                opacity: interpolate(frame, [50, 55], [0, 1], { extrapolateRight: "clamp" }),
               }}
             >
               <CircularVisualizer frame={frame} active={aiSpeaking} isAI={true} />
               <div
                 style={{
                   backgroundColor: "#334155",
-                  borderRadius: "20px 20px 20px 4px",
-                  padding: "15px 20px",
-                  maxWidth: 400,
+                  borderRadius: "24px 24px 24px 6px",
+                  padding: "18px 25px",
+                  maxWidth: 480,
                 }}
               >
                 {aiSpeaking ? (
                   <ConversationWaveform frame={frame} isUser={false} intensity={aiIntensity} />
                 ) : (
-                  <span style={{ fontFamily: "system-ui", fontSize: 16, color: "#E2E8F0" }}>
+                  <span style={{ fontFamily: "system-ui", fontSize: 20, color: "#E2E8F0" }}>
                     "I can help you with that! Let me walk you through the process..."
                   </span>
                 )}
@@ -279,35 +287,35 @@ export const VoiceInActionScene: React.FC = () => {
           )}
         </div>
 
-        {/* Status indicator */}
+        {/* Status indicator - LARGER */}
         <div
           style={{
             display: "flex",
             justifyContent: "center",
-            gap: 10,
+            gap: 12,
             alignItems: "center",
           }}
         >
           <div
             style={{
-              width: 10,
-              height: 10,
+              width: 14,
+              height: 14,
               borderRadius: "50%",
               backgroundColor: userSpeaking ? "#3B82F6" : aiSpeaking ? "#8B5CF6" : "#10B981",
-              boxShadow: `0 0 10px ${userSpeaking ? "#3B82F6" : aiSpeaking ? "#8B5CF6" : "#10B981"}`,
+              boxShadow: `0 0 15px ${userSpeaking ? "#3B82F6" : aiSpeaking ? "#8B5CF6" : "#10B981"}`,
             }}
           />
-          <span style={{ fontFamily: "system-ui", fontSize: 14, color: "#94A3B8" }}>
+          <span style={{ fontFamily: "system-ui", fontSize: 18, color: "#94A3B8" }}>
             {userSpeaking ? "Listening..." : aiSpeaking ? "Speaking..." : "Ready"}
           </span>
         </div>
       </div>
 
-      {/* "Your website. Now it talks back." */}
+      {/* "Your website. Now it talks back." - BIGGER with ZOOM */}
       <div
         style={{
           position: "absolute",
-          bottom: 120,
+          bottom: 100,
           left: 0,
           right: 0,
           textAlign: "center",
@@ -318,7 +326,7 @@ export const VoiceInActionScene: React.FC = () => {
         <span
           style={{
             fontFamily: "system-ui",
-            fontSize: 48,
+            fontSize: 58,
             fontWeight: 700,
             color: "#F8FAFC",
             letterSpacing: "-0.02em",
@@ -330,6 +338,8 @@ export const VoiceInActionScene: React.FC = () => {
               background: "linear-gradient(90deg, #8B5CF6, #6366F1)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
+              display: "inline-block",
+              transform: `scale(${taglineScale})`,
             }}
           >
             Now it talks back.

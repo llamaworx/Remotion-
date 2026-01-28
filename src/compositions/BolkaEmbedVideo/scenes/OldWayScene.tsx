@@ -9,7 +9,7 @@ import {
 
 // Chat bubble icon for old chatbot
 const ChatBotIcon: React.FC<{ pulse: number }> = ({ pulse }) => (
-  <svg width="50" height="50" viewBox="0 0 24 24" fill="none">
+  <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
     <rect
       x="2"
       y="4"
@@ -30,13 +30,13 @@ const ChatBotIcon: React.FC<{ pulse: number }> = ({ pulse }) => (
 const TypingDots: React.FC<{ frame: number }> = ({ frame }) => {
   const dots = [0, 1, 2];
   return (
-    <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+    <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
       {dots.map((i) => (
         <div
           key={i}
           style={{
-            width: 8,
-            height: 8,
+            width: 12,
+            height: 12,
             borderRadius: "50%",
             backgroundColor: "#9CA3AF",
             opacity: interpolate(
@@ -47,7 +47,7 @@ const TypingDots: React.FC<{ frame: number }> = ({ frame }) => {
             transform: `translateY(${interpolate(
               Math.sin((frame * 0.3 + i * 1.5)),
               [-1, 1],
-              [0, -4]
+              [0, -6]
             )}px)`,
           }}
         />
@@ -60,42 +60,42 @@ export const OldWayScene: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Website fade in
-  const websiteOpacity = interpolate(frame, [0, 15], [0, 1], {
+  // Website fade in (slower)
+  const websiteOpacity = interpolate(frame, [0, 20], [0, 1], {
     extrapolateRight: "clamp",
   });
 
   // Chat icon pulse
   const pulse = Math.sin(frame * 0.15);
 
-  // Text typing animation - "How do I get started?"
+  // Text typing animation - "How do I get started?" (slower typing)
   const typingText = "How do I get started?";
-  const charsToShow = Math.floor(interpolate(frame, [15, 40], [0, typingText.length], {
+  const charsToShow = Math.floor(interpolate(frame, [20, 45], [0, typingText.length], {
     extrapolateRight: "clamp",
   }));
 
-  // "So 2020" text fade
-  const so2020Opacity = interpolate(frame, [45, 55], [0, 1], {
+  // "So 2020" text fade (delayed and slower)
+  const so2020Opacity = interpolate(frame, [50, 60], [0, 1], {
     extrapolateRight: "clamp",
   });
 
-  // EXTINCT stamp slam
+  // EXTINCT stamp slam (delayed for reading time)
   const stampProgress = spring({
-    frame: frame - 60,
+    frame: frame - 70,
     fps,
     config: { damping: 8, stiffness: 200 },
   });
 
-  const stampScale = interpolate(stampProgress, [0, 1], [3, 1]);
+  const stampScale = interpolate(stampProgress, [0, 1], [4, 1]);
   const stampRotation = interpolate(stampProgress, [0, 1], [-15, -12]);
-  const stampOpacity = frame >= 60 ? 1 : 0;
+  const stampOpacity = frame >= 70 ? 1 : 0;
 
   // Screen shake when stamp hits
-  const shakeX = frame >= 60 && frame < 70
-    ? Math.sin(frame * 2) * (70 - frame) * 0.5
+  const shakeX = frame >= 70 && frame < 82
+    ? Math.sin(frame * 2) * (82 - frame) * 0.6
     : 0;
-  const shakeY = frame >= 60 && frame < 70
-    ? Math.cos(frame * 2.5) * (70 - frame) * 0.5
+  const shakeY = frame >= 70 && frame < 82
+    ? Math.cos(frame * 2.5) * (82 - frame) * 0.6
     : 0;
 
   return (
@@ -107,13 +107,13 @@ export const OldWayScene: React.FC = () => {
         transform: `translate(${shakeX}px, ${shakeY}px)`,
       }}
     >
-      {/* Fake Website Browser */}
+      {/* Fake Website Browser - LARGER */}
       <div
         style={{
-          width: 850,
-          height: 550,
+          width: 920,
+          height: 580,
           backgroundColor: "#1F2937",
-          borderRadius: 16,
+          borderRadius: 20,
           overflow: "hidden",
           boxShadow: "0 25px 50px rgba(0,0,0,0.5)",
           opacity: websiteOpacity,
@@ -123,29 +123,29 @@ export const OldWayScene: React.FC = () => {
         {/* Browser Chrome */}
         <div
           style={{
-            height: 40,
+            height: 48,
             backgroundColor: "#374151",
             display: "flex",
             alignItems: "center",
-            padding: "0 15px",
-            gap: 8,
+            padding: "0 18px",
+            gap: 10,
           }}
         >
-          <div style={{ width: 12, height: 12, borderRadius: "50%", backgroundColor: "#EF4444" }} />
-          <div style={{ width: 12, height: 12, borderRadius: "50%", backgroundColor: "#F59E0B" }} />
-          <div style={{ width: 12, height: 12, borderRadius: "50%", backgroundColor: "#10B981" }} />
+          <div style={{ width: 14, height: 14, borderRadius: "50%", backgroundColor: "#EF4444" }} />
+          <div style={{ width: 14, height: 14, borderRadius: "50%", backgroundColor: "#F59E0B" }} />
+          <div style={{ width: 14, height: 14, borderRadius: "50%", backgroundColor: "#10B981" }} />
           <div
             style={{
-              marginLeft: 20,
+              marginLeft: 25,
               flex: 1,
-              height: 24,
+              height: 28,
               backgroundColor: "#1F2937",
-              borderRadius: 6,
+              borderRadius: 8,
               display: "flex",
               alignItems: "center",
-              paddingLeft: 12,
+              paddingLeft: 15,
               color: "#9CA3AF",
-              fontSize: 12,
+              fontSize: 14,
               fontFamily: "system-ui",
             }}
           >
@@ -154,59 +154,60 @@ export const OldWayScene: React.FC = () => {
         </div>
 
         {/* Website Content */}
-        <div style={{ padding: 30, position: "relative", height: "calc(100% - 40px)" }}>
+        <div style={{ padding: 35, position: "relative", height: "calc(100% - 48px)" }}>
           {/* Fake website elements */}
-          <div style={{ display: "flex", gap: 20, marginBottom: 25 }}>
-            <div style={{ width: 80, height: 24, backgroundColor: "#374151", borderRadius: 4 }} />
-            <div style={{ width: 60, height: 24, backgroundColor: "#374151", borderRadius: 4 }} />
-            <div style={{ width: 70, height: 24, backgroundColor: "#374151", borderRadius: 4 }} />
+          <div style={{ display: "flex", gap: 25, marginBottom: 30 }}>
+            <div style={{ width: 90, height: 28, backgroundColor: "#374151", borderRadius: 6 }} />
+            <div style={{ width: 70, height: 28, backgroundColor: "#374151", borderRadius: 6 }} />
+            <div style={{ width: 80, height: 28, backgroundColor: "#374151", borderRadius: 6 }} />
           </div>
 
-          <div style={{ width: "70%", height: 32, backgroundColor: "#374151", borderRadius: 6, marginBottom: 15 }} />
-          <div style={{ width: "50%", height: 20, backgroundColor: "#2D3748", borderRadius: 4, marginBottom: 30 }} />
+          <div style={{ width: "70%", height: 38, backgroundColor: "#374151", borderRadius: 8, marginBottom: 18 }} />
+          <div style={{ width: "50%", height: 24, backgroundColor: "#2D3748", borderRadius: 6, marginBottom: 35 }} />
 
-          <div style={{ display: "flex", gap: 20 }}>
-            <div style={{ width: 200, height: 150, backgroundColor: "#374151", borderRadius: 8 }} />
-            <div style={{ width: 200, height: 150, backgroundColor: "#374151", borderRadius: 8 }} />
-            <div style={{ width: 200, height: 150, backgroundColor: "#374151", borderRadius: 8 }} />
+          <div style={{ display: "flex", gap: 25 }}>
+            <div style={{ width: 220, height: 160, backgroundColor: "#374151", borderRadius: 12 }} />
+            <div style={{ width: 220, height: 160, backgroundColor: "#374151", borderRadius: 12 }} />
+            <div style={{ width: 220, height: 160, backgroundColor: "#374151", borderRadius: 12 }} />
           </div>
 
-          {/* Chat Widget - Bottom Right */}
+          {/* Chat Widget - Bottom Right - LARGER */}
           <div
             style={{
               position: "absolute",
-              bottom: 20,
-              right: 20,
+              bottom: 25,
+              right: 25,
               display: "flex",
               flexDirection: "column",
               alignItems: "flex-end",
-              gap: 10,
+              gap: 12,
             }}
           >
-            {/* Chat bubble with user message */}
+            {/* Chat bubble with user message - BIGGER */}
             {charsToShow > 0 && (
               <div
                 style={{
                   backgroundColor: "#3B82F6",
                   color: "white",
-                  padding: "10px 15px",
-                  borderRadius: "18px 18px 4px 18px",
-                  fontSize: 14,
+                  padding: "14px 20px",
+                  borderRadius: "22px 22px 6px 22px",
+                  fontSize: 18,
                   fontFamily: "system-ui",
-                  maxWidth: 200,
+                  fontWeight: 500,
+                  maxWidth: 260,
                 }}
               >
                 {typingText.slice(0, charsToShow)}
               </div>
             )}
 
-            {/* Bot typing indicator */}
-            {frame > 42 && (
+            {/* Bot typing indicator - BIGGER */}
+            {frame > 47 && (
               <div
                 style={{
                   backgroundColor: "#374151",
-                  padding: "12px 18px",
-                  borderRadius: "18px 18px 18px 4px",
+                  padding: "16px 22px",
+                  borderRadius: "22px 22px 22px 6px",
                   alignSelf: "flex-start",
                 }}
               >
@@ -214,17 +215,17 @@ export const OldWayScene: React.FC = () => {
               </div>
             )}
 
-            {/* Chat icon */}
+            {/* Chat icon - LARGER */}
             <div
               style={{
-                width: 60,
-                height: 60,
+                width: 75,
+                height: 75,
                 backgroundColor: "#4B5563",
                 borderRadius: "50%",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                boxShadow: "0 4px 15px rgba(0,0,0,0.3)",
+                boxShadow: "0 6px 20px rgba(0,0,0,0.4)",
                 transform: `scale(${1 + pulse * 0.05})`,
               }}
             >
@@ -234,11 +235,11 @@ export const OldWayScene: React.FC = () => {
         </div>
       </div>
 
-      {/* "Text chatbots. So 2020." overlay */}
+      {/* "Text chatbots. So 2020." overlay - BIGGER FONTS */}
       <div
         style={{
           position: "absolute",
-          bottom: 180,
+          bottom: 160,
           left: 0,
           right: 0,
           textAlign: "center",
@@ -248,7 +249,7 @@ export const OldWayScene: React.FC = () => {
         <span
           style={{
             fontFamily: "system-ui",
-            fontSize: 42,
+            fontSize: 56,
             fontWeight: 700,
             color: "#9CA3AF",
             letterSpacing: "-0.02em",
@@ -259,7 +260,7 @@ export const OldWayScene: React.FC = () => {
         </span>
       </div>
 
-      {/* EXTINCT Stamp */}
+      {/* EXTINCT Stamp - BIGGER */}
       <div
         style={{
           position: "absolute",
@@ -271,20 +272,20 @@ export const OldWayScene: React.FC = () => {
       >
         <div
           style={{
-            border: "8px solid #DC2626",
-            borderRadius: 12,
-            padding: "15px 40px",
-            backgroundColor: "rgba(220, 38, 38, 0.15)",
+            border: "10px solid #DC2626",
+            borderRadius: 16,
+            padding: "20px 50px",
+            backgroundColor: "rgba(220, 38, 38, 0.2)",
           }}
         >
           <span
             style={{
               fontFamily: "system-ui",
-              fontSize: 72,
+              fontSize: 96,
               fontWeight: 900,
               color: "#DC2626",
-              letterSpacing: "0.1em",
-              textShadow: "0 0 20px rgba(220, 38, 38, 0.5)",
+              letterSpacing: "0.12em",
+              textShadow: "0 0 30px rgba(220, 38, 38, 0.6)",
             }}
           >
             EXTINCT
