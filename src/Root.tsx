@@ -59,6 +59,15 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{
           // Add your music file to public/music.mp3
           musicUrl: staticFile("music.mp3"),
+          // Voice Over: Add audio files to public/voiceover/ folder
+          // Generate using ElevenLabs, Play.ht, or record yourself
+          voiceOver: {
+            scene1: staticFile("voiceover/scene1.mp3"), // "Text chatbots. So 2020. Extinct."
+            scene2: staticFile("voiceover/scene2.mp3"), // "Meet Bolka Embed."
+            scene3: staticFile("voiceover/scene3.mp3"), // "Text plus voice. Your choice."
+            scene4: staticFile("voiceover/scene4.mp3"), // "Your website. Now it talks back."
+            scene5: staticFile("voiceover/scene5.mp3"), // "The world moved to 2030. In 2026. Let your website speak. Bolka dot AI."
+          },
         }}
       />
     </>
