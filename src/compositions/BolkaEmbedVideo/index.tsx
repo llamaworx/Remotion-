@@ -3,6 +3,7 @@ import { AbsoluteFill, Audio, Sequence } from "remotion";
 import { OldWayScene } from "./scenes/OldWayScene";
 import { EnterBolkaScene } from "./scenes/EnterBolkaScene";
 import { WidgetOpensScene } from "./scenes/WidgetOpensScene";
+import { DualModeFeatureScene } from "./scenes/DualModeFeatureScene";
 import { VoiceInActionScene } from "./scenes/VoiceInActionScene";
 import { FutureIsNowScene } from "./scenes/FutureIsNowScene";
 
@@ -10,8 +11,9 @@ export interface VoiceOverConfig {
   scene1?: string; // "Text chatbots. So 2020. Extinct."
   scene2?: string; // "Meet Bolka Embed."
   scene3?: string; // "Text plus voice. Your choice."
-  scene4?: string; // "Your website. Now it talks back."
-  scene5?: string; // "The world moved to 2030. In 2026. Let your website speak. Bolka dot AI."
+  scene4?: string; // "World's first Voice AI Widget. Talk or type. One widget."
+  scene5?: string; // "Your website. Now it talks back."
+  scene6?: string; // "The world moved to 2030. In 2026. Voice AI, Deployed Your Way. Bolka dot AI."
 }
 
 export interface BolkaEmbedVideoProps {
@@ -49,13 +51,18 @@ export const BolkaEmbedVideo: React.FC<BolkaEmbedVideoProps> = ({
         </Sequence>
       )}
       {voiceOver?.scene4 && (
-        <Sequence from={360} durationInFrames={120}>
+        <Sequence from={360} durationInFrames={150}>
           <Audio src={voiceOver.scene4} volume={1} />
         </Sequence>
       )}
       {voiceOver?.scene5 && (
-        <Sequence from={480} durationInFrames={120}>
+        <Sequence from={510} durationInFrames={120}>
           <Audio src={voiceOver.scene5} volume={1} />
+        </Sequence>
+      )}
+      {voiceOver?.scene6 && (
+        <Sequence from={630} durationInFrames={120}>
+          <Audio src={voiceOver.scene6} volume={1} />
         </Sequence>
       )}
 
@@ -74,13 +81,18 @@ export const BolkaEmbedVideo: React.FC<BolkaEmbedVideoProps> = ({
         <WidgetOpensScene />
       </Sequence>
 
-      {/* Scene 4: Voice AI in Action (12-16s) */}
-      <Sequence from={360} durationInFrames={120}>
+      {/* Scene 4: World's First Voice AI Widget - Dual Mode Feature (12-17s) */}
+      <Sequence from={360} durationInFrames={150}>
+        <DualModeFeatureScene />
+      </Sequence>
+
+      {/* Scene 5: Voice AI in Action (17-21s) */}
+      <Sequence from={510} durationInFrames={120}>
         <VoiceInActionScene />
       </Sequence>
 
-      {/* Scene 5: The Future is Now (16-20s) */}
-      <Sequence from={480} durationInFrames={120}>
+      {/* Scene 6: The Future is Now (21-25s) */}
+      <Sequence from={630} durationInFrames={120}>
         <FutureIsNowScene />
       </Sequence>
     </AbsoluteFill>

@@ -327,12 +327,15 @@ export const FutureIsNowScene: React.FC = () => {
         <span
           style={{
             fontFamily: "system-ui",
-            fontSize: 36,
-            color: "#94A3B8",
+            fontSize: 38,
+            fontWeight: 600,
+            background: "linear-gradient(90deg, #94A3B8, #E2E8F0)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
             letterSpacing: "0.04em",
           }}
         >
-          Let your website speak
+          Voice AI, Deployed Your Way
         </span>
       </div>
 

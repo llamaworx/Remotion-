@@ -48,11 +48,11 @@ export const RemotionRoot: React.FC = () => {
         }}
       />
 
-      {/* Bolka Embed - Social Media Promo (20s) */}
+      {/* Bolka Embed - Social Media Promo (25s) */}
       <Composition
         id="BolkaEmbedVideo"
         component={BolkaEmbedVideo}
-        durationInFrames={600}
+        durationInFrames={750}
         fps={30}
         width={1080}
         height={1080}
@@ -65,8 +65,9 @@ export const RemotionRoot: React.FC = () => {
             scene1: staticFile("voiceover/scene1.mp3"), // "Text chatbots. So 2020. Extinct."
             scene2: staticFile("voiceover/scene2.mp3"), // "Meet Bolka Embed."
             scene3: staticFile("voiceover/scene3.mp3"), // "Text plus voice. Your choice."
-            scene4: staticFile("voiceover/scene4.mp3"), // "Your website. Now it talks back."
-            scene5: staticFile("voiceover/scene5.mp3"), // "The world moved to 2030. In 2026. Let your website speak. Bolka dot AI."
+            scene4: staticFile("voiceover/scene4.mp3"), // "World's first Voice AI Widget. Talk or type. One widget."
+            scene5: staticFile("voiceover/scene5.mp3"), // "Your website. Now it talks back."
+            scene6: staticFile("voiceover/scene6.mp3"), // "The world moved to 2030. In 2026. Voice AI, Deployed Your Way. Bolka dot AI."
           },
         }}
       />
