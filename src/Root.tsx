@@ -2,6 +2,7 @@ import React from "react";
 import { Composition, staticFile } from "remotion";
 import { BolkaProductVideo } from "./compositions/BolkaProductVideo";
 import { VoiceLinksVideo } from "./compositions/VoiceLinksVideo";
+import { BolkaEmbedVideo } from "./compositions/BolkaEmbedVideo";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -42,6 +43,20 @@ export const RemotionRoot: React.FC = () => {
             scenario: "Customer scans QR code on product packaging and instantly connects with AI support - no waiting, no forms, just talk.",
             benefit: "80% faster resolution, 24/7 availability",
           },
+          // Add your music file to public/music.mp3
+          musicUrl: staticFile("music.mp3"),
+        }}
+      />
+
+      {/* Bolka Embed - Social Media Promo (20s) */}
+      <Composition
+        id="BolkaEmbedVideo"
+        component={BolkaEmbedVideo}
+        durationInFrames={600}
+        fps={30}
+        width={1080}
+        height={1080}
+        defaultProps={{
           // Add your music file to public/music.mp3
           musicUrl: staticFile("music.mp3"),
         }}
