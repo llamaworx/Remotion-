@@ -7,6 +7,7 @@ import { Scene4VoiceAILinks } from "./scenes/Scene4VoiceAILinks";
 import { Scene5NotRecorded } from "./scenes/Scene5NotRecorded";
 import { Scene6NonLinear } from "./scenes/Scene6NonLinear";
 import { Scene7WebsiteVoice } from "./scenes/Scene7WebsiteVoice";
+import { Scene8SalesOutreach } from "./scenes/Scene8SalesOutreach";
 
 export interface VoiceAIAnywhereVideoProps {
   musicUrl?: string;
@@ -69,6 +70,12 @@ export const VoiceAIAnywhereVideo: React.FC<VoiceAIAnywhereVideoProps> = ({
       {/* VO: "With Bolka Embed, every website gets its own voice. Text chatbots? They're already extinct." */}
       <Sequence from={1620} durationInFrames={300}>
         <Scene7WebsiteVoice />
+      </Sequence>
+
+      {/* Scene 8: Sales Outreach Use Case (64-79s = 450 frames) */}
+      {/* VO: "For sales outreach, one voice link can handle thousands of conversations — qualifying leads in real time." */}
+      <Sequence from={1920} durationInFrames={450}>
+        <Scene8SalesOutreach />
       </Sequence>
 
       {/* More scenes will be added here */}
