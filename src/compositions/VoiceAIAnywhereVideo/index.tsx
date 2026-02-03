@@ -9,6 +9,7 @@ import { Scene6NonLinear } from "./scenes/Scene6NonLinear";
 import { Scene7WebsiteVoice } from "./scenes/Scene7WebsiteVoice";
 import { Scene8SalesOutreach } from "./scenes/Scene8SalesOutreach";
 import { Scene9Industries } from "./scenes/Scene9Industries";
+import { Scene10AdsQR } from "./scenes/Scene10AdsQR";
 
 export interface VoiceAIAnywhereVideoProps {
   musicUrl?: string;
@@ -83,6 +84,12 @@ export const VoiceAIAnywhereVideo: React.FC<VoiceAIAnywhereVideoProps> = ({
       {/* VO: "From real estate to insurance, SaaS to healthcare — just share a Voice AI link and let it sell." */}
       <Sequence from={2370} durationInFrames={450}>
         <Scene9Industries />
+      </Sequence>
+
+      {/* Scene 10: Ads + QR (94-104s = 300 frames) */}
+      {/* VO: "Your ads don't need landing pages anymore. Just scan and talk to an expert… powered by Bolka." */}
+      <Sequence from={2820} durationInFrames={300}>
+        <Scene10AdsQR />
       </Sequence>
 
       {/* More scenes will be added here */}
