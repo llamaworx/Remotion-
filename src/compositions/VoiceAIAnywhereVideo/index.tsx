@@ -3,6 +3,7 @@ import { AbsoluteFill, Audio, Sequence } from "remotion";
 import { Scene1TextChatSlow } from "./scenes/Scene1TextChatSlow";
 import { Scene2EnterBolka } from "./scenes/Scene2EnterBolka";
 import { Scene3TwoProducts } from "./scenes/Scene3TwoProducts";
+import { Scene4VoiceAILinks } from "./scenes/Scene4VoiceAILinks";
 
 export interface VoiceAIAnywhereVideoProps {
   musicUrl?: string;
@@ -41,6 +42,12 @@ export const VoiceAIAnywhereVideo: React.FC<VoiceAIAnywhereVideoProps> = ({
       {/* VO: "Two products. One revolution." */}
       <Sequence from={330} durationInFrames={240}>
         <Scene3TwoProducts />
+      </Sequence>
+
+      {/* Scene 4: Voice AI Links (19-34s = 450 frames) */}
+      {/* VO: "Bolka Share gives you a Voice AI link. Just click and start talking — on any device, any browser." */}
+      <Sequence from={570} durationInFrames={450}>
+        <Scene4VoiceAILinks />
       </Sequence>
 
       {/* More scenes will be added here */}
