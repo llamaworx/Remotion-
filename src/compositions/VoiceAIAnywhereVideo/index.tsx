@@ -8,6 +8,7 @@ import { Scene5NotRecorded } from "./scenes/Scene5NotRecorded";
 import { Scene6NonLinear } from "./scenes/Scene6NonLinear";
 import { Scene7WebsiteVoice } from "./scenes/Scene7WebsiteVoice";
 import { Scene8SalesOutreach } from "./scenes/Scene8SalesOutreach";
+import { Scene9Industries } from "./scenes/Scene9Industries";
 
 export interface VoiceAIAnywhereVideoProps {
   musicUrl?: string;
@@ -76,6 +77,12 @@ export const VoiceAIAnywhereVideo: React.FC<VoiceAIAnywhereVideoProps> = ({
       {/* VO: "For sales outreach, one voice link can handle thousands of conversations — qualifying leads in real time." */}
       <Sequence from={1920} durationInFrames={450}>
         <Scene8SalesOutreach />
+      </Sequence>
+
+      {/* Scene 9: Industries (79-94s = 450 frames) */}
+      {/* VO: "From real estate to insurance, SaaS to healthcare — just share a Voice AI link and let it sell." */}
+      <Sequence from={2370} durationInFrames={450}>
+        <Scene9Industries />
       </Sequence>
 
       {/* More scenes will be added here */}

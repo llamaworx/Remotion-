@@ -73,11 +73,11 @@ export const RemotionRoot: React.FC = () => {
         }}
       />
 
-      {/* Voice AI Anywhere - SaaS Launch Film (70-90s) */}
+      {/* Voice AI Anywhere - SaaS Launch Film (~100s) */}
       <Composition
         id="VoiceAIAnywhereVideo"
         component={VoiceAIAnywhereVideo}
-        durationInFrames={2400}
+        durationInFrames={3000}
         fps={30}
         width={1920}
         height={1080}
