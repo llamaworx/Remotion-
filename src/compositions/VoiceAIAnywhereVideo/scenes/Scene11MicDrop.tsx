@@ -208,7 +208,7 @@ export const Scene11MicDrop: React.FC = () => {
           <span
             style={{
               fontFamily: "system-ui",
-              fontSize: 100,
+              fontSize: 130,
               fontWeight: 800,
               letterSpacing: "-0.03em",
             }}
@@ -244,7 +244,7 @@ export const Scene11MicDrop: React.FC = () => {
             <span
               style={{
                 fontFamily: "system-ui",
-                fontSize: 56,
+                fontSize: 72,
                 fontWeight: 700,
                 color: "white",
                 letterSpacing: "0.02em",
@@ -270,7 +270,7 @@ export const Scene11MicDrop: React.FC = () => {
         <span
           style={{
             fontFamily: "system-ui",
-            fontSize: 28,
+            fontSize: 40,
             color: "#64748B",
             letterSpacing: "0.1em",
           }}

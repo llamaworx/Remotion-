@@ -212,7 +212,7 @@ export const Scene2EnterBolka: React.FC = () => {
         <span
           style={{
             fontFamily: "system-ui",
-            fontSize: 90,
+            fontSize: 120,
             fontWeight: 800,
             letterSpacing: "-0.03em",
           }}

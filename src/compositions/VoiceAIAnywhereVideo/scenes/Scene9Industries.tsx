@@ -76,7 +76,7 @@ const IndustryCard: React.FC<{
         <span
           style={{
             fontFamily: "system-ui",
-            fontSize: 22,
+            fontSize: 28,
             fontWeight: 600,
             color: isHighlighted ? "#F8FAFC" : "#94A3B8",
             transition: "all 0.2s ease",
@@ -294,7 +294,7 @@ export const Scene9Industries: React.FC = () => {
         <span
           style={{
             fontFamily: "system-ui",
-            fontSize: 80,
+            fontSize: 110,
             fontWeight: 800,
             color: "#F8FAFC",
             letterSpacing: "-0.02em",

@@ -145,7 +145,7 @@ const DataSource: React.FC<{
         >
           {icon}
         </div>
-        <span style={{ fontFamily: "system-ui", fontSize: 14, color: "#94A3B8", fontWeight: 500 }}>
+        <span style={{ fontFamily: "system-ui", fontSize: 20, color: "#94A3B8", fontWeight: 500 }}>
           {label}
         </span>
       </div>
@@ -301,7 +301,7 @@ const VoiceOutput: React.FC<{ frame: number; opacity: number }> = ({ frame, opac
         })}
       </div>
 
-      <span style={{ fontFamily: "system-ui", fontSize: 20, color: "#A78BFA", fontWeight: 500 }}>
+      <span style={{ fontFamily: "system-ui", fontSize: 28, color: "#A78BFA", fontWeight: 500 }}>
         Intelligent Response
       </span>
     </div>
@@ -486,7 +486,7 @@ export const Scene5NotRecorded: React.FC = () => {
           <span
             style={{
               fontFamily: "system-ui",
-              fontSize: 80,
+              fontSize: 110,
               fontWeight: 800,
               color: "#F8FAFC",
               letterSpacing: "-0.02em",
@@ -517,7 +517,7 @@ export const Scene5NotRecorded: React.FC = () => {
           <span
             style={{
               fontFamily: "system-ui",
-              fontSize: 60,
+              fontSize: 80,
               fontWeight: 700,
               color: "#CBD5E1",
             }}

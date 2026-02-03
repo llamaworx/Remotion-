@@ -200,7 +200,7 @@ const WebsiteMockup: React.FC<{
           opacity: 0.8,
         }}
       >
-        <span style={{ fontFamily: "system-ui", fontSize: 14, color: "#94A3B8" }}>
+        <span style={{ fontFamily: "system-ui", fontSize: 18, color: "#94A3B8" }}>
           {name}
         </span>
       </div>
@@ -241,7 +241,7 @@ const ExtinctBadge: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) 
         <span
           style={{
             fontFamily: "system-ui",
-            fontSize: 48,
+            fontSize: 64,
             fontWeight: 900,
             color: "#EF4444",
             letterSpacing: "0.1em",
@@ -343,7 +343,7 @@ export const Scene7WebsiteVoice: React.FC = () => {
         <span
           style={{
             fontFamily: "system-ui",
-            fontSize: 80,
+            fontSize: 110,
             fontWeight: 800,
             color: "#F8FAFC",
             letterSpacing: "-0.02em",

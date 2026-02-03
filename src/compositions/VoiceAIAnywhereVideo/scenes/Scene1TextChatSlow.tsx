@@ -256,7 +256,7 @@ export const Scene1TextChatSlow: React.FC = () => {
           <span
             style={{
               fontFamily: "system-ui",
-              fontSize: 85,
+              fontSize: 110,
               fontWeight: 800,
               color: "#F8FAFC",
               letterSpacing: "-0.03em",
@@ -286,7 +286,7 @@ export const Scene1TextChatSlow: React.FC = () => {
           <span
             style={{
               fontFamily: "system-ui",
-              fontSize: 75,
+              fontSize: 100,
               fontWeight: 700,
               color: "#CBD5E1",
               letterSpacing: "-0.02em",

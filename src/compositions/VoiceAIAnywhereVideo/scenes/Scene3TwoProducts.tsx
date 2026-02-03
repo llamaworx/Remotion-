@@ -343,7 +343,7 @@ export const Scene3TwoProducts: React.FC = () => {
           <div
             style={{
               fontFamily: "system-ui",
-              fontSize: 42,
+              fontSize: 56,
               fontWeight: 700,
               color: "#F8FAFC",
               marginBottom: 8,
@@ -354,7 +354,7 @@ export const Scene3TwoProducts: React.FC = () => {
           <div
             style={{
               fontFamily: "system-ui",
-              fontSize: 24,
+              fontSize: 32,
               color: "#8B5CF6",
               fontWeight: 500,
             }}
@@ -394,7 +394,7 @@ export const Scene3TwoProducts: React.FC = () => {
           <div
             style={{
               fontFamily: "system-ui",
-              fontSize: 42,
+              fontSize: 56,
               fontWeight: 700,
               color: "#F8FAFC",
               marginBottom: 8,
@@ -405,7 +405,7 @@ export const Scene3TwoProducts: React.FC = () => {
           <div
             style={{
               fontFamily: "system-ui",
-              fontSize: 24,
+              fontSize: 32,
               color: "#6366F1",
               fontWeight: 500,
             }}

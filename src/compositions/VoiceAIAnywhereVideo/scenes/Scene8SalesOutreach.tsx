@@ -71,7 +71,7 @@ const FunnelStep: React.FC<{
         <span
           style={{
             fontFamily: "system-ui",
-            fontSize: 24,
+            fontSize: 32,
             fontWeight: 600,
             color: isActive ? "#F8FAFC" : "#94A3B8",
           }}
@@ -215,7 +215,7 @@ const StatsCounter: React.FC<{
       <div
         style={{
           fontFamily: "system-ui",
-          fontSize: 56,
+          fontSize: 72,
           fontWeight: 800,
           background: "linear-gradient(90deg, #8B5CF6, #6366F1)",
           WebkitBackgroundClip: "text",
@@ -227,7 +227,7 @@ const StatsCounter: React.FC<{
       <div
         style={{
           fontFamily: "system-ui",
-          fontSize: 18,
+          fontSize: 24,
           color: "#94A3B8",
           marginTop: 4,
         }}
@@ -329,7 +329,7 @@ export const Scene8SalesOutreach: React.FC = () => {
         <span
           style={{
             fontFamily: "system-ui",
-            fontSize: 48,
+            fontSize: 64,
             fontWeight: 700,
             color: "#F8FAFC",
           }}
@@ -413,7 +413,7 @@ export const Scene8SalesOutreach: React.FC = () => {
         <span
           style={{
             fontFamily: "system-ui",
-            fontSize: 72,
+            fontSize: 96,
             fontWeight: 800,
             color: "#F8FAFC",
             letterSpacing: "-0.02em",

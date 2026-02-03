@@ -112,7 +112,7 @@ const PlatformCard: React.FC<{
         }}
       >
         {icon}
-        <span style={{ fontFamily: "system-ui", fontSize: 14, color: "#94A3B8", fontWeight: 500 }}>
+        <span style={{ fontFamily: "system-ui", fontSize: 18, color: "#94A3B8", fontWeight: 500 }}>
           {name}
         </span>
       </div>
@@ -217,7 +217,7 @@ const ClickToTalk: React.FC<{ frame: number; fps: number; startFrame: number }> 
             <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round"/>
           </svg>
         </div>
-        <span style={{ fontFamily: "monospace", fontSize: 24, color: "#8B5CF6" }}>
+        <span style={{ fontFamily: "monospace", fontSize: 30, color: "#8B5CF6" }}>
           bolka.ai/share/demo
         </span>
       </div>
@@ -308,7 +308,7 @@ const ClickToTalk: React.FC<{ frame: number; fps: number; startFrame: number }> 
               })}
             </div>
 
-            <span style={{ fontFamily: "system-ui", fontSize: 18, color: "#94A3B8" }}>
+            <span style={{ fontFamily: "system-ui", fontSize: 24, color: "#94A3B8" }}>
               Listening...
             </span>
           </div>
@@ -450,7 +450,7 @@ export const Scene4VoiceAILinks: React.FC = () => {
           <span
             style={{
               fontFamily: "system-ui",
-              fontSize: 72,
+              fontSize: 96,
               fontWeight: 800,
               color: "#F8FAFC",
               letterSpacing: "-0.02em",
@@ -479,7 +479,7 @@ export const Scene4VoiceAILinks: React.FC = () => {
           <span
             style={{
               fontFamily: "system-ui",
-              fontSize: 36,
+              fontSize: 48,
               fontWeight: 500,
               color: "#94A3B8",
             }}

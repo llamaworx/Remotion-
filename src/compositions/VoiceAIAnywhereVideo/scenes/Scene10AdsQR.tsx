@@ -108,7 +108,7 @@ const FacebookAd: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) =>
               <path d="M12 18V22M8 22H16" stroke="white" strokeWidth="2" strokeLinecap="round" />
             </svg>
           </div>
-          <span style={{ fontFamily: "system-ui", fontSize: 28, fontWeight: 700, color: "white" }}>
+          <span style={{ fontFamily: "system-ui", fontSize: 36, fontWeight: 700, color: "white" }}>
             Talk to an Expert Now
           </span>
         </div>
@@ -126,7 +126,7 @@ const FacebookAd: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) =>
               cursor: "pointer",
             }}
           >
-            <span style={{ fontFamily: "system-ui", fontSize: 18, fontWeight: 600, color: "white" }}>
+            <span style={{ fontFamily: "system-ui", fontSize: 22, fontWeight: 600, color: "white" }}>
               🎤 Talk Now
             </span>
           </div>
@@ -529,7 +529,7 @@ export const Scene10AdsQR: React.FC = () => {
         <span
           style={{
             fontFamily: "system-ui",
-            fontSize: 72,
+            fontSize: 96,
             fontWeight: 800,
             color: "#F8FAFC",
             letterSpacing: "-0.02em",

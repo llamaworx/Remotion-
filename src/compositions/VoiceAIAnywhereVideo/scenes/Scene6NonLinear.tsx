@@ -89,7 +89,7 @@ const ConversationNode: React.FC<{
         <span
           style={{
             fontFamily: "system-ui",
-            fontSize: 14,
+            fontSize: 18,
             color: "#E2E8F0",
             lineHeight: 1.4,
           }}
@@ -190,7 +190,7 @@ const FloatingQuestion: React.FC<{
           padding: "8px 16px",
         }}
       >
-        <span style={{ fontFamily: "system-ui", fontSize: 16, color: "#93C5FD" }}>
+        <span style={{ fontFamily: "system-ui", fontSize: 22, color: "#93C5FD" }}>
           "{text}"
         </span>
       </div>
@@ -353,7 +353,7 @@ export const Scene6NonLinear: React.FC = () => {
           <span
             style={{
               fontFamily: "system-ui",
-              fontSize: 80,
+              fontSize: 110,
               fontWeight: 800,
               color: "#F8FAFC",
               letterSpacing: "-0.02em",
@@ -382,7 +382,7 @@ export const Scene6NonLinear: React.FC = () => {
           <span
             style={{
               fontFamily: "system-ui",
-              fontSize: 50,
+              fontSize: 68,
               fontWeight: 600,
               color: "#94A3B8",
             }}
