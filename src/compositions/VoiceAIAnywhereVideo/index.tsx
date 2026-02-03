@@ -4,6 +4,7 @@ import { Scene1TextChatSlow } from "./scenes/Scene1TextChatSlow";
 import { Scene2EnterBolka } from "./scenes/Scene2EnterBolka";
 import { Scene3TwoProducts } from "./scenes/Scene3TwoProducts";
 import { Scene4VoiceAILinks } from "./scenes/Scene4VoiceAILinks";
+import { Scene5NotRecorded } from "./scenes/Scene5NotRecorded";
 
 export interface VoiceAIAnywhereVideoProps {
   musicUrl?: string;
@@ -48,6 +49,12 @@ export const VoiceAIAnywhereVideo: React.FC<VoiceAIAnywhereVideoProps> = ({
       {/* VO: "Bolka Share gives you a Voice AI link. Just click and start talking — on any device, any browser." */}
       <Sequence from={570} durationInFrames={450}>
         <Scene4VoiceAILinks />
+      </Sequence>
+
+      {/* Scene 5: Not Recorded - It's Trained (34-44s = 300 frames) */}
+      {/* VO: "This isn't a recorded message. It's trained on your product, your website, your data. It thinks. It responds. It adapts." */}
+      <Sequence from={1020} durationInFrames={300}>
+        <Scene5NotRecorded />
       </Sequence>
 
       {/* More scenes will be added here */}
