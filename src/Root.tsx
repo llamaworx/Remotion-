@@ -3,6 +3,7 @@ import { Composition, staticFile } from "remotion";
 import { BolkaProductVideo } from "./compositions/BolkaProductVideo";
 import { VoiceLinksVideo } from "./compositions/VoiceLinksVideo";
 import { BolkaEmbedVideo } from "./compositions/BolkaEmbedVideo";
+import { VoiceAIAnywhereVideo } from "./compositions/VoiceAIAnywhereVideo";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -69,6 +70,21 @@ export const RemotionRoot: React.FC = () => {
             scene5: staticFile("voiceover/scene5.mp3"), // "Your website. Now it talks back."
             scene6: staticFile("voiceover/scene6.mp3"), // "The world moved to 2030. In 2026. Voice AI, Deployed Your Way. Bolka dot AI."
           },
+        }}
+      />
+
+      {/* Voice AI Anywhere - SaaS Launch Film (70-90s) */}
+      <Composition
+        id="VoiceAIAnywhereVideo"
+        component={VoiceAIAnywhereVideo}
+        durationInFrames={2400}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{
+          musicUrl: staticFile("music.mp3"),
+          // Full voice over track
+          // VO Scene 1: "We built the internet to talk… and then forced everyone to type."
         }}
       />
     </>
