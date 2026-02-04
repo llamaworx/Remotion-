@@ -8,6 +8,7 @@ import { Scene3DigitalNotTalking } from "./scenes/Scene3DigitalNotTalking";
 import { Scene4WhatSalesNeeds } from "./scenes/Scene4WhatSalesNeeds";
 import { Scene5EnterBolka } from "./scenes/Scene5EnterBolka";
 import { Scene6SalesFlow } from "./scenes/Scene6SalesFlow";
+import { Scene7CustomerExperience } from "./scenes/Scene7CustomerExperience";
 
 interface SalesOutreachVideoProps {
   musicUrl?: string;
@@ -78,6 +79,11 @@ export const SalesOutreachVideo: React.FC<SalesOutreachVideoProps> = ({
       {/* Scene 6: Real Sales Outreach Flow (42-55s) */}
       <Sequence from={1260} durationInFrames={390}>
         <Scene6SalesFlow />
+      </Sequence>
+
+      {/* Scene 7: Customer Experience (55-65s) */}
+      <Sequence from={1650} durationInFrames={300}>
+        <Scene7CustomerExperience />
       </Sequence>
     </AbsoluteFill>
   );
