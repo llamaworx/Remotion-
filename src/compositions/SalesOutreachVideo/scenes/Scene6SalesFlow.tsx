@@ -405,15 +405,15 @@ export const Scene6SalesFlow: React.FC = () => {
 
   // Channel positions
   const channels = [
-    { icon: <WhatsAppIcon size={36} />, name: "WhatsApp", color: "#25D366", delay: 10, endX: 250, endY: 200 },
-    { icon: <EmailIcon size={36} />, name: "Email", color: "#EA4335", delay: 30, endX: 250, endY: 400 },
-    { icon: <SMSIcon size={36} />, name: "SMS", color: "#34B7F1", delay: 50, endX: 250, endY: 600 },
-    { icon: <AdBannerIcon size={36} />, name: "Ad Banner", color: "#F59E0B", delay: 70, endX: 250, endY: 800 },
+    { icon: <WhatsAppIcon size={36} />, name: "WhatsApp", color: "#25D366", delay: 10, endX: 320, endY: 200 },
+    { icon: <EmailIcon size={36} />, name: "Email", color: "#EA4335", delay: 30, endX: 320, endY: 380 },
+    { icon: <SMSIcon size={36} />, name: "SMS", color: "#34B7F1", delay: 50, endX: 320, endY: 560 },
+    { icon: <AdBannerIcon size={36} />, name: "Ad Banner", color: "#F59E0B", delay: 70, endX: 320, endY: 740 },
   ];
 
-  // Hub position
-  const hubX = 500;
-  const hubY = 450;
+  // Hub position - centered better
+  const hubX = 700;
+  const hubY = 480;
 
   return (
     <AbsoluteFill
@@ -464,12 +464,12 @@ export const Scene6SalesFlow: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          left: 100,
+          left: 140,
           top: "50%",
           transform: "translateY(-50%)",
           display: "flex",
           flexDirection: "column",
-          gap: 40,
+          gap: 30,
         }}
       >
         {channels.map((channel, i) => (
@@ -491,7 +491,7 @@ export const Scene6SalesFlow: React.FC = () => {
         style={{
           position: "absolute",
           left: hubX - 70,
-          top: hubY - 70,
+          top: hubY - 120,
         }}
       >
         <VoiceLinkHub frame={frame} fps={fps} />

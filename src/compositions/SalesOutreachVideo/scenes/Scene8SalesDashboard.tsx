@@ -541,9 +541,9 @@ export const Scene8SalesDashboard: React.FC = () => {
               </span>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              <CallbackItem name="Rahul Sharma" time="Requested 2 min ago" priority="high" delay={110} frame={frame} fps={fps} />
-              <CallbackItem name="Priya Patel" time="Requested 5 min ago" priority="high" delay={130} frame={frame} fps={fps} />
-              <CallbackItem name="Amit Kumar" time="Requested 12 min ago" priority="medium" delay={150} frame={frame} fps={fps} />
+              <CallbackItem name="James Wilson" time="New York, USA • 2 min ago" priority="high" delay={110} frame={frame} fps={fps} />
+              <CallbackItem name="Emma Schmidt" time="Berlin, Germany • 5 min ago" priority="high" delay={130} frame={frame} fps={fps} />
+              <CallbackItem name="Sophie Martin" time="Paris, France • 12 min ago" priority="medium" delay={150} frame={frame} fps={fps} />
             </div>
           </div>
         </div>

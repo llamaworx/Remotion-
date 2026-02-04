@@ -187,9 +187,9 @@ export const Scene7CustomerExperience: React.FC = () => {
   // Conversation flow
   const conversations = [
     { text: "Is this available in my city?", isUser: true, delay: 20 },
-    { text: "Yes! We're available in Mumbai, Delhi, Bangalore, and 50+ other cities. Which city are you in?", isUser: false, delay: 60 },
+    { text: "Yes! We're available in New York, London, Sydney, Singapore, and 50+ cities worldwide. Which city are you in?", isUser: false, delay: 60 },
     { text: "What's the price?", isUser: true, delay: 120 },
-    { text: "Our plans start at ₹2,999/month. Would you like me to explain what's included?", isUser: false, delay: 160 },
+    { text: "Our plans start at $299/month. Would you like me to explain what's included?", isUser: false, delay: 160 },
     { text: "When can you call me?", isUser: true, delay: 220 },
     { text: "I can schedule a call right now! What time works best for you today?", isUser: false, delay: 260 },
   ];

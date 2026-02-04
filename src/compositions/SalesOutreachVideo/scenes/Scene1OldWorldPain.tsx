@@ -306,12 +306,14 @@ export const Scene1OldWorldPain: React.FC = () => {
     config: { damping: 14 },
   });
 
-  // Phone positions
+  // Phone positions - spread across left and center
   const phones = [
-    { x: 100, y: 200, delay: 5, rejected: true },
-    { x: 300, y: 350, delay: 15, rejected: true },
-    { x: 150, y: 500, delay: 25, rejected: false },
-    { x: 350, y: 180, delay: 35, rejected: true },
+    { x: 120, y: 150, delay: 5, rejected: true },
+    { x: 380, y: 280, delay: 15, rejected: true },
+    { x: 180, y: 420, delay: 25, rejected: false },
+    { x: 450, y: 120, delay: 35, rejected: true },
+    { x: 550, y: 380, delay: 45, rejected: true },
+    { x: 720, y: 220, delay: 55, rejected: true },
   ];
 
   return (

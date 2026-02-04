@@ -34,7 +34,7 @@ const ChannelCard: React.FC<{
       style={{
         opacity: interpolate(entrySpring, [0, 1], [0, 1]),
         transform: `scale(${interpolate(entrySpring, [0, 1], [0.8, 1])}) translateY(${interpolate(entrySpring, [0, 1], [40, 0])}px)`,
-        width: isQR ? 280 : 320,
+        width: isQR ? 260 : 300,
         backgroundColor: "#0F172A",
         borderRadius: 24,
         overflow: "hidden",
@@ -312,11 +312,11 @@ export const Scene9Distribution: React.FC = () => {
             config: { damping: 20 },
           });
           const positions = [
-            { x1: 270, y1: 400 },
-            { x1: 560, y1: 400 },
-            { x1: 960, y1: 400 },
-            { x1: 1360, y1: 400 },
-            { x1: 1650, y1: 400 },
+            { x1: 200, y1: 420 },
+            { x1: 480, y1: 420 },
+            { x1: 760, y1: 420 },
+            { x1: 1160, y1: 420 },
+            { x1: 1520, y1: 420 },
           ];
           return (
             <line
@@ -368,13 +368,13 @@ export const Scene9Distribution: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: 140,
+          top: 130,
           left: 0,
           right: 0,
           display: "flex",
           justifyContent: "center",
-          gap: 30,
-          padding: "0 60px",
+          gap: 24,
+          padding: "0 40px",
         }}
       >
         {channels.map((channel, i) => (
@@ -396,7 +396,7 @@ export const Scene9Distribution: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          bottom: 180,
+          bottom: 160,
           left: "50%",
           transform: "translateX(-50%)",
           opacity: interpolate(
