@@ -3,6 +3,7 @@ import { AbsoluteFill, Audio, Sequence } from "remotion";
 
 // Scene imports
 import { Scene1OldWorldPain } from "./scenes/Scene1OldWorldPain";
+import { Scene2Compliance } from "./scenes/Scene2Compliance";
 
 interface SalesOutreachVideoProps {
   musicUrl?: string;
@@ -48,6 +49,11 @@ export const SalesOutreachVideo: React.FC<SalesOutreachVideoProps> = ({
       {/* Scene 1: Old World Pain (0-8s) */}
       <Sequence from={0} durationInFrames={240}>
         <Scene1OldWorldPain />
+      </Sequence>
+
+      {/* Scene 2: Compliance + Reality (8-14s) */}
+      <Sequence from={240} durationInFrames={180}>
+        <Scene2Compliance />
       </Sequence>
     </AbsoluteFill>
   );
