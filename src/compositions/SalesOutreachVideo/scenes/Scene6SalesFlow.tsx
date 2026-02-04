@@ -403,17 +403,17 @@ export const Scene6SalesFlow: React.FC = () => {
     config: { damping: 14 },
   });
 
-  // Channel positions
+  // Channel positions - endX/endY are line endpoint targets (icon centers)
   const channels = [
-    { icon: <WhatsAppIcon size={36} />, name: "WhatsApp", color: "#25D366", delay: 10, endX: 320, endY: 200 },
-    { icon: <EmailIcon size={36} />, name: "Email", color: "#EA4335", delay: 30, endX: 320, endY: 380 },
-    { icon: <SMSIcon size={36} />, name: "SMS", color: "#34B7F1", delay: 50, endX: 320, endY: 560 },
-    { icon: <AdBannerIcon size={36} />, name: "Ad Banner", color: "#F59E0B", delay: 70, endX: 320, endY: 740 },
+    { icon: <WhatsAppIcon size={36} />, name: "WhatsApp", color: "#25D366", delay: 10, lineEndX: 220, lineEndY: 315 },
+    { icon: <EmailIcon size={36} />, name: "Email", color: "#EA4335", delay: 30, lineEndX: 220, lineEndY: 455 },
+    { icon: <SMSIcon size={36} />, name: "SMS", color: "#34B7F1", delay: 50, lineEndX: 220, lineEndY: 595 },
+    { icon: <AdBannerIcon size={36} />, name: "Ad Banner", color: "#F59E0B", delay: 70, lineEndX: 220, lineEndY: 735 },
   ];
 
-  // Hub position - centered better
-  const hubX = 700;
-  const hubY = 480;
+  // Hub position - centered
+  const hubX = 650;
+  const hubY = 540;
 
   return (
     <AbsoluteFill
@@ -447,14 +447,14 @@ export const Scene6SalesFlow: React.FC = () => {
         }}
       />
 
-      {/* Connection lines */}
+      {/* Connection lines from hub to channels */}
       {channels.map((channel, i) => (
         <ConnectionLine
           key={i}
           startX={hubX}
           startY={hubY}
-          endX={channel.endX}
-          endY={channel.endY - 350}
+          endX={channel.lineEndX}
+          endY={channel.lineEndY}
           delay={channel.delay + 80}
           frame={frame}
         />
@@ -491,7 +491,7 @@ export const Scene6SalesFlow: React.FC = () => {
         style={{
           position: "absolute",
           left: hubX - 70,
-          top: hubY - 120,
+          top: hubY - 70,
         }}
       >
         <VoiceLinkHub frame={frame} fps={fps} />
