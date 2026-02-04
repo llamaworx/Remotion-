@@ -4,6 +4,7 @@ import { AbsoluteFill, Audio, Sequence } from "remotion";
 // Scene imports
 import { Scene1OldWorldPain } from "./scenes/Scene1OldWorldPain";
 import { Scene2Compliance } from "./scenes/Scene2Compliance";
+import { Scene3DigitalNotTalking } from "./scenes/Scene3DigitalNotTalking";
 
 interface SalesOutreachVideoProps {
   musicUrl?: string;
@@ -54,6 +55,11 @@ export const SalesOutreachVideo: React.FC<SalesOutreachVideoProps> = ({
       {/* Scene 2: Compliance + Reality (8-14s) */}
       <Sequence from={240} durationInFrames={180}>
         <Scene2Compliance />
+      </Sequence>
+
+      {/* Scene 3: Digital Isn't Talking (14-22s) */}
+      <Sequence from={420} durationInFrames={240}>
+        <Scene3DigitalNotTalking />
       </Sequence>
     </AbsoluteFill>
   );
