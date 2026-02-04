@@ -7,7 +7,7 @@ import {
   spring,
 } from "remotion";
 
-// Channel card with voice link - mobile optimized
+// Channel card with voice link - mobile optimized (horizontal row style)
 const ChannelCard: React.FC<{
   name: string;
   icon: React.ReactNode;
@@ -33,147 +33,88 @@ const ChannelCard: React.FC<{
     <div
       style={{
         opacity: interpolate(entrySpring, [0, 1], [0, 1]),
-        transform: `scale(${interpolate(entrySpring, [0, 1], [0.8, 1])}) translateY(${interpolate(entrySpring, [0, 1], [20, 0])}px)`,
+        transform: `translateX(${interpolate(entrySpring, [0, 1], [-30, 0])}px)`,
         backgroundColor: "#0F172A",
         borderRadius: 16,
         overflow: "hidden",
-        boxShadow: `0 15px 40px rgba(0,0,0,0.4), 0 0 20px ${accentColor}20`,
+        boxShadow: `0 10px 30px rgba(0,0,0,0.3), 0 0 15px ${accentColor}15`,
         border: `2px solid ${accentColor}40`,
         display: "flex",
-        flexDirection: "column",
+        alignItems: "center",
+        padding: "14px 20px",
+        gap: 16,
+        width: "100%",
       }}
     >
-      {/* Channel header */}
+      {/* Channel icon container */}
       <div
         style={{
-          height: 44,
+          width: 52,
+          height: 52,
+          borderRadius: 12,
           background: bgColor,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          gap: 8,
-          padding: "0 14px",
+          flexShrink: 0,
         }}
       >
         {icon}
+      </div>
+
+      {/* Channel name */}
+      <span
+        style={{
+          fontFamily: "system-ui",
+          fontSize: 20,
+          fontWeight: 700,
+          color: "#F8FAFC",
+          flex: 1,
+        }}
+      >
+        {name}
+      </span>
+
+      {/* Voice Link button */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 6,
+          backgroundColor: "#8B5CF620",
+          border: "1px solid #8B5CF6",
+          borderRadius: 20,
+          padding: "8px 14px",
+          boxShadow: `0 0 ${10 + voiceLinkGlow * 10}px rgba(139, 92, 246, ${0.3 + voiceLinkGlow * 0.3})`,
+          flexShrink: 0,
+        }}
+      >
+        <div
+          style={{
+            width: 20,
+            height: 20,
+            borderRadius: "50%",
+            backgroundColor: "#8B5CF6",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="white">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2" stroke="white" strokeWidth="2" fill="none" />
+          </svg>
+        </div>
         <span
           style={{
             fontFamily: "system-ui",
-            fontSize: 14,
+            fontSize: 11,
             fontWeight: 700,
-            color: "white",
+            color: "#8B5CF6",
           }}
         >
-          {name}
+          Voice Link
         </span>
-      </div>
-
-      {/* Content area */}
-      <div
-        style={{
-          padding: 12,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 10,
-        }}
-      >
-        {isQR ? (
-          /* QR Code */
-          <div
-            style={{
-              width: 80,
-              height: 80,
-              backgroundColor: "white",
-              borderRadius: 8,
-              padding: 6,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <svg width="68" height="68" viewBox="0 0 100 100">
-              {/* Simplified QR pattern */}
-              <rect x="0" y="0" width="30" height="30" fill="#0A0A0F" />
-              <rect x="5" y="5" width="20" height="20" fill="white" />
-              <rect x="10" y="10" width="10" height="10" fill="#0A0A0F" />
-
-              <rect x="70" y="0" width="30" height="30" fill="#0A0A0F" />
-              <rect x="75" y="5" width="20" height="20" fill="white" />
-              <rect x="80" y="10" width="10" height="10" fill="#0A0A0F" />
-
-              <rect x="0" y="70" width="30" height="30" fill="#0A0A0F" />
-              <rect x="5" y="75" width="20" height="20" fill="white" />
-              <rect x="10" y="80" width="10" height="10" fill="#0A0A0F" />
-
-              <rect x="40" y="40" width="20" height="20" fill="#8B5CF6" rx="4" />
-            </svg>
-          </div>
-        ) : (
-          /* Ad preview mockup */
-          <div
-            style={{
-              width: "100%",
-              height: 60,
-              backgroundColor: "#1E293B",
-              borderRadius: 8,
-              display: "flex",
-              flexDirection: "column",
-              padding: 8,
-              gap: 4,
-            }}
-          >
-            <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-              <div style={{ width: 20, height: 20, borderRadius: "50%", backgroundColor: accentColor }} />
-              <div>
-                <div style={{ width: 50, height: 6, backgroundColor: "#334155", borderRadius: 3 }} />
-                <div style={{ width: 30, height: 4, backgroundColor: "#334155", borderRadius: 2, marginTop: 3 }} />
-              </div>
-            </div>
-            <div style={{ flex: 1, backgroundColor: "#334155", borderRadius: 4 }} />
-          </div>
-        )}
-
-        {/* Voice Link button */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-            backgroundColor: "#8B5CF620",
-            border: "1px solid #8B5CF6",
-            borderRadius: 20,
-            padding: "6px 12px",
-            boxShadow: `0 0 ${10 + voiceLinkGlow * 10}px rgba(139, 92, 246, ${0.3 + voiceLinkGlow * 0.3})`,
-          }}
-        >
-          <div
-            style={{
-              width: 20,
-              height: 20,
-              borderRadius: "50%",
-              backgroundColor: "#8B5CF6",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="white">
-              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
-              <path d="M19 10v2a7 7 0 0 1-14 0v-2" stroke="white" strokeWidth="2" fill="none" />
-            </svg>
-          </div>
-          <span
-            style={{
-              fontFamily: "system-ui",
-              fontSize: 10,
-              fontWeight: 700,
-              color: "#8B5CF6",
-            }}
-          >
-            Voice Link
-          </span>
-        </div>
       </div>
     </div>
   );
@@ -295,8 +236,8 @@ export const Scene9Distribution: React.FC = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          padding: "50px 30px",
-          gap: 20,
+          padding: "50px 40px",
+          gap: 14,
         }}
       >
         {/* Title */}
@@ -304,12 +245,13 @@ export const Scene9Distribution: React.FC = () => {
           style={{
             opacity: interpolate(titleSpring, [0, 1], [0, 1]),
             transform: `translateY(${interpolate(titleSpring, [0, 1], [-20, 0])}px)`,
+            marginBottom: 8,
           }}
         >
           <span
             style={{
               fontFamily: "system-ui",
-              fontSize: 28,
+              fontSize: 26,
               fontWeight: 700,
               color: "#94A3B8",
             }}
@@ -318,16 +260,17 @@ export const Scene9Distribution: React.FC = () => {
           </span>
         </div>
 
-        {/* Channel cards grid - 2 columns for first 4, then full width for QR */}
+        {/* Channel cards - vertical list */}
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-            gap: 14,
+            display: "flex",
+            flexDirection: "column",
+            gap: 12,
             width: "100%",
+            flex: 1,
           }}
         >
-          {channels.slice(0, 4).map((channel) => (
+          {channels.map((channel) => (
             <ChannelCard
               key={channel.name}
               name={channel.name}
@@ -337,49 +280,9 @@ export const Scene9Distribution: React.FC = () => {
               delay={channel.delay}
               frame={frame}
               fps={fps}
+              isQR={channel.isQR}
             />
           ))}
-        </div>
-
-        {/* QR Poster card centered */}
-        <div style={{ width: "60%" }}>
-          <ChannelCard
-            name={channels[4].name}
-            icon={channels[4].icon}
-            bgColor={channels[4].bgColor}
-            accentColor={channels[4].accentColor}
-            delay={channels[4].delay}
-            frame={frame}
-            fps={fps}
-            isQR={channels[4].isQR}
-          />
-        </div>
-
-        {/* Central hub */}
-        <div
-          style={{
-            opacity: interpolate(hubSpring, [0, 1], [0, 1]),
-            transform: `scale(${interpolate(hubSpring, [0, 1], [0.5, 1])})`,
-          }}
-        >
-          <div
-            style={{
-              width: 80,
-              height: 80,
-              borderRadius: "50%",
-              background: "linear-gradient(135deg, #8B5CF6, #06B6D4)",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              boxShadow: `0 0 ${30 + Math.sin(frame * 0.1) * 10}px rgba(139, 92, 246, 0.5)`,
-            }}
-          >
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="white">
-              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
-              <path d="M19 10v2a7 7 0 0 1-14 0v-2" stroke="white" strokeWidth="2" fill="none" />
-              <line x1="12" y1="19" x2="12" y2="23" stroke="white" strokeWidth="2" />
-            </svg>
-          </div>
         </div>
 
         {/* Main text */}
@@ -387,6 +290,7 @@ export const Scene9Distribution: React.FC = () => {
           style={{
             marginTop: "auto",
             textAlign: "center",
+            paddingTop: 20,
             opacity: interpolate(textSpring, [0, 1], [0, 1]),
             transform: `translateY(${interpolate(textSpring, [0, 1], [25, 0])}px)`,
           }}
@@ -397,7 +301,7 @@ export const Scene9Distribution: React.FC = () => {
               fontSize: 36,
               fontWeight: 800,
               letterSpacing: "-0.02em",
-              lineHeight: 1.2,
+              lineHeight: 1.3,
             }}
           >
             <span
@@ -408,7 +312,8 @@ export const Scene9Distribution: React.FC = () => {
               }}
             >
               Every channel
-            </span>{" "}
+            </span>
+            <br />
             <span style={{ color: "#F8FAFC" }}>becomes a sales desk.</span>
           </span>
         </div>

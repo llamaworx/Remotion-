@@ -34,7 +34,7 @@ const AdBannerIcon: React.FC<{ size: number }> = ({ size }) => (
   </svg>
 );
 
-// Channel Card - mobile optimized
+// Channel Card - mobile optimized (horizontal row style)
 const ChannelCard: React.FC<{
   icon: React.ReactNode;
   name: string;
@@ -60,34 +60,66 @@ const ChannelCard: React.FC<{
     <div
       style={{
         opacity: interpolate(entrySpring, [0, 1], [0, 1]),
-        transform: `scale(${entrySpring})`,
+        transform: `translateX(${interpolate(entrySpring, [0, 1], [-30, 0])}px)`,
         display: "flex",
-        flexDirection: "column",
         alignItems: "center",
-        gap: 8,
+        gap: 16,
+        width: "100%",
+        padding: "16px 24px",
+        backgroundColor: "#0F172A",
+        borderRadius: 16,
+        border: `2px solid ${color}40`,
+        boxShadow: linkSent ? `0 0 20px ${color}30` : "0 8px 24px rgba(0,0,0,0.3)",
       }}
     >
       {/* Channel icon */}
       <div
         style={{
-          width: 60,
-          height: 60,
-          borderRadius: 16,
+          width: 56,
+          height: 56,
+          borderRadius: 14,
           backgroundColor: "#1E293B",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          border: `2px solid ${color}40`,
-          boxShadow: linkSent ? `0 0 15px ${color}40` : "0 8px 24px rgba(0,0,0,0.3)",
+          flexShrink: 0,
         }}
       >
         {icon}
       </div>
 
       {/* Channel name */}
-      <span style={{ fontFamily: "system-ui", fontSize: 12, fontWeight: 600, color: "#94A3B8" }}>
+      <span style={{ fontFamily: "system-ui", fontSize: 20, fontWeight: 700, color: "#F8FAFC" }}>
         {name}
       </span>
+
+      {/* Voice Link indicator */}
+      {linkSent && (
+        <div
+          style={{
+            marginLeft: "auto",
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            padding: "8px 14px",
+            backgroundColor: `${color}20`,
+            borderRadius: 20,
+          }}
+        >
+          <div
+            style={{
+              width: 8,
+              height: 8,
+              borderRadius: "50%",
+              backgroundColor: color,
+              boxShadow: `0 0 8px ${color}`,
+            }}
+          />
+          <span style={{ fontFamily: "system-ui", fontSize: 12, fontWeight: 600, color }}>
+            Link Sent
+          </span>
+        </div>
+      )}
     </div>
   );
 };
@@ -380,16 +412,29 @@ export const Scene6SalesFlow: React.FC = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          padding: "50px 40px",
-          gap: 16,
+          padding: "60px 50px",
+          gap: 12,
         }}
       >
-        {/* Channel cards - 2x2 grid */}
+        {/* Title */}
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-            gap: 20,
+            opacity: interpolate(spring({ frame, fps, config: { damping: 14 } }), [0, 1], [0, 1]),
+            marginBottom: 8,
+          }}
+        >
+          <span style={{ fontFamily: "system-ui", fontSize: 24, fontWeight: 600, color: "#94A3B8" }}>
+            Voice Link works everywhere
+          </span>
+        </div>
+
+        {/* Channel cards - vertical list */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 14,
+            width: "100%",
           }}
         >
           {channels.map((channel, i) => (
@@ -406,61 +451,56 @@ export const Scene6SalesFlow: React.FC = () => {
         </div>
 
         {/* Down Arrow */}
-        <DownArrow delay={70} frame={frame} />
+        <DownArrow delay={80} frame={frame} />
 
-        {/* Central Voice Link hub */}
-        <VoiceLinkHub frame={frame} fps={fps} />
+        {/* Central Voice Link hub with text */}
+        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+          <VoiceLinkHub frame={frame} fps={fps} />
 
-        {/* Click Talk Qualify text */}
-        <div
-          style={{
-            opacity: interpolate(textSpring, [0, 1], [0, 1]),
-            display: "flex",
-            gap: 16,
-            alignItems: "center",
-            padding: "8px 0",
-          }}
-        >
-          <span
+          {/* Click Talk Qualify text - vertical */}
+          <div
             style={{
-              fontFamily: "system-ui",
-              fontSize: 32,
-              fontWeight: 800,
-              color: "#8B5CF6",
-              letterSpacing: "-0.02em",
+              opacity: interpolate(textSpring, [0, 1], [0, 1]),
+              display: "flex",
+              flexDirection: "column",
+              gap: 4,
             }}
           >
-            Click.
-          </span>
-          <span
-            style={{
-              fontFamily: "system-ui",
-              fontSize: 32,
-              fontWeight: 800,
-              color: "#06B6D4",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            Talk.
-          </span>
-          <span
-            style={{
-              fontFamily: "system-ui",
-              fontSize: 32,
-              fontWeight: 800,
-              color: "#22C55E",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            Qualify.
-          </span>
+            <span
+              style={{
+                fontFamily: "system-ui",
+                fontSize: 36,
+                fontWeight: 800,
+                color: "#8B5CF6",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Click.
+            </span>
+            <span
+              style={{
+                fontFamily: "system-ui",
+                fontSize: 36,
+                fontWeight: 800,
+                color: "#06B6D4",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Talk.
+            </span>
+            <span
+              style={{
+                fontFamily: "system-ui",
+                fontSize: 36,
+                fontWeight: 800,
+                color: "#22C55E",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Qualify.
+            </span>
+          </div>
         </div>
-
-        {/* Down Arrow to Customer */}
-        <DownArrow delay={100} frame={frame} />
-
-        {/* User interaction */}
-        <UserInteraction frame={frame} fps={fps} delay={130} />
       </div>
     </AbsoluteFill>
   );
