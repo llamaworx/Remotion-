@@ -11,6 +11,7 @@ import { Scene6SalesFlow } from "./scenes/Scene6SalesFlow";
 import { Scene7CustomerExperience } from "./scenes/Scene7CustomerExperience";
 import { Scene8SalesDashboard } from "./scenes/Scene8SalesDashboard";
 import { Scene9Distribution } from "./scenes/Scene9Distribution";
+import { Scene10Finale } from "./scenes/Scene10Finale";
 
 interface SalesOutreachVideoProps {
   musicUrl?: string;
@@ -96,6 +97,11 @@ export const SalesOutreachVideo: React.FC<SalesOutreachVideoProps> = ({
       {/* Scene 9: Distribution Everywhere (75-83s) */}
       <Sequence from={2250} durationInFrames={240}>
         <Scene9Distribution />
+      </Sequence>
+
+      {/* Scene 10: The New Sales Reality - CTA Finale (83-90s) */}
+      <Sequence from={2490} durationInFrames={210}>
+        <Scene10Finale />
       </Sequence>
     </AbsoluteFill>
   );
