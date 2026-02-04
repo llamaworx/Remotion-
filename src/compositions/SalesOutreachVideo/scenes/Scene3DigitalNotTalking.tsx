@@ -7,8 +7,8 @@ import {
   spring,
 } from "remotion";
 
-// Ad Card - mobile optimized
-const AdCard: React.FC<{
+// Simple ad preview card
+const AdPreview: React.FC<{
   delay: number;
   frame: number;
   fps: number;
@@ -32,56 +32,69 @@ const AdCard: React.FC<{
       <div
         style={{
           backgroundColor: "#1E293B",
-          borderRadius: 16,
+          borderRadius: 24,
           overflow: "hidden",
-          boxShadow: "0 10px 40px rgba(0,0,0,0.3)",
-          border: "1px solid #334155",
+          boxShadow: "0 15px 50px rgba(0,0,0,0.4)",
+          border: "2px solid #334155",
         }}
       >
+        {/* Ad header */}
         <div
           style={{
-            padding: "12px 16px",
+            padding: "16px 24px",
             backgroundColor: "#0F172A",
             display: "flex",
             alignItems: "center",
-            gap: 8,
+            gap: 12,
           }}
         >
-          <div style={{ width: 8, height: 8, borderRadius: "50%", backgroundColor: "#22C55E" }} />
-          <span style={{ fontFamily: "system-ui", fontSize: 12, color: "#64748B" }}>
+          <div style={{ width: 12, height: 12, borderRadius: "50%", backgroundColor: "#22C55E" }} />
+          <span style={{ fontFamily: "system-ui", fontSize: 18, color: "#64748B" }}>
             Sponsored Ad
           </span>
         </div>
 
-        <div style={{ padding: 16 }}>
+        {/* Ad content */}
+        <div style={{ padding: 28 }}>
           <div
             style={{
               width: "100%",
-              height: 80,
+              height: 160,
               background: "linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%)",
-              borderRadius: 8,
+              borderRadius: 16,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              marginBottom: 12,
+              marginBottom: 24,
             }}
           >
-            <span style={{ fontFamily: "system-ui", fontSize: 24, fontWeight: 700, color: "white" }}>
+            <span style={{ fontFamily: "system-ui", fontSize: 48, fontWeight: 800, color: "white" }}>
               50% OFF
             </span>
           </div>
-          <div style={{ fontFamily: "system-ui", fontSize: 16, fontWeight: 600, color: "#F8FAFC", marginBottom: 10 }}>
+
+          <div
+            style={{
+              fontFamily: "system-ui",
+              fontSize: 28,
+              fontWeight: 700,
+              color: "#F8FAFC",
+              marginBottom: 20,
+              textAlign: "center",
+            }}
+          >
             Limited Time Offer!
           </div>
+
           <div
             style={{
               backgroundColor: "#3B82F6",
-              padding: "12px 16px",
-              borderRadius: 8,
+              padding: "20px 24px",
+              borderRadius: 14,
               textAlign: "center",
               fontFamily: "system-ui",
-              fontSize: 14,
-              fontWeight: 600,
+              fontSize: 22,
+              fontWeight: 700,
               color: "white",
             }}
           >
@@ -93,36 +106,74 @@ const AdCard: React.FC<{
   );
 };
 
-// Down Arrow
-const DownArrow: React.FC<{
+// Journey step
+const JourneyStep: React.FC<{
+  icon: React.ReactNode;
+  label: string;
+  status: "active" | "bounce";
   delay: number;
   frame: number;
-}> = ({ delay, frame }) => {
-  const progress = interpolate(frame - delay, [0, 30], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
+  fps: number;
+}> = ({ icon, label, status, delay, frame, fps }) => {
+  const entrySpring = spring({
+    frame: frame - delay,
+    fps,
+    config: { damping: 12 },
   });
 
-  if (progress <= 0) return null;
+  if (entrySpring <= 0) return null;
+
+  const color = status === "bounce" ? "#EF4444" : "#22C55E";
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", padding: "10px 0", opacity: progress }}>
-      <svg width="40" height="50" viewBox="0 0 40 50">
-        <defs>
-          <linearGradient id="arrowGradV" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#8B5CF6" />
-            <stop offset="100%" stopColor="#3B82F6" />
-          </linearGradient>
-        </defs>
-        <path d="M 20 5 L 20 35" stroke="url(#arrowGradV)" strokeWidth="3" fill="none" strokeLinecap="round" />
-        <path d="M 12 28 L 20 40 L 28 28" stroke="#3B82F6" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
+    <div
+      style={{
+        opacity: interpolate(entrySpring, [0, 1], [0, 1]),
+        transform: `translateY(${interpolate(entrySpring, [0, 1], [30, 0])}px)`,
+        display: "flex",
+        alignItems: "center",
+        gap: 20,
+        width: "100%",
+        backgroundColor: "#1E293B",
+        borderRadius: 20,
+        padding: "24px 28px",
+        border: `2px solid ${color}40`,
+      }}
+    >
+      <div
+        style={{
+          width: 60,
+          height: 60,
+          borderRadius: 16,
+          backgroundColor: `${color}20`,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {icon}
+      </div>
+      <span style={{ fontFamily: "system-ui", fontSize: 24, fontWeight: 600, color: "#F8FAFC", flex: 1 }}>
+        {label}
+      </span>
+      <div
+        style={{
+          backgroundColor: `${color}20`,
+          padding: "10px 18px",
+          borderRadius: 10,
+          border: `2px solid ${color}`,
+        }}
+      >
+        <span style={{ fontFamily: "system-ui", fontSize: 16, fontWeight: 700, color }}>
+          {status === "bounce" ? "BOUNCE" : "OK"}
+        </span>
+      </div>
     </div>
   );
 };
 
-// Landing Page with Form - mobile optimized
-const LandingPage: React.FC<{
+// Big bounce rate display
+const BounceRateDisplay: React.FC<{
   delay: number;
   frame: number;
   fps: number;
@@ -133,213 +184,59 @@ const LandingPage: React.FC<{
     config: { damping: 12 },
   });
 
-  if (entrySpring <= 0) return null;
+  const localFrame = frame - delay;
+  const rate = interpolate(localFrame, [0, 60], [0, 87], { extrapolateRight: "clamp" });
+  const pulse = Math.sin(localFrame * 0.15) * 0.02 + 1;
 
-  const formFields = ["Full Name", "Email", "Phone", "Company", "Message"];
+  if (entrySpring <= 0) return null;
 
   return (
     <div
       style={{
         opacity: interpolate(entrySpring, [0, 1], [0, 1]),
-        transform: `scale(${entrySpring})`,
+        transform: `scale(${entrySpring * pulse})`,
         width: "100%",
       }}
     >
       <div
         style={{
           backgroundColor: "#1E293B",
-          borderRadius: 16,
-          overflow: "hidden",
-          boxShadow: "0 10px 40px rgba(0,0,0,0.3)",
-          border: "1px solid #334155",
+          borderRadius: 28,
+          padding: "40px 32px",
+          border: "3px solid #EF4444",
+          boxShadow: "0 10px 50px rgba(239, 68, 68, 0.3)",
+          textAlign: "center",
         }}
       >
         <div
           style={{
-            padding: "10px 16px",
-            backgroundColor: "#0F172A",
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
+            fontFamily: "system-ui",
+            fontSize: 24,
+            color: "#94A3B8",
+            marginBottom: 12,
           }}
         >
-          <div style={{ display: "flex", gap: 6 }}>
-            <div style={{ width: 10, height: 10, borderRadius: "50%", backgroundColor: "#EF4444" }} />
-            <div style={{ width: 10, height: 10, borderRadius: "50%", backgroundColor: "#F59E0B" }} />
-            <div style={{ width: 10, height: 10, borderRadius: "50%", backgroundColor: "#22C55E" }} />
-          </div>
-          <div
-            style={{
-              flex: 1,
-              backgroundColor: "#1E293B",
-              borderRadius: 4,
-              padding: "4px 12px",
-              fontFamily: "monospace",
-              fontSize: 11,
-              color: "#64748B",
-            }}
-          >
-            example.com/contact
-          </div>
-        </div>
-
-        <div style={{ padding: 16 }}>
-          <div style={{ fontFamily: "system-ui", fontSize: 18, fontWeight: 700, color: "#F8FAFC", marginBottom: 14 }}>
-            Contact Us
-          </div>
-
-          {formFields.map((field, i) => {
-            const fieldDelay = delay + 15 + i * 8;
-            const fieldOpacity = interpolate(frame - fieldDelay, [0, 12], [0, 1], {
-              extrapolateLeft: "clamp",
-              extrapolateRight: "clamp",
-            });
-
-            return (
-              <div key={field} style={{ marginBottom: 8, opacity: fieldOpacity }}>
-                <div
-                  style={{
-                    backgroundColor: "#0F172A",
-                    border: "1px solid #334155",
-                    borderRadius: 6,
-                    padding: "10px 12px",
-                    fontFamily: "system-ui",
-                    fontSize: 13,
-                    color: "#64748B",
-                  }}
-                >
-                  {field}
-                </div>
-              </div>
-            );
-          })}
-
-          <div
-            style={{
-              backgroundColor: "#475569",
-              padding: "12px",
-              borderRadius: 8,
-              textAlign: "center",
-              fontFamily: "system-ui",
-              fontSize: 14,
-              fontWeight: 600,
-              color: "#94A3B8",
-              marginTop: 8,
-            }}
-          >
-            Submit
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Bouncing Users - mobile optimized
-const BouncingUsers: React.FC<{
-  delay: number;
-  frame: number;
-}> = ({ delay, frame }) => {
-  const localFrame = frame - delay;
-  if (localFrame < 0) return null;
-
-  const users = [0, 1, 2];
-
-  return (
-    <div style={{ display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
-      {users.map((i) => {
-        const userDelay = i * 20;
-        const userFrame = localFrame - userDelay;
-        if (userFrame < 0 || userFrame > 60) return null;
-
-        const progress = userFrame / 60;
-        const opacity = interpolate(progress, [0, 0.2, 0.7, 1], [0, 1, 1, 0]);
-        const y = interpolate(progress, [0, 0.3, 1], [0, -20, 60]);
-        const rotation = interpolate(progress, [0, 1], [0, 30]);
-
-        return (
-          <div
-            key={i}
-            style={{
-              transform: `translateY(${y}px) rotate(${rotation}deg)`,
-              opacity,
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                backgroundColor: "#EF444420",
-                padding: "8px 14px",
-                borderRadius: 20,
-                border: "1px solid #EF4444",
-              }}
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="8" r="4" stroke="#EF4444" strokeWidth="2" />
-                <path d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-              <span style={{ fontFamily: "system-ui", fontSize: 13, fontWeight: 600, color: "#EF4444" }}>
-                Bounced
-              </span>
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
-
-// Bounce Rate Indicator - mobile optimized
-const BounceRate: React.FC<{
-  frame: number;
-  fps: number;
-  delay: number;
-}> = ({ frame, fps, delay }) => {
-  const entrySpring = spring({
-    frame: frame - delay,
-    fps,
-    config: { damping: 12 },
-  });
-
-  const localFrame = frame - delay;
-  const rate = interpolate(localFrame, [0, 60], [0, 87], { extrapolateRight: "clamp" });
-
-  if (entrySpring <= 0) return null;
-
-  return (
-    <div
-      style={{
-        opacity: interpolate(entrySpring, [0, 1], [0, 1]),
-        transform: `scale(${entrySpring})`,
-        width: "100%",
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: "#1E293B",
-          borderRadius: 16,
-          padding: 24,
-          border: "2px solid #EF444440",
-          boxShadow: "0 10px 40px rgba(0,0,0,0.3)",
-          textAlign: "center",
-        }}
-      >
-        <div style={{ fontFamily: "system-ui", fontSize: 16, color: "#64748B", marginBottom: 8 }}>
-          Bounce Rate
+          Website Bounce Rate
         </div>
         <div
           style={{
             fontFamily: "system-ui",
-            fontSize: 72,
-            fontWeight: 800,
+            fontSize: 100,
+            fontWeight: 900,
             color: "#EF4444",
+            lineHeight: 1,
           }}
         >
           {Math.floor(rate)}%
         </div>
-        <div style={{ fontFamily: "system-ui", fontSize: 14, color: "#EF4444", marginTop: 4 }}>
+        <div
+          style={{
+            fontFamily: "system-ui",
+            fontSize: 20,
+            color: "#EF4444",
+            marginTop: 16,
+          }}
+        >
           Users leave without engaging
         </div>
       </div>
@@ -352,7 +249,7 @@ export const Scene3DigitalNotTalking: React.FC = () => {
   const { fps } = useVideoConfig();
 
   const textSpring = spring({
-    frame: frame - 180,
+    frame: frame - 200,
     fps,
     config: { damping: 14 },
   });
@@ -370,22 +267,9 @@ export const Scene3DigitalNotTalking: React.FC = () => {
           position: "absolute",
           inset: 0,
           background: `
-            radial-gradient(circle at 50% 30%, rgba(139, 92, 246, 0.1) 0%, transparent 40%),
-            radial-gradient(circle at 50% 70%, rgba(239, 68, 68, 0.08) 0%, transparent 40%)
+            radial-gradient(circle at 50% 20%, rgba(139, 92, 246, 0.12) 0%, transparent 40%),
+            radial-gradient(circle at 50% 70%, rgba(239, 68, 68, 0.1) 0%, transparent 40%)
           `,
-        }}
-      />
-
-      {/* Grid overlay */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          backgroundImage: `
-            linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)
-          `,
-          backgroundSize: "50px 50px",
         }}
       />
 
@@ -396,29 +280,41 @@ export const Scene3DigitalNotTalking: React.FC = () => {
           inset: 0,
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
-          padding: "50px 40px",
-          gap: 10,
+          padding: "60px 50px",
+          gap: 24,
         }}
       >
-        {/* Ad Card */}
-        <AdCard delay={10} frame={frame} fps={fps} />
+        {/* Ad Preview */}
+        <AdPreview delay={10} frame={frame} fps={fps} />
 
-        {/* Arrow */}
-        <DownArrow delay={35} frame={frame} />
+        {/* Journey steps */}
+        <JourneyStep
+          icon={
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="#22C55E">
+              <path d="M15 3h6v6M14 10l6.1-6.1M21 14v5a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h5" />
+            </svg>
+          }
+          label="Click Ad"
+          status="active"
+          delay={50}
+          frame={frame}
+          fps={fps}
+        />
+        <JourneyStep
+          icon={
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2.5">
+              <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" />
+            </svg>
+          }
+          label="Read Forms... Leave"
+          status="bounce"
+          delay={90}
+          frame={frame}
+          fps={fps}
+        />
 
-        {/* Landing Page */}
-        <LandingPage delay={50} frame={frame} fps={fps} />
-
-        {/* Bouncing Users */}
-        <div style={{ marginTop: 20 }}>
-          <BouncingUsers delay={100} frame={frame} />
-        </div>
-
-        {/* Bounce Rate */}
-        <div style={{ width: "100%", marginTop: 20 }}>
-          <BounceRate frame={frame} fps={fps} delay={130} />
-        </div>
+        {/* Bounce rate */}
+        <BounceRateDisplay delay={130} frame={frame} fps={fps} />
 
         {/* Main text */}
         <div
@@ -432,7 +328,7 @@ export const Scene3DigitalNotTalking: React.FC = () => {
           <span
             style={{
               fontFamily: "system-ui",
-              fontSize: 44,
+              fontSize: 52,
               fontWeight: 800,
               color: "#F8FAFC",
               letterSpacing: "-0.02em",
@@ -440,7 +336,11 @@ export const Scene3DigitalNotTalking: React.FC = () => {
             }}
           >
             Ads talk.{" "}
-            <span style={{ color: "#EF4444" }}>Websites don't.</span>
+            <span style={{ color: "#EF4444" }}>
+              Websites
+              <br />
+              don't.
+            </span>
           </span>
         </div>
       </div>

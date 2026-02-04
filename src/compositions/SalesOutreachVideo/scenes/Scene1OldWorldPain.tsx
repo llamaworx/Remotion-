@@ -7,13 +7,14 @@ import {
   spring,
 } from "remotion";
 
-// Phone dialing animation - mobile optimized
-const DialingPhone: React.FC<{
+// Large phone card for mobile - shows rejection clearly
+const PhoneCard: React.FC<{
   delay: number;
   frame: number;
   fps: number;
-  rejected: boolean;
-}> = ({ delay, frame, fps, rejected }) => {
+  status: "dialing" | "rejected" | "blocked";
+  label: string;
+}> = ({ delay, frame, fps, status, label }) => {
   const entrySpring = spring({
     frame: frame - delay,
     fps,
@@ -21,154 +22,28 @@ const DialingPhone: React.FC<{
   });
 
   const localFrame = frame - delay;
-  const ringPulse = Math.sin(localFrame * 0.3) * 0.1 + 1;
+  const ringPulse = Math.sin(localFrame * 0.3) * 0.08 + 1;
 
-  const rejectStart = 60;
-  const isRejected = rejected && localFrame > rejectStart;
+  const rejectStart = 50;
+  const isRejected = status !== "dialing" && localFrame > rejectStart;
   const rejectShake = isRejected
-    ? Math.sin(localFrame * 2) * 5 * Math.max(0, 1 - (localFrame - rejectStart) / 30)
+    ? Math.sin(localFrame * 2) * 8 * Math.max(0, 1 - (localFrame - rejectStart) / 30)
     : 0;
 
   if (entrySpring <= 0) return null;
+
+  const statusColors = {
+    dialing: { border: "#22C55E", bg: "#22C55E20", icon: "#22C55E" },
+    rejected: { border: "#EF4444", bg: "#EF444420", icon: "#EF4444" },
+    blocked: { border: "#F59E0B", bg: "#F59E0B20", icon: "#F59E0B" },
+  };
+
+  const colors = isRejected ? statusColors[status] : statusColors.dialing;
 
   return (
     <div
       style={{
         transform: `scale(${entrySpring}) translateX(${rejectShake}px)`,
-        opacity: interpolate(entrySpring, [0, 1], [0, 1]),
-      }}
-    >
-      <div
-        style={{
-          width: 140,
-          height: 100,
-          backgroundColor: "#1E293B",
-          borderRadius: 16,
-          padding: 14,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 10,
-          border: isRejected ? "2px solid #EF4444" : "1px solid #334155",
-          boxShadow: isRejected
-            ? "0 0 25px rgba(239, 68, 68, 0.3)"
-            : "0 8px 30px rgba(0,0,0,0.3)",
-        }}
-      >
-        <div style={{ position: "relative" }}>
-          {!isRejected && (
-            <>
-              <div
-                style={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  transform: `translate(-50%, -50%) scale(${ringPulse})`,
-                  width: 50,
-                  height: 50,
-                  borderRadius: "50%",
-                  border: "2px solid rgba(34, 197, 94, 0.3)",
-                  opacity: interpolate(ringPulse, [0.9, 1.1], [0.5, 0]),
-                }}
-              />
-            </>
-          )}
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"
-              stroke={isRejected ? "#EF4444" : "#22C55E"}
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            {isRejected && (
-              <path d="M4 4l16 16" stroke="#EF4444" strokeWidth="3" strokeLinecap="round" />
-            )}
-          </svg>
-        </div>
-        <span
-          style={{
-            fontFamily: "system-ui",
-            fontSize: 13,
-            color: isRejected ? "#EF4444" : "#94A3B8",
-            fontWeight: 500,
-          }}
-        >
-          {isRejected ? "Rejected" : "Dialing..."}
-        </span>
-      </div>
-    </div>
-  );
-};
-
-// SPAM flash overlay
-const SpamFlash: React.FC<{ frame: number; startFrame: number }> = ({ frame, startFrame }) => {
-  const localFrame = frame - startFrame;
-  if (localFrame < 0 || localFrame > 45) return null;
-
-  const flashOpacity = interpolate(localFrame, [0, 5, 15, 30, 45], [0, 1, 1, 0.8, 0], {
-    extrapolateRight: "clamp",
-  });
-  const scale = interpolate(localFrame, [0, 10], [0.5, 1], { extrapolateRight: "clamp" });
-  const shake = Math.sin(localFrame * 1.5) * 3;
-
-  return (
-    <div
-      style={{
-        position: "absolute",
-        top: "25%",
-        left: "50%",
-        transform: `translate(-50%, -50%) scale(${scale}) translateX(${shake}px)`,
-        opacity: flashOpacity,
-        zIndex: 100,
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: "#EF4444",
-          padding: "16px 50px",
-          borderRadius: 12,
-          boxShadow: "0 0 50px rgba(239, 68, 68, 0.6)",
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "system-ui",
-            fontSize: 56,
-            fontWeight: 900,
-            color: "white",
-            letterSpacing: "0.1em",
-          }}
-        >
-          SPAM
-        </span>
-      </div>
-    </div>
-  );
-};
-
-// CRM Dashboard - mobile optimized
-const CRMDashboard: React.FC<{ frame: number; fps: number; startFrame: number }> = ({
-  frame,
-  fps,
-  startFrame,
-}) => {
-  const entrySpring = spring({
-    frame: frame - startFrame,
-    fps,
-    config: { damping: 14 },
-  });
-
-  const localFrame = frame - startFrame;
-  const connectRate = interpolate(localFrame, [0, 60], [0, 3.2], { extrapolateRight: "clamp" });
-
-  if (entrySpring <= 0) return null;
-
-  return (
-    <div
-      style={{
-        transform: `scale(${entrySpring})`,
         opacity: interpolate(entrySpring, [0, 1], [0, 1]),
         width: "100%",
       }}
@@ -176,74 +51,159 @@ const CRMDashboard: React.FC<{ frame: number; fps: number; startFrame: number }>
       <div
         style={{
           backgroundColor: "#1E293B",
-          borderRadius: 20,
-          padding: 24,
-          border: "1px solid #334155",
-          boxShadow: "0 15px 50px rgba(0,0,0,0.4)",
+          borderRadius: 24,
+          padding: 28,
+          display: "flex",
+          alignItems: "center",
+          gap: 24,
+          border: `3px solid ${colors.border}`,
+          boxShadow: `0 10px 40px rgba(0,0,0,0.3), 0 0 30px ${colors.border}30`,
         }}
       >
-        <div
-          style={{
-            fontFamily: "system-ui",
-            fontSize: 20,
-            color: "#64748B",
-            marginBottom: 16,
-            textAlign: "center",
-          }}
-        >
-          CRM Dashboard
+        {/* Phone icon with pulse */}
+        <div style={{ position: "relative" }}>
+          {!isRejected && (
+            <div
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: `translate(-50%, -50%) scale(${ringPulse})`,
+                width: 80,
+                height: 80,
+                borderRadius: "50%",
+                border: `3px solid ${colors.border}50`,
+                opacity: interpolate(ringPulse, [0.92, 1.08], [0.6, 0]),
+              }}
+            />
+          )}
+          <div
+            style={{
+              width: 70,
+              height: 70,
+              borderRadius: "50%",
+              backgroundColor: colors.bg,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"
+                stroke={colors.icon}
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              {isRejected && (
+                <path d="M4 4l16 16" stroke={colors.icon} strokeWidth="3" strokeLinecap="round" />
+              )}
+            </svg>
+          </div>
         </div>
 
-        <div style={{ marginBottom: 20 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-            <span style={{ fontFamily: "system-ui", fontSize: 18, color: "#94A3B8" }}>
-              Connect Rate
-            </span>
-            <span
-              style={{
-                fontFamily: "system-ui",
-                fontSize: 28,
-                fontWeight: 700,
-                color: "#EF4444",
-              }}
-            >
-              {connectRate.toFixed(1)}%
-            </span>
+        {/* Status text */}
+        <div style={{ flex: 1 }}>
+          <div
+            style={{
+              fontFamily: "system-ui",
+              fontSize: 28,
+              fontWeight: 700,
+              color: "#F8FAFC",
+              marginBottom: 6,
+            }}
+          >
+            {label}
           </div>
           <div
             style={{
-              width: "100%",
-              height: 10,
-              backgroundColor: "#0F172A",
-              borderRadius: 5,
-              overflow: "hidden",
+              fontFamily: "system-ui",
+              fontSize: 20,
+              fontWeight: 600,
+              color: colors.icon,
             }}
           >
-            <div
-              style={{
-                width: `${connectRate}%`,
-                height: "100%",
-                backgroundColor: "#EF4444",
-                borderRadius: 5,
-              }}
-            />
+            {isRejected ? (status === "blocked" ? "BLOCKED" : "REJECTED") : "Dialing..."}
           </div>
         </div>
 
-        <div style={{ display: "flex", gap: 20 }}>
-          <div style={{ flex: 1, textAlign: "center" }}>
-            <div style={{ fontFamily: "system-ui", fontSize: 32, fontWeight: 700, color: "#F8FAFC" }}>
-              {Math.floor(interpolate(localFrame, [0, 60], [0, 1247], { extrapolateRight: "clamp" }))}
-            </div>
-            <div style={{ fontFamily: "system-ui", fontSize: 14, color: "#64748B" }}>Calls Made</div>
+        {/* Status badge */}
+        {isRejected && (
+          <div
+            style={{
+              backgroundColor: colors.bg,
+              padding: "12px 20px",
+              borderRadius: 12,
+              border: `2px solid ${colors.border}`,
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "system-ui",
+                fontSize: 16,
+                fontWeight: 700,
+                color: colors.icon,
+              }}
+            >
+              {status === "blocked" ? "DND" : "SPAM"}
+            </span>
           </div>
-          <div style={{ flex: 1, textAlign: "center" }}>
-            <div style={{ fontFamily: "system-ui", fontSize: 32, fontWeight: 700, color: "#EF4444" }}>
-              {Math.floor(interpolate(localFrame, [0, 60], [0, 40], { extrapolateRight: "clamp" }))}
-            </div>
-            <div style={{ fontFamily: "system-ui", fontSize: 14, color: "#64748B" }}>Connected</div>
-          </div>
-        </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Big stat card
+const StatCard: React.FC<{
+  value: string;
+  label: string;
+  color: string;
+  delay: number;
+  frame: number;
+  fps: number;
+}> = ({ value, label, color, delay, frame, fps }) => {
+  const entrySpring = spring({
+    frame: frame - delay,
+    fps,
+    config: { damping: 12 },
+  });
+
+  if (entrySpring <= 0) return null;
+
+  return (
+    <div
+      style={{
+        opacity: interpolate(entrySpring, [0, 1], [0, 1]),
+        transform: `scale(${entrySpring})`,
+        flex: 1,
+        textAlign: "center",
+        backgroundColor: "#1E293B",
+        borderRadius: 20,
+        padding: "28px 20px",
+        border: `2px solid ${color}40`,
+      }}
+    >
+      <div
+        style={{
+          fontFamily: "system-ui",
+          fontSize: 56,
+          fontWeight: 800,
+          color,
+          marginBottom: 8,
+        }}
+      >
+        {value}
+      </div>
+      <div
+        style={{
+          fontFamily: "system-ui",
+          fontSize: 18,
+          color: "#94A3B8",
+        }}
+      >
+        {label}
       </div>
     </div>
   );
@@ -253,21 +213,17 @@ export const Scene1OldWorldPain: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const text1Spring = spring({
-    frame: frame - 140,
+  const titleSpring = spring({
+    frame: frame - 5,
     fps,
     config: { damping: 14 },
   });
 
-  const text2Spring = spring({
+  const textSpring = spring({
     frame: frame - 180,
     fps,
     config: { damping: 14 },
   });
-
-  // Phone delays for grid
-  const phoneDelays = [5, 15, 25, 35, 45, 55];
-  const phoneRejected = [true, true, false, true, true, true];
 
   return (
     <AbsoluteFill
@@ -282,22 +238,9 @@ export const Scene1OldWorldPain: React.FC = () => {
           position: "absolute",
           inset: 0,
           background: `
-            radial-gradient(circle at 50% 30%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 50% 70%, rgba(139, 92, 246, 0.08) 0%, transparent 50%)
+            radial-gradient(circle at 50% 30%, rgba(239, 68, 68, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 50% 70%, rgba(139, 92, 246, 0.1) 0%, transparent 50%)
           `,
-        }}
-      />
-
-      {/* Grid pattern */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          backgroundImage: `
-            linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)
-          `,
-          backgroundSize: "50px 50px",
         }}
       />
 
@@ -308,88 +251,66 @@ export const Scene1OldWorldPain: React.FC = () => {
           inset: 0,
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
-          padding: "60px 40px",
+          padding: "80px 50px",
+          gap: 28,
         }}
       >
-        {/* Phone grid - 2x3 */}
+        {/* Title */}
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-            gap: 20,
-            marginBottom: 40,
+            textAlign: "center",
+            opacity: interpolate(titleSpring, [0, 1], [0, 1]),
+            transform: `translateY(${interpolate(titleSpring, [0, 1], [-20, 0])}px)`,
+            marginBottom: 20,
           }}
         >
-          {phoneDelays.map((delay, i) => (
-            <DialingPhone
-              key={i}
-              delay={delay}
-              frame={frame}
-              fps={fps}
-              rejected={phoneRejected[i]}
-            />
-          ))}
+          <span
+            style={{
+              fontFamily: "system-ui",
+              fontSize: 32,
+              fontWeight: 600,
+              color: "#94A3B8",
+            }}
+          >
+            Cold Calling in 2024
+          </span>
         </div>
 
-        {/* SPAM Flash */}
-        <SpamFlash frame={frame} startFrame={80} />
+        {/* Phone cards */}
+        <PhoneCard delay={15} frame={frame} fps={fps} status="rejected" label="Lead #1" />
+        <PhoneCard delay={35} frame={frame} fps={fps} status="blocked" label="Lead #2" />
+        <PhoneCard delay={55} frame={frame} fps={fps} status="rejected" label="Lead #3" />
 
-        {/* CRM Dashboard */}
-        <div style={{ width: "100%", maxWidth: 400, marginBottom: 50 }}>
-          <CRMDashboard frame={frame} fps={fps} startFrame={50} />
+        {/* Stats */}
+        <div style={{ display: "flex", gap: 16, marginTop: 20 }}>
+          <StatCard value="3.2%" label="Connect Rate" color="#EF4444" delay={90} frame={frame} fps={fps} />
+          <StatCard value="97%" label="Rejected" color="#F59E0B" delay={110} frame={frame} fps={fps} />
         </div>
 
         {/* Main text */}
         <div
           style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 20,
+            marginTop: "auto",
             textAlign: "center",
+            opacity: interpolate(textSpring, [0, 1], [0, 1]),
+            transform: `translateY(${interpolate(textSpring, [0, 1], [40, 0])}px)`,
           }}
         >
-          <div
+          <span
             style={{
-              opacity: interpolate(text1Spring, [0, 1], [0, 1]),
-              transform: `translateY(${interpolate(text1Spring, [0, 1], [40, 0])}px)`,
+              fontFamily: "system-ui",
+              fontSize: 56,
+              fontWeight: 800,
+              color: "#F8FAFC",
+              letterSpacing: "-0.02em",
+              lineHeight: 1.2,
             }}
           >
-            <span
-              style={{
-                fontFamily: "system-ui",
-                fontSize: 52,
-                fontWeight: 800,
-                color: "#F8FAFC",
-                letterSpacing: "-0.02em",
-                lineHeight: 1.2,
-              }}
-            >
-              Cold calls{" "}
-              <span style={{ color: "#EF4444" }}>don't connect</span>
-              <br />
-              anymore.
-            </span>
-          </div>
-
-          <div
-            style={{
-              opacity: interpolate(text2Spring, [0, 1], [0, 1]),
-              transform: `translateY(${interpolate(text2Spring, [0, 1], [30, 0])}px)`,
-            }}
-          >
-            <span
-              style={{
-                fontFamily: "system-ui",
-                fontSize: 32,
-                fontWeight: 500,
-                color: "#94A3B8",
-              }}
-            >
-              Most get blocked.
-            </span>
-          </div>
+            Cold calls{" "}
+            <span style={{ color: "#EF4444" }}>don't work</span>
+            <br />
+            anymore.
+          </span>
         </div>
       </div>
     </AbsoluteFill>

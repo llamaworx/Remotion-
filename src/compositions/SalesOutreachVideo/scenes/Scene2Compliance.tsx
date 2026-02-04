@@ -7,30 +7,28 @@ import {
   spring,
 } from "remotion";
 
-// Privacy Law Card - mobile optimized
+// Large law card for mobile
 const LawCard: React.FC<{
   title: string;
-  subtitle: string;
-  icon: React.ReactNode;
+  region: string;
+  penalty: string;
+  color: string;
   delay: number;
   frame: number;
   fps: number;
-  color: string;
-}> = ({ title, subtitle, icon, delay, frame, fps, color }) => {
+}> = ({ title, region, penalty, color, delay, frame, fps }) => {
   const entrySpring = spring({
     frame: frame - delay,
     fps,
     config: { damping: 12, stiffness: 100 },
   });
 
-  const pulse = Math.sin((frame - delay) * 0.08) * 0.03 + 1;
-
   if (entrySpring <= 0) return null;
 
   return (
     <div
       style={{
-        transform: `scale(${entrySpring * pulse})`,
+        transform: `translateX(${interpolate(entrySpring, [0, 1], [-50, 0])}px)`,
         opacity: interpolate(entrySpring, [0, 1], [0, 1]),
         width: "100%",
       }}
@@ -38,110 +36,97 @@ const LawCard: React.FC<{
       <div
         style={{
           backgroundColor: "#1E293B",
-          borderRadius: 16,
-          padding: 18,
-          border: `2px solid ${color}40`,
-          boxShadow: `0 10px 40px rgba(0,0,0,0.3), 0 0 30px ${color}20`,
-          display: "flex",
-          alignItems: "center",
-          gap: 16,
+          borderRadius: 24,
+          padding: 32,
+          border: `3px solid ${color}`,
+          boxShadow: `0 10px 40px rgba(0,0,0,0.3), 0 0 40px ${color}30`,
         }}
       >
-        <div
-          style={{
-            width: 50,
-            height: 50,
-            borderRadius: 12,
-            backgroundColor: `${color}20`,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexShrink: 0,
-          }}
-        >
-          {icon}
-        </div>
-        <div>
+        <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 20 }}>
+          {/* Shield icon */}
           <div
             style={{
+              width: 70,
+              height: 70,
+              borderRadius: 18,
+              backgroundColor: `${color}20`,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M12 2L4 6v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V6l-8-4z"
+                stroke={color}
+                strokeWidth="2.5"
+                fill="none"
+              />
+              <path
+                d="M9 12l2 2 4-4"
+                stroke={color}
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+
+          <div style={{ flex: 1 }}>
+            <div
+              style={{
+                fontFamily: "system-ui",
+                fontSize: 36,
+                fontWeight: 800,
+                color,
+              }}
+            >
+              {title}
+            </div>
+            <div
+              style={{
+                fontFamily: "system-ui",
+                fontSize: 20,
+                color: "#94A3B8",
+              }}
+            >
+              {region}
+            </div>
+          </div>
+        </div>
+
+        {/* Penalty */}
+        <div
+          style={{
+            backgroundColor: `${color}15`,
+            borderRadius: 14,
+            padding: "16px 20px",
+            display: "flex",
+            alignItems: "center",
+            gap: 12,
+          }}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill={color}>
+            <path d="M12 2L1 21h22L12 2zm0 4l7.53 13H4.47L12 6zm-1 5v4h2v-4h-2zm0 6v2h2v-2h-2z" />
+          </svg>
+          <span
+            style={{
               fontFamily: "system-ui",
-              fontSize: 24,
-              fontWeight: 700,
+              fontSize: 18,
+              fontWeight: 600,
               color,
             }}
           >
-            {title}
-          </div>
-          <div
-            style={{
-              fontFamily: "system-ui",
-              fontSize: 14,
-              color: "#64748B",
-            }}
-          >
-            {subtitle}
-          </div>
+            {penalty}
+          </span>
         </div>
       </div>
     </div>
   );
 };
 
-// Warning Badge - mobile optimized
-const WarningBadge: React.FC<{
-  text: string;
-  delay: number;
-  frame: number;
-  fps: number;
-}> = ({ text, delay, frame, fps }) => {
-  const entrySpring = spring({
-    frame: frame - delay,
-    fps,
-    config: { damping: 10, stiffness: 120 },
-  });
-
-  const shake = Math.sin((frame - delay) * 0.4) * 2;
-
-  if (entrySpring <= 0) return null;
-
-  return (
-    <div
-      style={{
-        transform: `scale(${entrySpring}) translateX(${shake}px)`,
-        opacity: interpolate(entrySpring, [0, 1], [0, 1]),
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: "#FEF3C7",
-          border: "2px solid #F59E0B",
-          borderRadius: 10,
-          padding: "10px 18px",
-          display: "flex",
-          alignItems: "center",
-          gap: 10,
-        }}
-      >
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="#F59E0B">
-          <path d="M12 2L1 21h22L12 2zm0 4l7.53 13H4.47L12 6zm-1 5v4h2v-4h-2zm0 6v2h2v-2h-2z" />
-        </svg>
-        <span
-          style={{
-            fontFamily: "system-ui",
-            fontSize: 16,
-            fontWeight: 600,
-            color: "#92400E",
-          }}
-        >
-          {text}
-        </span>
-      </div>
-    </div>
-  );
-};
-
-// Blocked List Item
-const BlockedItem: React.FC<{
+// Warning banner
+const WarningBanner: React.FC<{
   delay: number;
   frame: number;
   fps: number;
@@ -149,103 +134,78 @@ const BlockedItem: React.FC<{
   const entrySpring = spring({
     frame: frame - delay,
     fps,
-    config: { damping: 14 },
+    config: { damping: 12 },
   });
 
-  if (entrySpring <= 0) return null;
+  const pulse = Math.sin((frame - delay) * 0.1) * 0.03 + 1;
 
-  const phoneNumber = `+1 ${Math.floor(Math.random() * 900 + 100)} ${Math.floor(Math.random() * 900 + 100)} ${Math.floor(Math.random() * 9000 + 1000)}`;
+  if (entrySpring <= 0) return null;
 
   return (
     <div
       style={{
         opacity: interpolate(entrySpring, [0, 1], [0, 1]),
-        transform: `translateX(${interpolate(entrySpring, [0, 1], [30, 0])}px)`,
-        display: "flex",
-        alignItems: "center",
-        gap: 12,
-        padding: "10px 0",
-        borderBottom: "1px solid #1E293B",
+        transform: `scale(${entrySpring * pulse})`,
+        width: "100%",
       }}
     >
       <div
         style={{
-          width: 32,
-          height: 32,
-          borderRadius: "50%",
-          backgroundColor: "#EF444420",
+          backgroundColor: "#FEF3C7",
+          borderRadius: 20,
+          padding: "24px 32px",
           display: "flex",
-          justifyContent: "center",
           alignItems: "center",
+          gap: 20,
+          border: "3px solid #F59E0B",
+          boxShadow: "0 10px 40px rgba(245, 158, 11, 0.3)",
         }}
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-          <path d="M18 6L6 18M6 6l12 12" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" />
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="#F59E0B">
+          <path d="M12 2L1 21h22L12 2zm0 4l7.53 13H4.47L12 6zm-1 5v4h2v-4h-2zm0 6v2h2v-2h-2z" />
         </svg>
+        <div style={{ flex: 1 }}>
+          <div
+            style={{
+              fontFamily: "system-ui",
+              fontSize: 26,
+              fontWeight: 800,
+              color: "#92400E",
+              marginBottom: 4,
+            }}
+          >
+            Consent Required
+          </div>
+          <div
+            style={{
+              fontFamily: "system-ui",
+              fontSize: 18,
+              color: "#B45309",
+            }}
+          >
+            Cold calls without consent = legal risk
+          </div>
+        </div>
       </div>
-      <span style={{ fontFamily: "monospace", fontSize: 15, color: "#94A3B8" }}>
-        {phoneNumber}
-      </span>
-      <span
-        style={{
-          marginLeft: "auto",
-          fontFamily: "system-ui",
-          fontSize: 12,
-          color: "#EF4444",
-          backgroundColor: "#EF444420",
-          padding: "4px 10px",
-          borderRadius: 4,
-        }}
-      >
-        DND
-      </span>
     </div>
   );
 };
-
-// Icons
-const ShieldIcon: React.FC<{ color: string }> = ({ color }) => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-    <path d="M12 2L4 6v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V6l-8-4z" stroke={color} strokeWidth="2" fill="none" />
-    <path d="M9 12l2 2 4-4" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const DocumentIcon: React.FC<{ color: string }> = ({ color }) => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke={color} strokeWidth="2" fill="none" />
-    <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke={color} strokeWidth="2" strokeLinecap="round" />
-  </svg>
-);
-
-const LockIcon: React.FC<{ color: string }> = ({ color }) => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-    <rect x="3" y="11" width="18" height="11" rx="2" stroke={color} strokeWidth="2" />
-    <path d="M7 11V7a5 5 0 0110 0v4" stroke={color} strokeWidth="2" strokeLinecap="round" />
-  </svg>
-);
 
 export const Scene2Compliance: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const textSpring = spring({
-    frame: frame - 120,
+  const titleSpring = spring({
+    frame: frame - 5,
     fps,
     config: { damping: 14 },
   });
 
-  const laws = [
-    { title: "DPDP Act", subtitle: "India 2023", icon: <ShieldIcon color="#8B5CF6" />, delay: 10, color: "#8B5CF6" },
-    { title: "GDPR", subtitle: "European Union", icon: <DocumentIcon color="#3B82F6" />, delay: 25, color: "#3B82F6" },
-    { title: "TCPA", subtitle: "United States", icon: <LockIcon color="#06B6D4" />, delay: 40, color: "#06B6D4" },
-  ];
-
-  const warnings = [
-    { text: "Consent Required", delay: 55 },
-    { text: "Heavy Fines", delay: 70 },
-    { text: "Legal Risk", delay: 85 },
-  ];
+  const textSpring = spring({
+    frame: frame - 130,
+    fps,
+    config: { damping: 14 },
+  });
 
   return (
     <AbsoluteFill
@@ -260,23 +220,10 @@ export const Scene2Compliance: React.FC = () => {
           position: "absolute",
           inset: 0,
           background: `
-            radial-gradient(circle at 50% 20%, rgba(139, 92, 246, 0.12) 0%, transparent 40%),
-            radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
-            radial-gradient(circle at 50% 80%, rgba(6, 182, 212, 0.06) 0%, transparent 30%)
+            radial-gradient(circle at 50% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
+            radial-gradient(circle at 50% 60%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
+            radial-gradient(circle at 50% 90%, rgba(6, 182, 212, 0.08) 0%, transparent 30%)
           `,
-        }}
-      />
-
-      {/* Grid overlay */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          backgroundImage: `
-            linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)
-          `,
-          backgroundSize: "50px 50px",
         }}
       />
 
@@ -287,85 +234,62 @@ export const Scene2Compliance: React.FC = () => {
           inset: 0,
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
-          padding: "50px 40px",
+          padding: "80px 50px",
+          gap: 24,
         }}
       >
-        {/* Law cards */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 16, width: "100%", marginBottom: 30 }}>
-          {laws.map((law, i) => (
-            <LawCard
-              key={i}
-              title={law.title}
-              subtitle={law.subtitle}
-              icon={law.icon}
-              delay={law.delay}
-              frame={frame}
-              fps={fps}
-              color={law.color}
-            />
-          ))}
-        </div>
-
-        {/* Warning badges */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "center", marginBottom: 30 }}>
-          {warnings.map((warning, i) => (
-            <WarningBadge key={i} text={warning.text} delay={warning.delay} frame={frame} fps={fps} />
-          ))}
-        </div>
-
-        {/* Blocked list panel */}
+        {/* Title */}
         <div
           style={{
-            width: "100%",
-            opacity: interpolate(frame, [60, 90], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
+            textAlign: "center",
+            opacity: interpolate(titleSpring, [0, 1], [0, 1]),
+            transform: `translateY(${interpolate(titleSpring, [0, 1], [-20, 0])}px)`,
+            marginBottom: 16,
           }}
         >
-          <div
+          <span
             style={{
-              backgroundColor: "#1E293B",
-              borderRadius: 16,
-              padding: 20,
-              border: "1px solid #334155",
-              boxShadow: "0 20px 60px rgba(0,0,0,0.4)",
+              fontFamily: "system-ui",
+              fontSize: 32,
+              fontWeight: 600,
+              color: "#94A3B8",
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 12,
-                marginBottom: 14,
-                paddingBottom: 12,
-                borderBottom: "1px solid #334155",
-              }}
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="10" stroke="#EF4444" strokeWidth="2" />
-                <path d="M4.93 4.93l14.14 14.14" stroke="#EF4444" strokeWidth="2" />
-              </svg>
-              <span style={{ fontFamily: "system-ui", fontSize: 18, fontWeight: 600, color: "#F8FAFC" }}>
-                DND Blocked List
-              </span>
-            </div>
-
-            {[0, 1, 2, 3].map((i) => (
-              <BlockedItem key={i} delay={90 + i * 12} frame={frame} fps={fps} />
-            ))}
-
-            <div
-              style={{
-                marginTop: 14,
-                textAlign: "center",
-                fontFamily: "system-ui",
-                fontSize: 14,
-                color: "#64748B",
-              }}
-            >
-              +2,847 more blocked
-            </div>
-          </div>
+            Global Privacy Laws
+          </span>
         </div>
+
+        {/* Law cards */}
+        <LawCard
+          title="DPDP Act"
+          region="India 2023"
+          penalty="Fines up to ₹250 Crore"
+          color="#8B5CF6"
+          delay={15}
+          frame={frame}
+          fps={fps}
+        />
+        <LawCard
+          title="GDPR"
+          region="European Union"
+          penalty="Fines up to €20 Million"
+          color="#3B82F6"
+          delay={35}
+          frame={frame}
+          fps={fps}
+        />
+        <LawCard
+          title="TCPA"
+          region="United States"
+          penalty="$500-$1,500 per violation"
+          color="#06B6D4"
+          delay={55}
+          frame={frame}
+          fps={fps}
+        />
+
+        {/* Warning banner */}
+        <WarningBanner delay={80} frame={frame} fps={fps} />
 
         {/* Main text */}
         <div
@@ -379,7 +303,7 @@ export const Scene2Compliance: React.FC = () => {
           <span
             style={{
               fontFamily: "system-ui",
-              fontSize: 44,
+              fontSize: 52,
               fontWeight: 800,
               color: "#F8FAFC",
               letterSpacing: "-0.02em",
@@ -394,8 +318,10 @@ export const Scene2Compliance: React.FC = () => {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              changed everything.
+              changed
             </span>
+            <br />
+            everything.
           </span>
         </div>
       </div>

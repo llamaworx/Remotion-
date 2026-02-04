@@ -7,136 +7,19 @@ import {
   spring,
 } from "remotion";
 
-// Animated counter component
-const AnimatedCounter: React.FC<{
-  value: number;
-  suffix?: string;
-  prefix?: string;
-  delay: number;
-  frame: number;
-  fps: number;
-  color?: string;
-}> = ({ value, suffix = "", prefix = "", delay, frame, fps, color = "#F8FAFC" }) => {
-  const progress = spring({
-    frame: frame - delay,
-    fps,
-    config: { damping: 20, stiffness: 80 },
-  });
-
-  const displayValue = Math.round(value * Math.max(0, progress));
-
-  return (
-    <span style={{ color, fontVariantNumeric: "tabular-nums" }}>
-      {prefix}{displayValue.toLocaleString()}{suffix}
-    </span>
-  );
-};
-
-// Dashboard metric card - mobile optimized
+// Big metric card
 const MetricCard: React.FC<{
-  title: string;
-  value: number;
-  suffix?: string;
-  prefix?: string;
-  icon: React.ReactNode;
-  delay: number;
-  frame: number;
-  fps: number;
-  accentColor: string;
-}> = ({ title, value, suffix, prefix, icon, delay, frame, fps, accentColor }) => {
-  const entrySpring = spring({
-    frame: frame - delay,
-    fps,
-    config: { damping: 12, stiffness: 100 },
-  });
-
-  if (entrySpring <= 0) return null;
-
-  return (
-    <div
-      style={{
-        opacity: interpolate(entrySpring, [0, 1], [0, 1]),
-        transform: `translateY(${interpolate(entrySpring, [0, 1], [20, 0])}px) scale(${interpolate(entrySpring, [0, 1], [0.9, 1])})`,
-        backgroundColor: "#0F172A",
-        borderRadius: 16,
-        padding: 18,
-        border: `2px solid ${accentColor}30`,
-        boxShadow: `0 10px 30px rgba(0,0,0,0.3), 0 0 20px ${accentColor}15`,
-        display: "flex",
-        alignItems: "center",
-        gap: 14,
-        flex: 1,
-      }}
-    >
-      {/* Icon */}
-      <div
-        style={{
-          width: 44,
-          height: 44,
-          borderRadius: 10,
-          backgroundColor: `${accentColor}20`,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexShrink: 0,
-        }}
-      >
-        {icon}
-      </div>
-      <div>
-        <div
-          style={{
-            fontFamily: "system-ui",
-            fontSize: 12,
-            fontWeight: 500,
-            color: "#94A3B8",
-            marginBottom: 4,
-          }}
-        >
-          {title}
-        </div>
-        <div
-          style={{
-            fontFamily: "system-ui",
-            fontSize: 28,
-            fontWeight: 800,
-            letterSpacing: "-0.02em",
-          }}
-        >
-          <AnimatedCounter
-            value={value}
-            suffix={suffix}
-            prefix={prefix}
-            delay={delay + 10}
-            frame={frame}
-            fps={fps}
-            color={accentColor}
-          />
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Lead quality bar - mobile optimized
-const QualityBar: React.FC<{
   label: string;
-  percentage: number;
+  value: string;
   color: string;
   delay: number;
   frame: number;
   fps: number;
-}> = ({ label, percentage, color, delay, frame, fps }) => {
+}> = ({ label, value, color, delay, frame, fps }) => {
   const entrySpring = spring({
     frame: frame - delay,
     fps,
-    config: { damping: 15, stiffness: 100 },
-  });
-
-  const barProgress = spring({
-    frame: frame - delay - 15,
-    fps,
-    config: { damping: 20, stiffness: 60 },
+    config: { damping: 12 },
   });
 
   if (entrySpring <= 0) return null;
@@ -145,117 +28,133 @@ const QualityBar: React.FC<{
     <div
       style={{
         opacity: interpolate(entrySpring, [0, 1], [0, 1]),
-        display: "flex",
-        flexDirection: "column",
-        gap: 6,
+        transform: `scale(${entrySpring})`,
+        flex: 1,
       }}
     >
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <span style={{ fontFamily: "system-ui", fontSize: 14, fontWeight: 500, color: "#F8FAFC" }}>
-          {label}
-        </span>
-        <span style={{ fontFamily: "system-ui", fontSize: 14, fontWeight: 700, color }}>
-          {Math.round(percentage * Math.max(0, barProgress))}%
-        </span>
-      </div>
       <div
         style={{
-          height: 10,
           backgroundColor: "#1E293B",
-          borderRadius: 5,
-          overflow: "hidden",
+          borderRadius: 20,
+          padding: "28px 20px",
+          textAlign: "center",
+          border: `2px solid ${color}40`,
+          boxShadow: `0 10px 40px rgba(0,0,0,0.3), 0 0 20px ${color}20`,
         }}
       >
         <div
           style={{
-            height: "100%",
-            width: `${percentage * Math.max(0, barProgress)}%`,
-            backgroundColor: color,
-            borderRadius: 5,
-            boxShadow: `0 0 10px ${color}50`,
+            fontFamily: "system-ui",
+            fontSize: 48,
+            fontWeight: 800,
+            color,
+            marginBottom: 8,
           }}
-        />
+        >
+          {value}
+        </div>
+        <div
+          style={{
+            fontFamily: "system-ui",
+            fontSize: 16,
+            color: "#94A3B8",
+          }}
+        >
+          {label}
+        </div>
       </div>
     </div>
   );
 };
 
-// Callback request item - mobile optimized
-const CallbackItem: React.FC<{
+// Lead card with quality indicator
+const LeadCard: React.FC<{
   name: string;
-  time: string;
-  priority: "high" | "medium" | "low";
+  location: string;
+  quality: number;
+  interest: "High" | "Medium" | "Low";
   delay: number;
   frame: number;
   fps: number;
-}> = ({ name, time, priority, delay, frame, fps }) => {
+}> = ({ name, location, quality, interest, delay, frame, fps }) => {
   const entrySpring = spring({
     frame: frame - delay,
     fps,
-    config: { damping: 12, stiffness: 100 },
+    config: { damping: 12 },
   });
 
   if (entrySpring <= 0) return null;
 
-  const priorityColors = {
-    high: "#EF4444",
-    medium: "#F59E0B",
-    low: "#22C55E",
+  const interestColors = {
+    High: "#22C55E",
+    Medium: "#F59E0B",
+    Low: "#EF4444",
   };
 
   return (
     <div
       style={{
         opacity: interpolate(entrySpring, [0, 1], [0, 1]),
-        transform: `translateX(${interpolate(entrySpring, [0, 1], [15, 0])}px)`,
-        display: "flex",
-        alignItems: "center",
-        gap: 10,
-        padding: "10px 12px",
-        backgroundColor: "#1E293B",
-        borderRadius: 10,
-        borderLeft: `3px solid ${priorityColors[priority]}`,
+        transform: `translateX(${interpolate(entrySpring, [0, 1], [-30, 0])}px)`,
+        width: "100%",
       }}
     >
       <div
         style={{
-          width: 36,
-          height: 36,
-          borderRadius: "50%",
-          backgroundColor: "#334155",
+          backgroundColor: "#1E293B",
+          borderRadius: 20,
+          padding: "24px 28px",
           display: "flex",
-          justifyContent: "center",
           alignItems: "center",
-          flexShrink: 0,
+          gap: 20,
+          border: "2px solid #334155",
         }}
       >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="#F8FAFC">
-          <circle cx="12" cy="8" r="4" />
-          <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
-        </svg>
-      </div>
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontFamily: "system-ui", fontSize: 14, fontWeight: 600, color: "#F8FAFC" }}>
-          {name}
+        {/* Avatar */}
+        <div
+          style={{
+            width: 60,
+            height: 60,
+            borderRadius: "50%",
+            background: "linear-gradient(135deg, #8B5CF6, #06B6D4)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexShrink: 0,
+          }}
+        >
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
+          </svg>
         </div>
-        <div style={{ fontFamily: "system-ui", fontSize: 11, color: "#94A3B8" }}>
-          {time}
+
+        {/* Name and location */}
+        <div style={{ flex: 1 }}>
+          <div style={{ fontFamily: "system-ui", fontSize: 22, fontWeight: 700, color: "#F8FAFC", marginBottom: 4 }}>
+            {name}
+          </div>
+          <div style={{ fontFamily: "system-ui", fontSize: 16, color: "#94A3B8" }}>
+            {location}
+          </div>
         </div>
-      </div>
-      <div
-        style={{
-          padding: "4px 8px",
-          backgroundColor: `${priorityColors[priority]}20`,
-          borderRadius: 6,
-          fontFamily: "system-ui",
-          fontSize: 10,
-          fontWeight: 600,
-          color: priorityColors[priority],
-          textTransform: "uppercase",
-          flexShrink: 0,
-        }}
-      >
-        {priority}
+
+        {/* Quality + Interest */}
+        <div style={{ textAlign: "right" }}>
+          <div style={{ fontFamily: "system-ui", fontSize: 28, fontWeight: 800, color: "#8B5CF6" }}>
+            {quality}%
+          </div>
+          <div
+            style={{
+              fontFamily: "system-ui",
+              fontSize: 14,
+              fontWeight: 600,
+              color: interestColors[interest],
+            }}
+          >
+            {interest} Intent
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -265,16 +164,14 @@ export const Scene8SalesDashboard: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Dashboard entry animation
-  const dashboardEntry = spring({
-    frame,
+  const titleSpring = spring({
+    frame: frame - 5,
     fps,
-    config: { damping: 15, stiffness: 80 },
+    config: { damping: 14 },
   });
 
-  // Text animation at end
   const textSpring = spring({
-    frame: frame - 220,
+    frame: frame - 260,
     fps,
     config: { damping: 14 },
   });
@@ -292,22 +189,9 @@ export const Scene8SalesDashboard: React.FC = () => {
           position: "absolute",
           inset: 0,
           background: `
-            radial-gradient(circle at 50% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 40%),
-            radial-gradient(circle at 50% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 40%)
+            radial-gradient(circle at 50% 20%, rgba(139, 92, 246, 0.12) 0%, transparent 40%),
+            radial-gradient(circle at 50% 70%, rgba(34, 197, 94, 0.1) 0%, transparent 40%)
           `,
-        }}
-      />
-
-      {/* Grid overlay */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          backgroundImage: `
-            linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)
-          `,
-          backgroundSize: "50px 50px",
         }}
       />
 
@@ -318,212 +202,111 @@ export const Scene8SalesDashboard: React.FC = () => {
           inset: 0,
           display: "flex",
           flexDirection: "column",
-          padding: "40px 30px",
-          gap: 16,
+          padding: "60px 50px",
+          gap: 24,
         }}
       >
-        {/* Dashboard header */}
+        {/* Title */}
         <div
           style={{
-            opacity: interpolate(dashboardEntry, [0, 1], [0, 1]),
-            transform: `translateY(${interpolate(dashboardEntry, [0, 1], [-15, 0])}px)`,
-            display: "flex",
-            alignItems: "center",
-            gap: 14,
+            opacity: interpolate(titleSpring, [0, 1], [0, 1]),
+            textAlign: "center",
             marginBottom: 10,
+          }}
+        >
+          <span style={{ fontFamily: "system-ui", fontSize: 28, fontWeight: 600, color: "#94A3B8" }}>
+            Real-Time Lead Intelligence
+          </span>
+        </div>
+
+        {/* Metric cards row */}
+        <div style={{ display: "flex", gap: 16 }}>
+          <MetricCard label="Calls Today" value="47" color="#8B5CF6" delay={15} frame={frame} fps={fps} />
+          <MetricCard label="Qualified" value="32" color="#22C55E" delay={30} frame={frame} fps={fps} />
+        </div>
+
+        {/* Lead cards */}
+        <LeadCard
+          name="James Wilson"
+          location="New York, USA"
+          quality={94}
+          interest="High"
+          delay={50}
+          frame={frame}
+          fps={fps}
+        />
+        <LeadCard
+          name="Emma Schmidt"
+          location="Berlin, Germany"
+          quality={87}
+          interest="High"
+          delay={80}
+          frame={frame}
+          fps={fps}
+        />
+        <LeadCard
+          name="Sophie Martin"
+          location="Paris, France"
+          quality={76}
+          interest="Medium"
+          delay={110}
+          frame={frame}
+          fps={fps}
+        />
+        <LeadCard
+          name="David Chen"
+          location="Singapore"
+          quality={91}
+          interest="High"
+          delay={140}
+          frame={frame}
+          fps={fps}
+        />
+
+        {/* Callback badge */}
+        <div
+          style={{
+            opacity: interpolate(spring({ frame: frame - 180, fps, config: { damping: 12 } }), [0, 1], [0, 1]),
+            display: "flex",
+            justifyContent: "center",
           }}
         >
           <div
             style={{
-              width: 44,
-              height: 44,
-              borderRadius: 12,
-              background: "linear-gradient(135deg, #8B5CF6, #06B6D4)",
+              backgroundColor: "#22C55E20",
+              border: "2px solid #22C55E",
+              borderRadius: 16,
+              padding: "16px 32px",
               display: "flex",
-              justifyContent: "center",
               alignItems: "center",
+              gap: 12,
             }}
           >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
-              <rect x="3" y="3" width="7" height="7" rx="1" />
-              <rect x="14" y="3" width="7" height="7" rx="1" />
-              <rect x="3" y="14" width="7" height="7" rx="1" />
-              <rect x="14" y="14" width="7" height="7" rx="1" />
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#22C55E">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
             </svg>
-          </div>
-          <div>
-            <div style={{ fontFamily: "system-ui", fontSize: 20, fontWeight: 700, color: "#F8FAFC" }}>
-              Bolka Sales Dashboard
-            </div>
-            <div style={{ fontFamily: "system-ui", fontSize: 12, color: "#94A3B8" }}>
-              Real-time conversation analytics
-            </div>
-          </div>
-        </div>
-
-        {/* Metric cards row */}
-        <div style={{ display: "flex", gap: 12 }}>
-          <MetricCard
-            title="Conversations"
-            value={1247}
-            icon={
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="#8B5CF6">
-                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-              </svg>
-            }
-            delay={20}
-            frame={frame}
-            fps={fps}
-            accentColor="#8B5CF6"
-          />
-          <MetricCard
-            title="Callbacks"
-            value={342}
-            icon={
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="#06B6D4">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-              </svg>
-            }
-            delay={40}
-            frame={frame}
-            fps={fps}
-            accentColor="#06B6D4"
-          />
-        </div>
-
-        {/* Lead Quality Section */}
-        <div
-          style={{
-            backgroundColor: "#0F172A",
-            borderRadius: 16,
-            padding: 18,
-            border: "2px solid #22C55E30",
-            boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
-            opacity: interpolate(
-              spring({ frame: frame - 60, fps, config: { damping: 12 } }),
-              [0, 1],
-              [0, 1]
-            ),
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
-            <div
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 10,
-                backgroundColor: "#22C55E20",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="#22C55E">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-              </svg>
-            </div>
-            <span style={{ fontFamily: "system-ui", fontSize: 16, fontWeight: 600, color: "#F8FAFC" }}>
-              Lead Quality
+            <span style={{ fontFamily: "system-ui", fontSize: 20, fontWeight: 700, color: "#22C55E" }}>
+              12 Callbacks Scheduled
             </span>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <QualityBar label="Hot Leads" percentage={78} color="#EF4444" delay={80} frame={frame} fps={fps} />
-            <QualityBar label="Warm Leads" percentage={62} color="#F59E0B" delay={100} frame={frame} fps={fps} />
-            <QualityBar label="Cold Leads" percentage={24} color="#3B82F6" delay={120} frame={frame} fps={fps} />
-          </div>
-        </div>
-
-        {/* Interest Level */}
-        <div
-          style={{
-            backgroundColor: "#0F172A",
-            borderRadius: 16,
-            padding: 18,
-            border: "2px solid #F59E0B30",
-            boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
-            opacity: interpolate(
-              spring({ frame: frame - 50, fps, config: { damping: 12 } }),
-              [0, 1],
-              [0, 1]
-            ),
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: 10,
-                  backgroundColor: "#F59E0B20",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="#F59E0B">
-                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-                </svg>
-              </div>
-              <span style={{ fontFamily: "system-ui", fontSize: 16, fontWeight: 600, color: "#F8FAFC" }}>
-                Interest Level
-              </span>
-            </div>
-            <div
-              style={{
-                fontFamily: "system-ui",
-                fontSize: 32,
-                fontWeight: 800,
-                color: "#F59E0B",
-              }}
-            >
-              <AnimatedCounter value={87} suffix="%" delay={80} frame={frame} fps={fps} color="#F59E0B" />
-            </div>
-          </div>
-        </div>
-
-        {/* Callback Requests List */}
-        <div
-          style={{
-            backgroundColor: "#0F172A",
-            borderRadius: 16,
-            padding: 16,
-            border: "2px solid #06B6D430",
-            boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
-            flex: 1,
-            opacity: interpolate(
-              spring({ frame: frame - 90, fps, config: { damping: 12 } }),
-              [0, 1],
-              [0, 1]
-            ),
-          }}
-        >
-          <div style={{ fontFamily: "system-ui", fontSize: 14, fontWeight: 600, color: "#F8FAFC", marginBottom: 12 }}>
-            Recent Callback Requests
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            <CallbackItem name="James Wilson" time="New York, USA • 2 min ago" priority="high" delay={110} frame={frame} fps={fps} />
-            <CallbackItem name="Emma Schmidt" time="Berlin, Germany • 5 min ago" priority="high" delay={130} frame={frame} fps={fps} />
-            <CallbackItem name="Sophie Martin" time="Paris, France • 12 min ago" priority="medium" delay={150} frame={frame} fps={fps} />
           </div>
         </div>
 
         {/* Main text */}
         <div
           style={{
-            textAlign: "center",
             marginTop: "auto",
-            paddingTop: 16,
+            textAlign: "center",
             opacity: interpolate(textSpring, [0, 1], [0, 1]),
-            transform: `translateY(${interpolate(textSpring, [0, 1], [25, 0])}px)`,
+            transform: `translateY(${interpolate(textSpring, [0, 1], [30, 0])}px)`,
           }}
         >
           <span
             style={{
               fontFamily: "system-ui",
-              fontSize: 36,
+              fontSize: 48,
               fontWeight: 800,
               letterSpacing: "-0.02em",
+              lineHeight: 1.2,
             }}
           >
             <span
@@ -533,9 +316,9 @@ export const Scene8SalesDashboard: React.FC = () => {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              Every conversation
+              Pre-qualified.
             </span>{" "}
-            <span style={{ color: "#F8FAFC" }}>tracked.</span>
+            <span style={{ color: "#22C55E" }}>Ready to buy.</span>
           </span>
         </div>
       </div>
