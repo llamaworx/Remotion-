@@ -23,34 +23,34 @@ const ConversationBubble: React.FC<{
 
   if (entrySpring <= 0) return null;
 
+  // Customer messages on LEFT (flex-start), AI messages on RIGHT (flex-end)
   return (
     <div
       style={{
         display: "flex",
-        justifyContent: isUser ? "flex-end" : "flex-start",
+        justifyContent: isUser ? "flex-start" : "flex-end",
         opacity: interpolate(entrySpring, [0, 1], [0, 1]),
         transform: `translateY(${interpolate(entrySpring, [0, 1], [20, 0])}px)`,
       }}
     >
       <div
         style={{
-          maxWidth: 400,
-          backgroundColor: isUser ? "#8B5CF6" : "#1E293B",
+          maxWidth: 420,
+          backgroundColor: isUser ? "#8B5CF6" : "#0E7490",
           borderRadius: 20,
-          borderBottomRightRadius: isUser ? 4 : 20,
-          borderBottomLeftRadius: isUser ? 20 : 4,
+          borderBottomLeftRadius: isUser ? 4 : 20,
+          borderBottomRightRadius: isUser ? 20 : 4,
           padding: "14px 20px",
           boxShadow: isUser
             ? "0 8px 25px rgba(139, 92, 246, 0.3)"
-            : "0 8px 25px rgba(0,0,0,0.3)",
-          border: isUser ? "none" : "1px solid #334155",
+            : "0 8px 25px rgba(6, 182, 212, 0.3)",
         }}
       >
         <span
           style={{
             fontFamily: "system-ui",
             fontSize: 20,
-            color: isUser ? "white" : "#F8FAFC",
+            color: "white",
             lineHeight: 1.4,
           }}
         >
@@ -244,11 +244,11 @@ export const Scene7CustomerExperience: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: 80,
-          left: 100,
-          right: 100,
+          top: 60,
+          left: 80,
+          right: 80,
           display: "flex",
-          gap: 60,
+          gap: 40,
         }}
       >
         {/* Left side: User */}
@@ -295,9 +295,9 @@ export const Scene7CustomerExperience: React.FC = () => {
             flex: 2,
             display: "flex",
             flexDirection: "column",
-            gap: 16,
-            maxHeight: 500,
-            overflow: "hidden",
+            gap: 14,
+            maxHeight: 650,
+            overflow: "visible",
           }}
         >
           {conversations.map((convo, i) => (
