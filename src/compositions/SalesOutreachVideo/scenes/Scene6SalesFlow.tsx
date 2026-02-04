@@ -500,30 +500,52 @@ export const Scene6SalesFlow: React.FC = () => {
       {/* User interaction */}
       <UserInteraction frame={frame} fps={fps} delay={150} />
 
-      {/* Main text */}
+      {/* Main text - positioned between hub and customer */}
       <div
         style={{
           position: "absolute",
-          bottom: 100,
-          left: 0,
-          right: 0,
-          textAlign: "center",
+          top: "50%",
+          left: hubX + 100,
+          transform: "translateY(-50%)",
           opacity: interpolate(textSpring, [0, 1], [0, 1]),
-          transform: `translateY(${interpolate(textSpring, [0, 1], [40, 0])}px)`,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 12,
         }}
       >
         <span
           style={{
             fontFamily: "system-ui",
-            fontSize: 72,
+            fontSize: 64,
             fontWeight: 800,
-            color: "#F8FAFC",
+            color: "#8B5CF6",
             letterSpacing: "-0.02em",
           }}
         >
-          <span style={{ color: "#8B5CF6" }}>Click.</span>{" "}
-          <span style={{ color: "#06B6D4" }}>Talk.</span>{" "}
-          <span style={{ color: "#22C55E" }}>Qualify.</span>
+          Click.
+        </span>
+        <span
+          style={{
+            fontFamily: "system-ui",
+            fontSize: 64,
+            fontWeight: 800,
+            color: "#06B6D4",
+            letterSpacing: "-0.02em",
+          }}
+        >
+          Talk.
+        </span>
+        <span
+          style={{
+            fontFamily: "system-ui",
+            fontSize: 64,
+            fontWeight: 800,
+            color: "#22C55E",
+            letterSpacing: "-0.02em",
+          }}
+        >
+          Qualify.
         </span>
       </div>
     </AbsoluteFill>
