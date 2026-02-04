@@ -4,6 +4,7 @@ import { BolkaProductVideo } from "./compositions/BolkaProductVideo";
 import { VoiceLinksVideo } from "./compositions/VoiceLinksVideo";
 import { BolkaEmbedVideo } from "./compositions/BolkaEmbedVideo";
 import { VoiceAIAnywhereVideo } from "./compositions/VoiceAIAnywhereVideo";
+import { SalesOutreachVideo } from "./compositions/SalesOutreachVideo";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -85,6 +86,19 @@ export const RemotionRoot: React.FC = () => {
           musicUrl: staticFile("music.mp3"),
           // Full voice over track
           // VO Scene 1: "We built the internet to talk… and then forced everyone to type."
+        }}
+      />
+
+      {/* Sales Outreach by Bolka AI - B2B Video (~90s) */}
+      <Composition
+        id="SalesOutreachVideo"
+        component={SalesOutreachVideo}
+        durationInFrames={2700}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{
+          musicUrl: staticFile("music.mp3"),
         }}
       />
     </>
