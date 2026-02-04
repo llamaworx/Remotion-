@@ -89,14 +89,14 @@ export const RemotionRoot: React.FC = () => {
         }}
       />
 
-      {/* Sales Outreach by Bolka AI - B2B Video (~90s) */}
+      {/* Sales Outreach by Bolka AI - B2B Video Mobile (~100s) */}
       <Composition
         id="SalesOutreachVideo"
         component={SalesOutreachVideo}
-        durationInFrames={2700}
+        durationInFrames={3000}
         fps={30}
-        width={1920}
-        height={1080}
+        width={1080}
+        height={1920}
         defaultProps={{
           musicUrl: staticFile("music.mp3"),
         }}

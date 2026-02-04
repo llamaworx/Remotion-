@@ -7,7 +7,7 @@ import {
   spring,
 } from "remotion";
 
-// Conversation bubble
+// Conversation bubble - mobile optimized
 const ConversationBubble: React.FC<{
   text: string;
   isUser: boolean;
@@ -30,26 +30,26 @@ const ConversationBubble: React.FC<{
         display: "flex",
         justifyContent: isUser ? "flex-start" : "flex-end",
         opacity: interpolate(entrySpring, [0, 1], [0, 1]),
-        transform: `translateY(${interpolate(entrySpring, [0, 1], [20, 0])}px)`,
+        transform: `translateY(${interpolate(entrySpring, [0, 1], [15, 0])}px)`,
       }}
     >
       <div
         style={{
-          maxWidth: 420,
+          maxWidth: "85%",
           backgroundColor: isUser ? "#8B5CF6" : "#0E7490",
-          borderRadius: 20,
-          borderBottomLeftRadius: isUser ? 4 : 20,
-          borderBottomRightRadius: isUser ? 20 : 4,
-          padding: "14px 20px",
+          borderRadius: 16,
+          borderBottomLeftRadius: isUser ? 4 : 16,
+          borderBottomRightRadius: isUser ? 16 : 4,
+          padding: "10px 14px",
           boxShadow: isUser
-            ? "0 8px 25px rgba(139, 92, 246, 0.3)"
-            : "0 8px 25px rgba(6, 182, 212, 0.3)",
+            ? "0 6px 20px rgba(139, 92, 246, 0.3)"
+            : "0 6px 20px rgba(6, 182, 212, 0.3)",
         }}
       >
         <span
           style={{
             fontFamily: "system-ui",
-            fontSize: 20,
+            fontSize: 15,
             color: "white",
             lineHeight: 1.4,
           }}
@@ -61,7 +61,7 @@ const ConversationBubble: React.FC<{
   );
 };
 
-// Voice waveform indicator
+// Voice waveform indicator - mobile optimized
 const VoiceIndicator: React.FC<{
   frame: number;
   isActive: boolean;
@@ -73,16 +73,16 @@ const VoiceIndicator: React.FC<{
     <div
       style={{
         display: "flex",
-        gap: 3,
+        gap: 2,
         alignItems: "center",
-        height: 24,
-        padding: "0 12px",
+        height: 20,
+        padding: "0 8px",
       }}
     >
-      {Array.from({ length: 8 }).map((_, i) => {
+      {Array.from({ length: 6 }).map((_, i) => {
         const height = isActive
-          ? 4 + Math.abs(Math.sin(frame * 0.25 + i * 0.5)) * 16
-          : 4;
+          ? 3 + Math.abs(Math.sin(frame * 0.25 + i * 0.5)) * 12
+          : 3;
         return (
           <div
             key={i}
@@ -99,30 +99,29 @@ const VoiceIndicator: React.FC<{
   );
 };
 
-// AI Brain visualization
+// AI Brain visualization - mobile optimized
 const AIBrain: React.FC<{
   frame: number;
-  fps: number;
   isProcessing: boolean;
-}> = ({ frame, fps, isProcessing }) => {
+}> = ({ frame, isProcessing }) => {
   const pulse = isProcessing ? Math.sin(frame * 0.15) * 0.1 + 1 : 1;
   const glow = isProcessing ? Math.sin(frame * 0.12) * 0.5 + 0.5 : 0.3;
 
   return (
     <div
       style={{
-        width: 120,
-        height: 120,
+        width: 70,
+        height: 70,
         borderRadius: "50%",
         background: "linear-gradient(135deg, #06B6D4 0%, #8B5CF6 100%)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         transform: `scale(${pulse})`,
-        boxShadow: `0 0 ${40 * glow}px rgba(6, 182, 212, 0.5), 0 20px 50px rgba(0,0,0,0.3)`,
+        boxShadow: `0 0 ${30 * glow}px rgba(6, 182, 212, 0.5), 0 10px 30px rgba(0,0,0,0.3)`,
       }}
     >
-      <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
+      <svg width="35" height="35" viewBox="0 0 24 24" fill="none">
         {/* Brain icon */}
         <path
           d="M12 2C9.5 2 7.5 4 7.5 6.5C7.5 7.5 7.8 8.4 8.3 9.1C6.4 9.6 5 11.3 5 13.5C5 15.4 6 17 7.5 17.7V19C7.5 20.7 8.8 22 10.5 22H13.5C15.2 22 16.5 20.7 16.5 19V17.7C18 17 19 15.4 19 13.5C19 11.3 17.6 9.6 15.7 9.1C16.2 8.4 16.5 7.5 16.5 6.5C16.5 4 14.5 2 12 2Z"
@@ -141,7 +140,7 @@ const AIBrain: React.FC<{
   );
 };
 
-// Response time indicator
+// Response time indicator - mobile optimized
 const ResponseTime: React.FC<{
   delay: number;
   frame: number;
@@ -162,18 +161,18 @@ const ResponseTime: React.FC<{
         transform: `scale(${entrySpring})`,
         display: "flex",
         alignItems: "center",
-        gap: 8,
+        gap: 6,
         backgroundColor: "#22C55E20",
         border: "1px solid #22C55E",
-        borderRadius: 20,
-        padding: "6px 14px",
+        borderRadius: 16,
+        padding: "4px 10px",
       }}
     >
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
         <circle cx="12" cy="12" r="10" stroke="#22C55E" strokeWidth="2" />
         <path d="M12 6v6l4 2" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" />
       </svg>
-      <span style={{ fontFamily: "system-ui", fontSize: 14, fontWeight: 600, color: "#22C55E" }}>
+      <span style={{ fontFamily: "system-ui", fontSize: 11, fontWeight: 600, color: "#22C55E" }}>
         Instant Response
       </span>
     </div>
@@ -187,11 +186,11 @@ export const Scene7CustomerExperience: React.FC = () => {
   // Conversation flow
   const conversations = [
     { text: "Is this available in my city?", isUser: true, delay: 20 },
-    { text: "Yes! We're available in New York, London, Sydney, Singapore, and 50+ cities worldwide. Which city are you in?", isUser: false, delay: 60 },
-    { text: "What's the price?", isUser: true, delay: 120 },
-    { text: "Our plans start at $299/month. Would you like me to explain what's included?", isUser: false, delay: 160 },
-    { text: "When can you call me?", isUser: true, delay: 220 },
-    { text: "I can schedule a call right now! What time works best for you today?", isUser: false, delay: 260 },
+    { text: "Yes! We're available in New York, London, Sydney, Singapore, and 50+ cities worldwide.", isUser: false, delay: 55 },
+    { text: "What's the price?", isUser: true, delay: 100 },
+    { text: "Our plans start at $299/month. Would you like me to explain what's included?", isUser: false, delay: 135 },
+    { text: "When can you call me?", isUser: true, delay: 180 },
+    { text: "I can schedule a call right now! What time works best for you today?", isUser: false, delay: 215 },
   ];
 
   // Determine which conversation is active
@@ -203,7 +202,7 @@ export const Scene7CustomerExperience: React.FC = () => {
 
   // Text animations
   const textSpring = spring({
-    frame: frame - 200,
+    frame: frame - 250,
     fps,
     config: { damping: 14 },
   });
@@ -221,8 +220,8 @@ export const Scene7CustomerExperience: React.FC = () => {
           position: "absolute",
           inset: 0,
           background: `
-            radial-gradient(circle at 30% 40%, rgba(139, 92, 246, 0.1) 0%, transparent 40%),
-            radial-gradient(circle at 70% 60%, rgba(6, 182, 212, 0.08) 0%, transparent 40%)
+            radial-gradient(circle at 30% 30%, rgba(139, 92, 246, 0.1) 0%, transparent 40%),
+            radial-gradient(circle at 70% 70%, rgba(6, 182, 212, 0.08) 0%, transparent 40%)
           `,
         }}
       />
@@ -236,67 +235,109 @@ export const Scene7CustomerExperience: React.FC = () => {
             linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
             linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)
           `,
-          backgroundSize: "60px 60px",
+          backgroundSize: "50px 50px",
         }}
       />
 
-      {/* Main conversation area */}
+      {/* Content container */}
       <div
         style={{
           position: "absolute",
-          top: 60,
-          left: 80,
-          right: 80,
+          inset: 0,
           display: "flex",
-          gap: 40,
+          flexDirection: "column",
+          padding: "50px 30px",
         }}
       >
-        {/* Left side: User */}
+        {/* "Not a recording" badge */}
+        <div
+          style={{
+            alignSelf: "center",
+            opacity: interpolate(frame, [30, 50], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
+            marginBottom: 20,
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "#0F172A",
+              border: "2px solid #06B6D4",
+              borderRadius: 10,
+              padding: "8px 14px",
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M9 12l2 2 4-4" stroke="#06B6D4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <circle cx="12" cy="12" r="10" stroke="#06B6D4" strokeWidth="2" />
+            </svg>
+            <span style={{ fontFamily: "system-ui", fontSize: 13, fontWeight: 600, color: "#06B6D4" }}>
+              Trained AI — Not a Recording
+            </span>
+          </div>
+        </div>
+
+        {/* Avatars row */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: 16,
+          }}
+        >
+          {/* Customer avatar */}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+            <div
+              style={{
+                width: 60,
+                height: 60,
+                borderRadius: "50%",
+                backgroundColor: "#8B5CF6",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                boxShadow: "0 8px 25px rgba(139, 92, 246, 0.3)",
+              }}
+            >
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
+              </svg>
+            </div>
+            <span style={{ fontFamily: "system-ui", fontSize: 12, fontWeight: 600, color: "#8B5CF6" }}>
+              Customer
+            </span>
+            <VoiceIndicator
+              frame={frame}
+              isActive={activeConvoIndex >= 0 && conversations[activeConvoIndex]?.isUser}
+              isUser={true}
+            />
+          </div>
+
+          {/* AI avatar */}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+            <AIBrain frame={frame} isProcessing={isAIProcessing} />
+            <span style={{ fontFamily: "system-ui", fontSize: 12, fontWeight: 600, color: "#06B6D4" }}>
+              Bolka AI
+            </span>
+            <VoiceIndicator
+              frame={frame}
+              isActive={activeConvoIndex >= 0 && !conversations[activeConvoIndex]?.isUser}
+              isUser={false}
+            />
+            <ResponseTime delay={60} frame={frame} fps={fps} />
+          </div>
+        </div>
+
+        {/* Conversation area */}
         <div
           style={{
             flex: 1,
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
-            gap: 20,
-          }}
-        >
-          {/* User avatar */}
-          <div
-            style={{
-              width: 100,
-              height: 100,
-              borderRadius: "50%",
-              backgroundColor: "#8B5CF6",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              boxShadow: "0 10px 40px rgba(139, 92, 246, 0.3)",
-            }}
-          >
-            <svg width="50" height="50" viewBox="0 0 24 24" fill="white">
-              <circle cx="12" cy="8" r="4" />
-              <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
-            </svg>
-          </div>
-          <span style={{ fontFamily: "system-ui", fontSize: 20, fontWeight: 600, color: "#8B5CF6" }}>
-            Customer
-          </span>
-          <VoiceIndicator
-            frame={frame}
-            isActive={activeConvoIndex >= 0 && conversations[activeConvoIndex]?.isUser}
-            isUser={true}
-          />
-        </div>
-
-        {/* Center: Conversation */}
-        <div
-          style={{
-            flex: 2,
-            display: "flex",
-            flexDirection: "column",
-            gap: 14,
-            maxHeight: 650,
+            gap: 10,
             overflow: "visible",
           }}
         >
@@ -312,90 +353,36 @@ export const Scene7CustomerExperience: React.FC = () => {
           ))}
         </div>
 
-        {/* Right side: AI */}
+        {/* Main text */}
         <div
           style={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 20,
-          }}
-        >
-          <AIBrain frame={frame} fps={fps} isProcessing={isAIProcessing} />
-          <span style={{ fontFamily: "system-ui", fontSize: 20, fontWeight: 600, color: "#06B6D4" }}>
-            Bolka AI
-          </span>
-          <VoiceIndicator
-            frame={frame}
-            isActive={activeConvoIndex >= 0 && !conversations[activeConvoIndex]?.isUser}
-            isUser={false}
-          />
-          <ResponseTime delay={70} frame={frame} fps={fps} />
-        </div>
-      </div>
-
-      {/* "Not a recording" badge */}
-      <div
-        style={{
-          position: "absolute",
-          top: 40,
-          right: 100,
-          opacity: interpolate(frame, [30, 60], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
-        }}
-      >
-        <div
-          style={{
-            backgroundColor: "#0F172A",
-            border: "2px solid #06B6D4",
-            borderRadius: 12,
-            padding: "10px 20px",
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-          }}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path d="M9 12l2 2 4-4" stroke="#06B6D4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            <circle cx="12" cy="12" r="10" stroke="#06B6D4" strokeWidth="2" />
-          </svg>
-          <span style={{ fontFamily: "system-ui", fontSize: 16, fontWeight: 600, color: "#06B6D4" }}>
-            Trained AI — Not a Recording
-          </span>
-        </div>
-      </div>
-
-      {/* Main text */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: 100,
-          left: 0,
-          right: 0,
-          textAlign: "center",
-          opacity: interpolate(textSpring, [0, 1], [0, 1]),
-          transform: `translateY(${interpolate(textSpring, [0, 1], [40, 0])}px)`,
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "system-ui",
-            fontSize: 72,
-            fontWeight: 800,
-            letterSpacing: "-0.02em",
+            textAlign: "center",
+            marginTop: "auto",
+            paddingTop: 20,
+            opacity: interpolate(textSpring, [0, 1], [0, 1]),
+            transform: `translateY(${interpolate(textSpring, [0, 1], [30, 0])}px)`,
           }}
         >
           <span
             style={{
-              background: "linear-gradient(90deg, #8B5CF6, #06B6D4)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              fontFamily: "system-ui",
+              fontSize: 44,
+              fontWeight: 800,
+              letterSpacing: "-0.02em",
             }}
           >
-            Natural.
-          </span>{" "}
-          <span style={{ color: "#F8FAFC" }}>Non-linear.</span>
-        </span>
+            <span
+              style={{
+                background: "linear-gradient(90deg, #8B5CF6, #06B6D4)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              Natural.
+            </span>{" "}
+            <span style={{ color: "#F8FAFC" }}>Non-linear.</span>
+          </span>
+        </div>
       </div>
     </AbsoluteFill>
   );

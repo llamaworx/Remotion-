@@ -34,7 +34,7 @@ const AdBannerIcon: React.FC<{ size: number }> = ({ size }) => (
   </svg>
 );
 
-// Channel Card
+// Channel Card - mobile optimized
 const ChannelCard: React.FC<{
   icon: React.ReactNode;
   name: string;
@@ -42,8 +42,7 @@ const ChannelCard: React.FC<{
   delay: number;
   frame: number;
   fps: number;
-  index: number;
-}> = ({ icon, name, color, delay, frame, fps, index }) => {
+}> = ({ icon, name, color, delay, frame, fps }) => {
   const entrySpring = spring({
     frame: frame - delay,
     fps,
@@ -54,10 +53,6 @@ const ChannelCard: React.FC<{
 
   // Link sending animation
   const linkSent = localFrame > 40;
-  const linkProgress = interpolate(localFrame, [40, 80], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
 
   if (entrySpring <= 0) return null;
 
@@ -69,64 +64,35 @@ const ChannelCard: React.FC<{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: 12,
+        gap: 8,
       }}
     >
       {/* Channel icon */}
       <div
         style={{
-          width: 80,
-          height: 80,
-          borderRadius: 20,
+          width: 60,
+          height: 60,
+          borderRadius: 16,
           backgroundColor: "#1E293B",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           border: `2px solid ${color}40`,
-          boxShadow: linkSent ? `0 0 20px ${color}40` : "0 10px 30px rgba(0,0,0,0.3)",
+          boxShadow: linkSent ? `0 0 15px ${color}40` : "0 8px 24px rgba(0,0,0,0.3)",
         }}
       >
         {icon}
       </div>
 
       {/* Channel name */}
-      <span style={{ fontFamily: "system-ui", fontSize: 16, fontWeight: 600, color: "#94A3B8" }}>
+      <span style={{ fontFamily: "system-ui", fontSize: 12, fontWeight: 600, color: "#94A3B8" }}>
         {name}
       </span>
-
-      {/* Link being sent */}
-      {linkSent && (
-        <div
-          style={{
-            opacity: linkProgress,
-            transform: `translateY(${interpolate(linkProgress, [0, 1], [10, 0])}px)`,
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "#8B5CF620",
-              border: "1px solid #8B5CF6",
-              borderRadius: 8,
-              padding: "6px 12px",
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-            }}
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="#8B5CF6">
-              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="#8B5CF6" strokeWidth="2" fill="none" strokeLinecap="round"/>
-            </svg>
-            <span style={{ fontFamily: "monospace", fontSize: 11, color: "#8B5CF6" }}>
-              bolka.ai/...
-            </span>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
 
-// Central Voice Link hub
+// Central Voice Link hub - mobile optimized
 const VoiceLinkHub: React.FC<{
   frame: number;
   fps: number;
@@ -151,17 +117,17 @@ const VoiceLinkHub: React.FC<{
     >
       <div
         style={{
-          width: 140,
-          height: 140,
+          width: 100,
+          height: 100,
           borderRadius: "50%",
           background: "linear-gradient(135deg, #8B5CF6 0%, #06B6D4 100%)",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          boxShadow: `0 0 ${50 * glow}px rgba(139, 92, 246, 0.5), 0 20px 60px rgba(0,0,0,0.3)`,
+          boxShadow: `0 0 ${40 * glow}px rgba(139, 92, 246, 0.5), 0 15px 40px rgba(0,0,0,0.3)`,
         }}
       >
-        <svg width="60" height="60" viewBox="0 0 24 24" fill="white">
+        <svg width="45" height="45" viewBox="0 0 24 24" fill="white">
           <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round"/>
           <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round"/>
         </svg>
@@ -170,67 +136,35 @@ const VoiceLinkHub: React.FC<{
   );
 };
 
-// Connection lines from hub to channels
-const ConnectionLine: React.FC<{
-  startX: number;
-  startY: number;
-  endX: number;
-  endY: number;
+// Down Arrow
+const DownArrow: React.FC<{
   delay: number;
   frame: number;
-}> = ({ startX, startY, endX, endY, delay, frame }) => {
-  const progress = interpolate(frame - delay, [0, 40], [0, 1], {
+}> = ({ delay, frame }) => {
+  const progress = interpolate(frame - delay, [0, 30], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
 
   if (progress <= 0) return null;
 
-  const currentX = startX + (endX - startX) * progress;
-  const currentY = startY + (endY - startY) * progress;
-
   return (
-    <svg
-      style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        pointerEvents: "none",
-      }}
-    >
-      <defs>
-        <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#8B5CF6" />
-          <stop offset="100%" stopColor="#06B6D4" />
-        </linearGradient>
-      </defs>
-      <line
-        x1={startX}
-        y1={startY}
-        x2={currentX}
-        y2={currentY}
-        stroke="url(#lineGrad)"
-        strokeWidth="3"
-        strokeLinecap="round"
-        opacity={0.6}
-      />
-      {/* Animated dot */}
-      <circle
-        cx={currentX}
-        cy={currentY}
-        r="6"
-        fill="#8B5CF6"
-        style={{
-          filter: "drop-shadow(0 0 8px rgba(139, 92, 246, 0.8))",
-        }}
-      />
-    </svg>
+    <div style={{ display: "flex", justifyContent: "center", padding: "8px 0", opacity: progress }}>
+      <svg width="30" height="40" viewBox="0 0 40 50">
+        <defs>
+          <linearGradient id="arrowGradV6" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#8B5CF6" />
+            <stop offset="100%" stopColor="#06B6D4" />
+          </linearGradient>
+        </defs>
+        <path d="M 20 5 L 20 35" stroke="url(#arrowGradV6)" strokeWidth="3" fill="none" strokeLinecap="round" />
+        <path d="M 12 28 L 20 40 L 28 28" stroke="#06B6D4" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </div>
   );
 };
 
-// User interaction demo
+// User interaction demo - mobile optimized
 const UserInteraction: React.FC<{
   frame: number;
   fps: number;
@@ -263,11 +197,8 @@ const UserInteraction: React.FC<{
   return (
     <div
       style={{
-        position: "absolute",
-        right: 120,
-        top: "50%",
-        transform: "translateY(-50%)",
         opacity: interpolate(entrySpring, [0, 1], [0, 1]),
+        width: "100%",
       }}
     >
       <div
@@ -275,30 +206,30 @@ const UserInteraction: React.FC<{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: 20,
+          gap: 14,
         }}
       >
         {/* User avatar */}
         <div
           style={{
-            width: 80,
-            height: 80,
+            width: 60,
+            height: 60,
             borderRadius: "50%",
             backgroundColor: "#22C55E",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            border: "3px solid #1E293B",
-            boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
+            border: "2px solid #1E293B",
+            boxShadow: "0 8px 24px rgba(0,0,0,0.3)",
           }}
         >
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="white">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
             <circle cx="12" cy="8" r="4" />
             <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
           </svg>
         </div>
 
-        <span style={{ fontFamily: "system-ui", fontSize: 16, fontWeight: 600, color: "#22C55E" }}>
+        <span style={{ fontFamily: "system-ui", fontSize: 14, fontWeight: 600, color: "#22C55E" }}>
           Customer
         </span>
 
@@ -306,14 +237,13 @@ const UserInteraction: React.FC<{
         {localFrame > 20 && !isClicked && (
           <div
             style={{
-              animation: "pulse 0.5s infinite",
               backgroundColor: "#8B5CF620",
               border: "2px solid #8B5CF6",
-              borderRadius: 12,
-              padding: "12px 24px",
+              borderRadius: 10,
+              padding: "8px 16px",
             }}
           >
-            <span style={{ fontFamily: "system-ui", fontSize: 14, color: "#8B5CF6" }}>
+            <span style={{ fontFamily: "system-ui", fontSize: 12, color: "#8B5CF6" }}>
               Clicks link...
             </span>
           </div>
@@ -325,36 +255,36 @@ const UserInteraction: React.FC<{
             style={{
               opacity: interpolate(micOpenSpring, [0, 1], [0, 1]),
               transform: `scale(${interpolate(micOpenSpring, [0, 1], [0.8, 1])})`,
+              width: "100%",
             }}
           >
             <div
               style={{
-                width: 200,
                 backgroundColor: "#1E293B",
-                borderRadius: 20,
-                padding: 20,
-                boxShadow: `0 20px 50px rgba(0,0,0,0.4), 0 0 ${30 * micGlow}px rgba(139, 92, 246, 0.3)`,
+                borderRadius: 16,
+                padding: 16,
+                boxShadow: `0 15px 40px rgba(0,0,0,0.4), 0 0 ${25 * micGlow}px rgba(139, 92, 246, 0.3)`,
                 border: "2px solid rgba(139, 92, 246, 0.4)",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                gap: 14,
+                gap: 12,
               }}
             >
               {/* Mic icon */}
               <div
                 style={{
-                  width: 56,
-                  height: 56,
+                  width: 50,
+                  height: 50,
                   background: "linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%)",
                   borderRadius: "50%",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  boxShadow: `0 0 ${20 * micGlow}px rgba(139, 92, 246, 0.5)`,
+                  boxShadow: `0 0 ${15 * micGlow}px rgba(139, 92, 246, 0.5)`,
                 }}
               >
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <rect x="9" y="2" width="6" height="11" rx="3" fill="white" />
                   <path d="M5 10V11C5 14.866 8.13401 18 12 18C15.866 18 19 14.866 19 11V10" stroke="white" strokeWidth="2" strokeLinecap="round" />
                   <path d="M12 18V22M8 22H16" stroke="white" strokeWidth="2" strokeLinecap="round" />
@@ -362,16 +292,16 @@ const UserInteraction: React.FC<{
               </div>
 
               {/* Voice waveform */}
-              <div style={{ display: "flex", gap: 3, alignItems: "center", height: 28 }}>
+              <div style={{ display: "flex", gap: 2, alignItems: "center", height: 24 }}>
                 {Array.from({ length: 12 }).map((_, i) => {
                   const height = waveActive
-                    ? 6 + Math.abs(Math.sin(frame * 0.2 + i * 0.5)) * 18
+                    ? 5 + Math.abs(Math.sin(frame * 0.2 + i * 0.5)) * 14
                     : 4;
                   return (
                     <div
                       key={i}
                       style={{
-                        width: 4,
+                        width: 3,
                         height,
                         backgroundColor: "#8B5CF6",
                         borderRadius: 2,
@@ -381,7 +311,7 @@ const UserInteraction: React.FC<{
                 })}
               </div>
 
-              <span style={{ fontFamily: "system-ui", fontSize: 14, color: "#22C55E" }}>
+              <span style={{ fontFamily: "system-ui", fontSize: 12, color: "#22C55E" }}>
                 Speaking...
               </span>
             </div>
@@ -398,22 +328,17 @@ export const Scene6SalesFlow: React.FC = () => {
 
   // Text animation
   const textSpring = spring({
-    frame: frame - 250,
+    frame: frame - 180,
     fps,
     config: { damping: 14 },
   });
 
-  // Channel positions - endX/endY are line endpoint targets (icon centers)
   const channels = [
-    { icon: <WhatsAppIcon size={36} />, name: "WhatsApp", color: "#25D366", delay: 10, lineEndX: 220, lineEndY: 315 },
-    { icon: <EmailIcon size={36} />, name: "Email", color: "#EA4335", delay: 30, lineEndX: 220, lineEndY: 455 },
-    { icon: <SMSIcon size={36} />, name: "SMS", color: "#34B7F1", delay: 50, lineEndX: 220, lineEndY: 595 },
-    { icon: <AdBannerIcon size={36} />, name: "Ad Banner", color: "#F59E0B", delay: 70, lineEndX: 220, lineEndY: 735 },
+    { icon: <WhatsAppIcon size={28} />, name: "WhatsApp", color: "#25D366", delay: 10 },
+    { icon: <EmailIcon size={28} />, name: "Email", color: "#EA4335", delay: 25 },
+    { icon: <SMSIcon size={28} />, name: "SMS", color: "#34B7F1", delay: 40 },
+    { icon: <AdBannerIcon size={28} />, name: "Ad Banner", color: "#F59E0B", delay: 55 },
   ];
-
-  // Hub position - centered
-  const hubX = 650;
-  const hubY = 540;
 
   return (
     <AbsoluteFill
@@ -428,8 +353,8 @@ export const Scene6SalesFlow: React.FC = () => {
           position: "absolute",
           inset: 0,
           background: `
-            radial-gradient(circle at 40% 50%, rgba(139, 92, 246, 0.12) 0%, transparent 40%),
-            radial-gradient(circle at 70% 50%, rgba(34, 197, 94, 0.08) 0%, transparent 40%)
+            radial-gradient(circle at 50% 20%, rgba(139, 92, 246, 0.12) 0%, transparent 40%),
+            radial-gradient(circle at 50% 70%, rgba(34, 197, 94, 0.08) 0%, transparent 40%)
           `,
         }}
       />
@@ -443,110 +368,99 @@ export const Scene6SalesFlow: React.FC = () => {
             linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
             linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)
           `,
-          backgroundSize: "60px 60px",
+          backgroundSize: "50px 50px",
         }}
       />
 
-      {/* Connection lines from hub to channels */}
-      {channels.map((channel, i) => (
-        <ConnectionLine
-          key={i}
-          startX={hubX}
-          startY={hubY}
-          endX={channel.lineEndX}
-          endY={channel.lineEndY}
-          delay={channel.delay + 80}
-          frame={frame}
-        />
-      ))}
-
-      {/* Channel cards - left side */}
+      {/* Content container */}
       <div
         style={{
           position: "absolute",
-          left: 140,
-          top: "50%",
-          transform: "translateY(-50%)",
-          display: "flex",
-          flexDirection: "column",
-          gap: 30,
-        }}
-      >
-        {channels.map((channel, i) => (
-          <ChannelCard
-            key={i}
-            icon={channel.icon}
-            name={channel.name}
-            color={channel.color}
-            delay={channel.delay}
-            frame={frame}
-            fps={fps}
-            index={i}
-          />
-        ))}
-      </div>
-
-      {/* Central Voice Link hub */}
-      <div
-        style={{
-          position: "absolute",
-          left: hubX - 70,
-          top: hubY - 70,
-        }}
-      >
-        <VoiceLinkHub frame={frame} fps={fps} />
-      </div>
-
-      {/* User interaction */}
-      <UserInteraction frame={frame} fps={fps} delay={150} />
-
-      {/* Main text - positioned between hub and customer */}
-      <div
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: hubX + 100,
-          transform: "translateY(-50%)",
-          opacity: interpolate(textSpring, [0, 1], [0, 1]),
+          inset: 0,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: 12,
+          padding: "50px 40px",
+          gap: 16,
         }}
       >
-        <span
+        {/* Channel cards - 2x2 grid */}
+        <div
           style={{
-            fontFamily: "system-ui",
-            fontSize: 64,
-            fontWeight: 800,
-            color: "#8B5CF6",
-            letterSpacing: "-0.02em",
+            display: "grid",
+            gridTemplateColumns: "repeat(2, 1fr)",
+            gap: 20,
           }}
         >
-          Click.
-        </span>
-        <span
+          {channels.map((channel, i) => (
+            <ChannelCard
+              key={i}
+              icon={channel.icon}
+              name={channel.name}
+              color={channel.color}
+              delay={channel.delay}
+              frame={frame}
+              fps={fps}
+            />
+          ))}
+        </div>
+
+        {/* Down Arrow */}
+        <DownArrow delay={70} frame={frame} />
+
+        {/* Central Voice Link hub */}
+        <VoiceLinkHub frame={frame} fps={fps} />
+
+        {/* Click Talk Qualify text */}
+        <div
           style={{
-            fontFamily: "system-ui",
-            fontSize: 64,
-            fontWeight: 800,
-            color: "#06B6D4",
-            letterSpacing: "-0.02em",
+            opacity: interpolate(textSpring, [0, 1], [0, 1]),
+            display: "flex",
+            gap: 16,
+            alignItems: "center",
+            padding: "8px 0",
           }}
         >
-          Talk.
-        </span>
-        <span
-          style={{
-            fontFamily: "system-ui",
-            fontSize: 64,
-            fontWeight: 800,
-            color: "#22C55E",
-            letterSpacing: "-0.02em",
-          }}
-        >
-          Qualify.
-        </span>
+          <span
+            style={{
+              fontFamily: "system-ui",
+              fontSize: 32,
+              fontWeight: 800,
+              color: "#8B5CF6",
+              letterSpacing: "-0.02em",
+            }}
+          >
+            Click.
+          </span>
+          <span
+            style={{
+              fontFamily: "system-ui",
+              fontSize: 32,
+              fontWeight: 800,
+              color: "#06B6D4",
+              letterSpacing: "-0.02em",
+            }}
+          >
+            Talk.
+          </span>
+          <span
+            style={{
+              fontFamily: "system-ui",
+              fontSize: 32,
+              fontWeight: 800,
+              color: "#22C55E",
+              letterSpacing: "-0.02em",
+            }}
+          >
+            Qualify.
+          </span>
+        </div>
+
+        {/* Down Arrow to Customer */}
+        <DownArrow delay={100} frame={frame} />
+
+        {/* User interaction */}
+        <UserInteraction frame={frame} fps={fps} delay={130} />
       </div>
     </AbsoluteFill>
   );

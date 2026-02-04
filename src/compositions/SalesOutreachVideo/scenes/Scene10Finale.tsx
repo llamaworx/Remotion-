@@ -8,7 +8,7 @@ import {
   Easing,
 } from "remotion";
 
-// Animated voice wave
+// Animated voice wave - mobile optimized
 const VoiceWave: React.FC<{
   frame: number;
   delay: number;
@@ -21,30 +21,29 @@ const VoiceWave: React.FC<{
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        gap: 6,
-        height: 80,
+        gap: 4,
+        height: 60,
       }}
     >
-      {Array.from({ length: 24 }).map((_, i) => {
+      {Array.from({ length: 16 }).map((_, i) => {
         // Create flowing wave pattern
-        const baseHeight = 10;
-        const waveHeight = Math.sin(waveProgress * 0.12 + i * 0.4) * 25 + 30;
-        const secondWave = Math.sin(waveProgress * 0.08 + i * 0.3) * 15;
+        const baseHeight = 8;
+        const waveHeight = Math.sin(waveProgress * 0.12 + i * 0.4) * 18 + 22;
+        const secondWave = Math.sin(waveProgress * 0.08 + i * 0.3) * 10;
         const height = waveProgress > 0 ? baseHeight + waveHeight + secondWave : baseHeight;
 
         // Gradient color based on position
-        const hue = interpolate(i, [0, 23], [270, 190]); // Purple to cyan
+        const hue = interpolate(i, [0, 15], [270, 190]); // Purple to cyan
 
         return (
           <div
             key={i}
             style={{
-              width: 6,
-              height: Math.max(8, height),
+              width: 5,
+              height: Math.max(6, height),
               backgroundColor: `hsl(${hue}, 80%, 60%)`,
               borderRadius: 3,
-              boxShadow: `0 0 15px hsla(${hue}, 80%, 60%, 0.5)`,
-              transition: "height 0.05s ease-out",
+              boxShadow: `0 0 10px hsla(${hue}, 80%, 60%, 0.5)`,
             }}
           />
         );
@@ -53,7 +52,7 @@ const VoiceWave: React.FC<{
   );
 };
 
-// Particle effect
+// Particle effect - mobile optimized
 const Particle: React.FC<{
   index: number;
   frame: number;
@@ -62,37 +61,36 @@ const Particle: React.FC<{
   const particleFrame = frame - delay;
   if (particleFrame < 0) return null;
 
-  const angle = (index / 20) * Math.PI * 2;
-  const radius = 150 + particleFrame * 2;
+  const angle = (index / 16) * Math.PI * 2;
+  const radius = 100 + particleFrame * 1.5;
   const x = Math.cos(angle + particleFrame * 0.02) * radius;
   const y = Math.sin(angle + particleFrame * 0.02) * radius;
   const opacity = interpolate(particleFrame, [0, 100], [0.8, 0], { extrapolateRight: "clamp" });
-  const size = 4 + Math.sin(particleFrame * 0.1 + index) * 2;
+  const size = 3 + Math.sin(particleFrame * 0.1 + index) * 1.5;
 
   return (
     <div
       style={{
         position: "absolute",
         left: "50%",
-        top: "50%",
+        top: "45%",
         width: size,
         height: size,
         borderRadius: "50%",
         backgroundColor: index % 2 === 0 ? "#8B5CF6" : "#06B6D4",
         transform: `translate(${x}px, ${y}px)`,
         opacity,
-        boxShadow: `0 0 10px ${index % 2 === 0 ? "#8B5CF6" : "#06B6D4"}`,
+        boxShadow: `0 0 8px ${index % 2 === 0 ? "#8B5CF6" : "#06B6D4"}`,
       }}
     />
   );
 };
 
-// Bolka Logo SVG
+// Bolka Logo SVG - mobile optimized
 const BolkaLogo: React.FC<{
   size: number;
   frame: number;
-  fps: number;
-}> = ({ size, frame, fps }) => {
+}> = ({ size, frame }) => {
   const pulse = Math.sin(frame * 0.08) * 0.05 + 1;
   const glow = Math.sin(frame * 0.06) * 0.3 + 0.7;
 
@@ -108,9 +106,9 @@ const BolkaLogo: React.FC<{
         alignItems: "center",
         transform: `scale(${pulse})`,
         boxShadow: `
-          0 0 ${60 * glow}px rgba(139, 92, 246, 0.6),
-          0 0 ${120 * glow}px rgba(6, 182, 212, 0.4),
-          0 30px 80px rgba(0, 0, 0, 0.4)
+          0 0 ${40 * glow}px rgba(139, 92, 246, 0.6),
+          0 0 ${80 * glow}px rgba(6, 182, 212, 0.4),
+          0 20px 60px rgba(0, 0, 0, 0.4)
         `,
       }}
     >
@@ -125,7 +123,7 @@ const BolkaLogo: React.FC<{
   );
 };
 
-// Ring animation
+// Ring animation - mobile optimized
 const AnimatedRing: React.FC<{
   delay: number;
   frame: number;
@@ -193,7 +191,7 @@ export const Scene10Finale: React.FC = () => {
   const finalZoom = interpolate(
     frame,
     [180, 210],
-    [1, 1.1],
+    [1, 1.05],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) }
   );
 
@@ -226,13 +224,13 @@ export const Scene10Finale: React.FC = () => {
             linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
             linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)
           `,
-          backgroundSize: "80px 80px",
+          backgroundSize: "60px 60px",
           opacity: 0.5,
         }}
       />
 
       {/* Particle effects */}
-      {Array.from({ length: 20 }).map((_, i) => (
+      {Array.from({ length: 16 }).map((_, i) => (
         <Particle key={i} index={i} frame={frame} delay={50 + i * 3} />
       ))}
 
@@ -240,7 +238,7 @@ export const Scene10Finale: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: "50%",
+          top: "45%",
           left: "50%",
           transform: "translate(-50%, -50%)",
           display: "flex",
@@ -248,9 +246,9 @@ export const Scene10Finale: React.FC = () => {
           alignItems: "center",
         }}
       >
-        <AnimatedRing delay={20} frame={frame} fps={fps} size={300} />
-        <AnimatedRing delay={40} frame={frame} fps={fps} size={400} />
-        <AnimatedRing delay={60} frame={frame} fps={fps} size={500} />
+        <AnimatedRing delay={20} frame={frame} fps={fps} size={200} />
+        <AnimatedRing delay={40} frame={frame} fps={fps} size={280} />
+        <AnimatedRing delay={60} frame={frame} fps={fps} size={360} />
       </div>
 
       {/* Main content */}
@@ -262,7 +260,8 @@ export const Scene10Finale: React.FC = () => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          gap: 40,
+          padding: "50px 30px",
+          gap: 24,
           transform: `scale(${finalZoom})`,
         }}
       >
@@ -273,27 +272,27 @@ export const Scene10Finale: React.FC = () => {
             transform: `scale(${interpolate(logoEntry, [0, 1], [0.5, 1])})`,
           }}
         >
-          <BolkaLogo size={180} frame={frame} fps={fps} />
+          <BolkaLogo size={120} frame={frame} />
         </div>
 
         {/* Bolka.ai text */}
         <div
           style={{
             opacity: interpolate(bolkaTextSpring, [0, 1], [0, 1]),
-            transform: `translateY(${interpolate(bolkaTextSpring, [0, 1], [30, 0])}px)`,
+            transform: `translateY(${interpolate(bolkaTextSpring, [0, 1], [20, 0])}px)`,
           }}
         >
           <span
             style={{
               fontFamily: "system-ui",
-              fontSize: 120,
+              fontSize: 72,
               fontWeight: 900,
               letterSpacing: "-0.03em",
               background: "linear-gradient(135deg, #8B5CF6 0%, #06B6D4 50%, #8B5CF6 100%)",
               backgroundSize: "200% 200%",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              textShadow: "0 0 80px rgba(139, 92, 246, 0.5)",
+              textShadow: "0 0 60px rgba(139, 92, 246, 0.5)",
             }}
           >
             Bolka.ai
@@ -314,16 +313,16 @@ export const Scene10Finale: React.FC = () => {
         <div
           style={{
             opacity: interpolate(taglineSpring, [0, 1], [0, 1]),
-            transform: `translateY(${interpolate(taglineSpring, [0, 1], [20, 0])}px)`,
+            transform: `translateY(${interpolate(taglineSpring, [0, 1], [15, 0])}px)`,
           }}
         >
           <span
             style={{
               fontFamily: "system-ui",
-              fontSize: 56,
+              fontSize: 28,
               fontWeight: 600,
               color: "#F8FAFC",
-              letterSpacing: "0.1em",
+              letterSpacing: "0.08em",
               textTransform: "uppercase",
             }}
           >
@@ -346,21 +345,21 @@ export const Scene10Finale: React.FC = () => {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: 16,
+              gap: 10,
               backgroundColor: "#1E293B50",
               border: "1px solid #334155",
-              borderRadius: 40,
-              padding: "16px 40px",
+              borderRadius: 30,
+              padding: "12px 24px",
             }}
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
               <circle cx="12" cy="12" r="10" stroke="#06B6D4" strokeWidth="2" />
               <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="#06B6D4" strokeWidth="2" />
             </svg>
             <span
               style={{
                 fontFamily: "system-ui",
-                fontSize: 28,
+                fontSize: 18,
                 fontWeight: 500,
                 color: "#94A3B8",
               }}
@@ -369,31 +368,30 @@ export const Scene10Finale: React.FC = () => {
             </span>
           </div>
         </div>
-      </div>
 
-      {/* Corner branding */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: 40,
-          right: 60,
-          opacity: interpolate(
-            spring({ frame: frame - 120, fps, config: { damping: 14 } }),
-            [0, 1],
-            [0, 0.6]
-          ),
-        }}
-      >
-        <span
+        {/* Bottom tagline */}
+        <div
           style={{
-            fontFamily: "system-ui",
-            fontSize: 18,
-            fontWeight: 500,
-            color: "#64748B",
+            position: "absolute",
+            bottom: 60,
+            opacity: interpolate(
+              spring({ frame: frame - 120, fps, config: { damping: 14 } }),
+              [0, 1],
+              [0, 0.7]
+            ),
           }}
         >
-          Sales without calling.
-        </span>
+          <span
+            style={{
+              fontFamily: "system-ui",
+              fontSize: 14,
+              fontWeight: 500,
+              color: "#64748B",
+            }}
+          >
+            Sales without calling.
+          </span>
+        </div>
       </div>
     </AbsoluteFill>
   );
